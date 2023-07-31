@@ -1,0 +1,5 @@
+As a user, I want to be able to decide whether my input shall be generated into a character, location, or object#3
+-  I can choose to process my input as a character
+-  I can choose to process my input as a location
+-  I can choose to process my input as an object
+-  The choice will show a relevant corresponding result(e.g., if character is chosen, it will provide character description, if location is chosen, location will be described, if object is chosen, object will be described).
