@@ -20,3 +20,5 @@ NodeJS, React, likely Express
 - Generation history (each new generated thing appears at the top of the page, so user can scroll down through things generated in the past)
 - Generators branch off from each other (generate person who lives in generated location or object owned by generated person, etc)
 - Change website theme, changing theme of prompts as well (fantasy/sci-fi/etc)
+
+## Story Points
