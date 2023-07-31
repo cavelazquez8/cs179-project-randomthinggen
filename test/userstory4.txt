@@ -1,0 +1,3 @@
+As a user, I want to change theme of prompt according to the website theme#4
+- website theme is able to be changed
+- theme of prompt changes with website theme
