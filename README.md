@@ -12,13 +12,13 @@ A website to allow writers to randomly generate various things (characters, loca
 NodeJS, React, likely Express
 
 ## Major Features
-- Randomly generate a description of a specific thing (e.g. person, location, object, etc.) from databases of relevant words.
-- Save favorite descriptions to sidebar
-- Download contents of sidebar as JSON
-- Incorporate OpenAI libraries to generate with various prompts from user (location: altitude, temperature, location type, etc; person: age, gender, height, etc)
-- Random writing prompt generator that incorporates items from other generators.
-- Generation history (each new generated thing appears at the top of the page, so user can scroll down through things generated in the past)
-- Generators branch off from each other (generate person who lives in generated location or object owned by generated person, etc)
-- Change website theme, changing theme of prompts as well (fantasy/sci-fi/etc)
-
-## Story Points
+| Priority | Feature                                                                                                                                                         | Story Points |
+|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
+| 10       | Randomly generate a description of a specific thing (e.g. person, location, object, etc.) from databases of relevant words.                                     | 10           |
+| 9        | Generation history (each new generated thing appears at the top of the page, so user can scroll down through things generated in the past)                      | 5            |
+| 8        | Incorporate OpenAI libraries to generate with various prompts from user (location: altitude, temperature, location type, etc; person: age, gender, height, etc) | 8            |
+| 7        | Save favorite descriptions to sidebar                                                                                                                           | 4            |
+| 6        | Download contents of sidebar as JSON                                                                                                                            | 4            |
+| 5        | Random writing prompt generator that incorporates items from other generators                                                                                   | 10           |
+| 4        | Generators branch off from each other (generate person who lives in generated location or object owned by generated person, etc)                                | 8            |
+| 3        | Change website theme, changing theme of prompts as well (fantasy/sci-fi/etc)                                                                                    | 10           |
