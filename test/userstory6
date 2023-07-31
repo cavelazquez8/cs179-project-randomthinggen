@@ -1,0 +1,4 @@
+As a user, I want to be able to decide whether or not I want my result to be AI-generated#6
+-  The prompt result should be AI-generated when chosen to use AI
+-  AI results should be relevant to the prompt
+-   The prompt result should provide a formulated, stricter layout 
