@@ -1,0 +1,4 @@
+As a user, I want to be able to see past generated results#7
+- Previous prompt's results in the same session are shown
+- Be able to scroll up to see these old results
+- Old results are not deleted upon entering a new input for a prompt
