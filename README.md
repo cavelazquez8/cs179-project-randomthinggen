@@ -24,10 +24,10 @@ NodeJS, React, likely Express
 | 3        | Change website theme, changing theme of prompts as well (fantasy/sci-fi/etc)                                                                                    | 10           |
 
 ## User Stories
-As a user, I want to be able to enter an input that randomly generates a character, location, or object.
-As a user, I want to be able to decide whether my input shall be generated into a character, location, or object.
-As a user, I want to be able to see past generated results
-As a user, I want to be able to decide whether or not I want my result to be AI-generated
-As a user, I want to bookmark/favorite descriptions so that I can save them/use them later
-As a user, I want to download my bookmarks/favorites in JSON format
-As a user, I want to change the theme of the result I receive according to the website theme
+- As a user, I want to be able to enter an input that randomly generates a character, location, or object.
+- As a user, I want to be able to decide whether my input shall be generated into a character, location, or object.
+- As a user, I want to be able to see past generated results
+- As a user, I want to be able to decide whether or not I want my result to be AI-generated
+- As a user, I want to bookmark/favorite descriptions so that I can save them/use them later
+- As a user, I want to download my bookmarks/favorites in JSON format
+- As a user, I want to change the theme of the result I receive according to the website theme
