@@ -1,6 +1,13 @@
 import './App.css';
-
+import React, {useState} from 'react';
 function App() {
+  const [description, setDescription] = useState("");
+
+  const generateDescription = () => {
+    const randText = Math.random().toString(36).substring(7);
+    setDescription(randText);
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -21,24 +28,11 @@ function App() {
           name="selector"/>
           THING
         </div>
+        <button onClick = {generateDescription} >Generate</button>
       </header>
       <body>
         <div className='descBox'>
-        Lorem ipsum dolor sit amet, 
-        consectetur adipiscing elit, 
-        sed do eiusmod tempor incididunt 
-        ut labore et dolore magna aliqua. 
-        Ut enim ad minim veniam, 
-        quis nostrud exercitation 
-        ullamco laboris nisi ut 
-        aliquip ex ea commodo consequat. 
-        Duis aute irure dolor in 
-        reprehenderit in voluptate 
-        velit esse cillum dolore 
-        eu fugiat nulla pariatur. 
-        Excepteur sint occaecat cupidatat 
-        non proident, sunt in culpa qui 
-        officia deserunt mollit anim id est laborum.
+        {description}
         </div>
       </body>
     </div>
