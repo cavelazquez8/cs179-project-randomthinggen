@@ -1,5 +1,6 @@
 import './App.css';
 import React, {useState} from 'react';
+import axios from 'axios';
 function App() {
   const [description, setDescription] = useState("");
   const [selection, setSelection] = useState("PERSON");
@@ -8,23 +9,26 @@ function App() {
     setSelection(event.target.value);
   }
 
-  const generateDescription = () => {
+  const generateDescription = async () => {
   let randomText;
   
   switch (selection) {
     case 'PERSON':
-      randomText = 'Carlos'; 
-      break;
-    case 'PLACE':
-      randomText = 'UCR'; 
-      break;
-    case 'THING':
-      randomText = 'Computer';
+      randomText = 'https://randomuser.me/api/?inc=name'; 
       break;
     default:
       randomText = '';
   }
-    setDescription(randomText);
+  try {
+    const response = await axios.get(randomText);
+    if (selection === 'PERSON') {
+    const person = response.data.results[0];
+    const fullName = `${person.name.title} ${person.name.first} ${person.name.last}`;
+    setDescription(fullName);
+    } 
+  } catch (error) {
+    console.error('Failed to fetch data:', error);
+  }
   }
 
   return (
