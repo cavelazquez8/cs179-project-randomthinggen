@@ -34,3 +34,4 @@ NodeJS, React, likely Express
 8. As a user, I want to see my results with as little delay as possible.
 9. As a user, I want the things I enter into my AI prompt to be reflected in the result I receive.
 10. As a user, I want there to be a large amount of possible true-random results.
+11. As a user, I want to log in to the randomgen website to keep and see my histories.
