@@ -2,3 +2,21 @@ As a user, I want to bookmark/favorite descriptions so that I can save them/migh
 -  Bookmarked descriptions should be saved
 -  Bookmarked descriptions should not be altered any differently from when they were generated
 -  More than one description can be bookmarked
+
+1. No Description
+  Input
+    - User presses the add-bookmark button
+  Expected Output
+    - System makes the pop-up that notifies there is no description
+
+2. Bookmark/Favorite Already Exists
+  Input
+    - User presses the add-bookmark button
+  Expected Output
+    - System replaces the existing one with new description 
+
+3. Empty Bookmark/Favorite
+  Input
+    - User presses the add-bookmark button
+  Expected Output
+    - System replaces the empty bookmark with new description 
