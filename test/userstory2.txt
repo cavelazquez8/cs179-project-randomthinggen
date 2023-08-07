@@ -1,4 +1,0 @@
-As a user, I want to be able to enter an input that randomly generates a character, location, or object.
--  is able to take in an input
--  the input only accepts string
-- input is correctly displayed as name of randomly generated thing
