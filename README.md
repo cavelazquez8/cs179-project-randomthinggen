@@ -25,9 +25,12 @@ NodeJS, React, likely Express
 
 ## User Stories
 1. As a user, I want to be able to enter an input that randomly generates a character, location, or object.
-1. As a user, I want to be able to decide whether my input shall be generated into a character, location, or object.
-1. As a user, I want to be able to see past generated results
-1. As a user, I want to be able to decide whether or not I want my result to be AI-generated
-1. As a user, I want to bookmark/favorite descriptions so that I can save them/use them later
-1. As a user, I want to download my bookmarks/favorites in JSON format
-1. As a user, I want to change the theme of the result I receive according to the website theme
+2. As a user, I want to be able to decide whether my input shall be generated into a character, location, or object.
+3. As a user, I want to be able to see past generated results
+4. As a user, I want to be able to decide whether or not I want my result to be AI-generated
+5. As a user, I want to bookmark/favorite descriptions so that I can save them/use them later
+6. As a user, I want to download my bookmarks/favorites in JSON format
+7. As a user, I want to change the theme of the result I receive according to the website theme
+8. As a user, I want to see my results with as little delay as possible.
+9. As a user, I want the things I enter into my AI prompt to be reflected in the result I receive.
+10. As a user, I want there to be a large amount of possible true-random results.
