@@ -2,3 +2,15 @@ As a user, I want to be able to decide whether or not I want my result to be AI-
 -  The prompt result should be AI-generated when chosen to use AI
 -  AI results should be relevant to the prompt
 -   The prompt result should provide a formulated, stricter layout 
+
+1. AI-Generation Checkbox Selected
+  Input
+    - User presses the generate button
+  Expected Output
+    - System picks the detailed description randomly 
+
+2. AI-Generation Checkbox Not Selected
+  Input
+    - User presses the generate button
+  Expected Output
+    - System picks the detailed description from the database our team provides. 
