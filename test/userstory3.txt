@@ -1,4 +1,22 @@
-As a user, I want to be able to see past generated results#7
+As a user, I want to be able to see past generated results
 - Previous prompt's results in the same session are shown
 - Be able to scroll up to see these old results
 - Old results are not deleted upon entering a new input for a prompt
+
+1. First Time Visitor
+  Input
+    - 
+  Expected Output
+    - System shows user empty background for histories
+
+2. The Number of Histories exceeds 100
+  Input
+    - User has more 100 inputs
+  Expected Output
+    - System shows user only the last 100 inputs and outputs.
+
+3. The Number of Histories are between 1 and 100
+  Input
+    - User has 1~100 inputs
+  Expected Output
+    - System shows user all of the inputs and outputs.
