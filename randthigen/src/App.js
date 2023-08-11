@@ -1,70 +1,52 @@
-import './App.css';
-import React, {useState} from 'react';
+import {
+  Routes,
+  Route,
+  useNavigationType,
+  useLocation,
+} from "react-router-dom";
+import LandingPage from "./pages/LandingPage";
+import { useEffect } from "react";
+
 function App() {
-  const [description, setDescription] = useState("");
-  const [selection, setSelection] = useState("PERSON");
+  const action = useNavigationType();
+  const location = useLocation();
+  const pathname = location.pathname;
 
-  const handleSelectionChange = (event) => {
-    setSelection(event.target.value);
-  }
+  useEffect(() => {
+    if (action !== "POP") {
+      window.scrollTo(0, 0);
+    }
+  }, [action, pathname]);
 
-  const generateDescription = () => {
-  let randomText;
-  
-  switch (selection) {
-    case 'PERSON':
-      randomText = 'Carlos'; 
-      break;
-    case 'PLACE':
-      randomText = 'UCR'; 
-      break;
-    case 'THING':
-      randomText = 'Computer';
-      break;
-    default:
-      randomText = '';
-  }
-    setDescription(randomText);
-  }
+  useEffect(() => {
+    let title = "";
+    let metaDescription = "";
+
+    switch (pathname) {
+      case "/":
+        title = "";
+        metaDescription = "";
+        break;
+    }
+
+    if (title) {
+      document.title = title;
+    }
+
+    if (metaDescription) {
+      const metaDescriptionTag = document.querySelector(
+        'head > meta[name="description"]'
+      );
+      if (metaDescriptionTag) {
+        metaDescriptionTag.content = metaDescription;
+      }
+    }
+  }, [pathname]);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <div className='title'>
-          RandomThingGen
-        </div>
-        <div className="selectors">
-          <input 
-          type="radio" 
-          name="selector"
-          value="PERSON" 
-          checked={selection === "PERSON"}
-          onChange={handleSelectionChange} />
-          PERSON
-          <input 
-          type="radio" 
-          name="selector"
-          value="PLACE"
-          checked={selection === "PLACE"}
-          onChange={handleSelectionChange}/>
-          PLACE
-          <input 
-          type="radio" 
-          name="selector"
-          value="THING"
-          checked={selection === "THING"}
-          onChange={handleSelectionChange}/>
-          THING
-        </div>
-        <button onClick = {generateDescription} >Generate</button>
-      </header>
-      <body>
-        <div className='descBox'>
-        {description}
-        </div>
-      </body>
-    </div>
+    <Routes>
+      <Route path="/" element={<LandingPage />} />
+    </Routes>
   );
 }
-
 export default App;
