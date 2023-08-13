@@ -6,7 +6,7 @@ import axios from 'axios';
 function App() {
 	const [description, setDescription] = useState('');
 	const [selection, setSelection] = useState('PERSON');
-	const [prompt, setPrompt] = useState('');
+	// const [prompt, setPrompt] = useState('');
 	const [response, setResponse] = useState('');
 
 	const [value, setValue] = useState('');
@@ -28,8 +28,9 @@ function App() {
 				'http://localhost:8000/completions',
 				options
 			);
+			console.log(response);
 			const data = await response.json();
-			//console.log(data);
+			console.log(data);
 			setMessage(data.choices[0].message);
 			console.log(message);
 			setResponse(data.choices[0].message.content);
@@ -38,7 +39,7 @@ function App() {
 		}
 	};
 	useEffect(() => {
-		console.log(currentTitle, value, message);
+		//console.log(currentTitle, value, message);
 		if (!currentTitle && value && message) {
 			setCurrentTitle(value);
 		}
@@ -79,6 +80,7 @@ function App() {
 
 	const handleSelectionChange = (event) => {
 		console.log(event.target.value);
+		console.log(event.target.type);
 		setSelection(event.target.value);
 	};
 
@@ -154,7 +156,15 @@ function App() {
 						Submit
 					</div>
 				</div>
-				<p>{response}</p>
+
+				<ul className='feed'>
+					{previousChats?.map((message, index) => (
+						<li key={index}>
+							<p className='role'>{message.role}</p>
+							<p>{message.content}</p>
+						</li>
+					))}
+				</ul>
 			</div>
 		</div>
 	);
