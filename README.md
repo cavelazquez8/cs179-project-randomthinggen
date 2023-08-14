@@ -21,7 +21,7 @@ NodeJS, React, likely Express
 | 6        | Download contents of sidebar as JSON                                                                                                                            | 4            |
 | 5        | Random writing prompt generator that incorporates items from other generators                                                                                   | 10           |
 | 4        | Generators branch off from each other (generate person who lives in generated location or object owned by generated person, etc)                                | 8            |
-| 3        | Change website theme, changing theme of prompts as well (fantasy/sci-fi/etc)                                                                                    | 10           |
+| 3        | Change website theme, changing theme of prompts as well (fantasy/sci-fi)                                                                                    | 10           |
 
 ## User Stories
 1. As a user, I want to be able to enter an input that randomly generates a character, location, or object.
@@ -35,3 +35,4 @@ NodeJS, React, likely Express
 9. As a user, I want the things I enter into my AI prompt to be reflected in the result I receive.
 10. As a user, I want there to be a large amount of possible true-random results.
 11. As a user, I want to log in to the randomgen website to keep and see my histories.
+12. As a user, I want to be able to provide information that will be reflected in my results.
