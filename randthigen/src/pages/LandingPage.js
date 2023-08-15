@@ -38,13 +38,13 @@ const LandingPage = () => {
         </div>
       </div>
       <ContainerFooter />
-      <div className={styles.copyright}>
+      <footer className={styles.copyright}>
         <div className={styles.privacyPolicyParent}>
           <div className={styles.saved}>Privacy Policy</div>
           <div className={styles.saved}>Terms of use</div>
         </div>
         <div className={styles.saved}>Test</div>
-      </div>
+      </footer>
     </div>
   );
 };

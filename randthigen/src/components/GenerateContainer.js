@@ -3,15 +3,18 @@ const GenerateContainer = () => {
   return (
     <div className={styles.singlegeneratecontainer}>
       <div className={styles.generatecontainer}>
-        <p className={styles.generatecontainer1}>GenerateContainer</p>
+        GenerateContainer
       </div>
-      <button className={styles.saveParent}>
+      <button className={styles.savegeneratebutton}>
         <div className={styles.save}>Save</div>
         <img
           className={styles.materialSymbolssaveIcon}
           alt=""
           src="/materialsymbolssave.svg"
         />
+      </button>
+      <button className={styles.deletebutton}>
+        <img className={styles.typcndeleteIcon} alt="" src="/typcndelete.svg" />
       </button>
     </div>
   );

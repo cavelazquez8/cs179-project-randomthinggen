@@ -1,8 +1,8 @@
 import styles from "./SavedResultsContainer.module.css";
 const SavedResultsContainer = () => {
   return (
-    <div className={styles.savedResultsParent}>
-      <div className={styles.savedResults}>Saved Results</div>
+    <div className={styles.savedresultscontainer}>
+      <h1 className={styles.savedResults}>Saved Results</h1>
       <button className={styles.downloadbutton}>
         <div className={styles.download}>{`Download `}</div>
         <img

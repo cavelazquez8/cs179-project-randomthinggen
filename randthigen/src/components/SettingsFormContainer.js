@@ -3,16 +3,12 @@ import styles from "./SettingsFormContainer.module.css";
 const SettingsFormContainer = () => {
   return (
     <div className={styles.settingscontainer}>
-      <div className={styles.settings}>Settings</div>
+      <h1 className={styles.settings}>Settings</h1>
       <button className={styles.generatebutton}>
         <div className={styles.generate}>Generate</div>
-        <img
-          className={styles.materialSymbolsdownloadIcon}
-          alt=""
-          src="/materialsymbolsdownload.svg"
-        />
+        <img className={styles.mdimagicIcon} alt="" src="/mdimagic.svg" />
       </button>
-      <div className={styles.genre}>Genre:</div>
+      <h2 className={styles.genre}>Genre:</h2>
       <div className={styles.genreradiobuttons}>
         <FormControlLabel
           label="Fantasy"
@@ -25,7 +21,7 @@ const SettingsFormContainer = () => {
           control={<Radio color="primary" size="medium" />}
         />
       </div>
-      <div className={styles.generate1}>Generate:</div>
+      <h2 className={styles.generate1}>Generate:</h2>
       <div className={styles.generateradiobuttons}>
         <FormControlLabel
           label="Person"
@@ -44,7 +40,7 @@ const SettingsFormContainer = () => {
         labelPlacement="end"
         control={<Radio color="primary" size="medium" />}
       />
-      <div className={styles.ai}>AI:</div>
+      <h2 className={styles.ai}>AI:</h2>
       <div className={styles.airadiobuttons}>
         <FormControlLabel
           label="On"

@@ -1,9 +1,11 @@
 .settings {
-  position: absolute;
   margin: 0 !important;
+  position: absolute;
   top: 0.63rem;
   left: 4.06rem;
   font-size: var(--font-size-5xl);
+  font-weight: 400;
+  font-family: inherit;
   z-index: 0;
 }
 .generate {
@@ -13,7 +15,7 @@
   color: var(--color-lightcyan);
   text-align: left;
 }
-.materialSymbolsdownloadIcon {
+.mdimagicIcon {
   position: relative;
   width: 1.5rem;
   height: 1.5rem;
@@ -39,8 +41,12 @@
   z-index: 1;
 }
 .genre {
+  margin: 0;
   position: relative;
+  font-size: inherit;
   line-height: 150%;
+  font-weight: 400;
+  font-family: inherit;
   z-index: 2;
 }
 .genreradiobuttons {
@@ -52,8 +58,12 @@
   z-index: 3;
 }
 .generate1 {
+  margin: 0;
   position: relative;
+  font-size: inherit;
   line-height: 150%;
+  font-weight: 400;
+  font-family: inherit;
   z-index: 4;
 }
 .generateradiobuttons {
@@ -68,9 +78,12 @@
   z-index: 6;
 }
 .ai {
+  margin: 0;
   position: relative;
   font-size: var(--font-size-base);
   line-height: 150%;
+  font-weight: 400;
+  font-family: inherit;
   z-index: 7;
 }
 .airadiobuttons {
@@ -100,7 +113,7 @@
   border: 1px solid var(--color-black);
   overflow: hidden;
   flex-direction: column;
-  padding: 0 var(--padding-8xs);
+  padding: var(--padding-11xs) var(--padding-8xs);
 }
 .aiinput {
   align-self: stretch;

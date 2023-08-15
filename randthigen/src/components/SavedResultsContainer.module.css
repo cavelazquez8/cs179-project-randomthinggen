@@ -1,9 +1,11 @@
 .savedResults {
-  position: absolute;
   margin: 0 !important;
+  position: absolute;
   top: 0.63rem;
   left: 2.25rem;
   font-size: var(--font-size-5xl);
+  font-weight: 400;
+  font-family: inherit;
   z-index: 0;
 }
 .download {
@@ -58,7 +60,7 @@
 .savedsinglegenerate1 {
   margin: 0;
 }
-.savedResultsParent,
+.savedresultscontainer,
 .savedsinglegeneratecontainer1 {
   overflow: hidden;
   display: flex;
@@ -74,7 +76,7 @@
   align-items: flex-start;
   z-index: 3;
 }
-.savedResultsParent {
+.savedresultscontainer {
   margin: 0 !important;
   position: absolute;
   top: 7.81rem;
