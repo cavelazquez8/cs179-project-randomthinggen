@@ -55,34 +55,31 @@ const SettingsFormContainer = () => {
       </div>
       <div className={styles.aisettings}>
         <div className={styles.aiinput}>
-          <div className={styles.height}>Height:</div>
+          Height:
           <div className={styles.aisettingtextbox}>
-            <div className={styles.tall}>Tall</div>
+          Tall
           </div>
         </div>
         <div className={styles.aiinput}>
-          <div className={styles.height}>Build:</div>
+          Build:
           <div className={styles.aisettingtextbox}>
-            <div className={styles.tall}>Thin</div>
+          Thin
           </div>
         </div>
         <div className={styles.aiinput}>
-          <div className={styles.height}>Job:</div>
+          Job:
           <div className={styles.aisettingtextbox}>
-            <div className={styles.tall}>Welder</div>
+          Welder
           </div>
         </div>
         <div className={styles.aiinput}>
-          <div className={styles.height}>Hobbies:</div>
+          Hobbies:
           <div className={styles.aisettingtextbox}>
-            <div className={styles.tall}>
-              <p className={styles.reading}>Reading</p>
-              <p className={styles.reading}>Writing</p>
+              Reading, Writing
             </div>
           </div>
         </div>
       </div>
-    </div>
   );
 };
 

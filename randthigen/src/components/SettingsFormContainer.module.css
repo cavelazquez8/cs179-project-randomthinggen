@@ -94,13 +94,6 @@
   gap: var(--gap-mini);
   z-index: 8;
 }
-.height,
-.tall {
-  position: relative;
-}
-.tall {
-  align-self: stretch;
-}
 .aiinput,
 .aisettingtextbox {
   display: flex;
@@ -120,9 +113,7 @@
   flex-direction: row;
   gap: var(--gap-8xs);
 }
-.reading {
-  margin: 0;
-}
+
 .aisettings,
 .settingscontainer {
   overflow: hidden;
