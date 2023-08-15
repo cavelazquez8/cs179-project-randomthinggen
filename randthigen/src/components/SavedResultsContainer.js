@@ -14,12 +14,11 @@ const SavedResultsContainer = () => {
       <div className={styles.savedsinglegeneratecontainer}>
         <div className={styles.savedsinglegenerate}>SavedSingleGenerate</div>
       </div>
-      <div className={styles.savedsinglegeneratecontainer1}>
-        <div className={styles.savedsinglegenerate}>
-          <p className={styles.savedsinglegenerate1}>SavedSingleGenerate</p>
-          <p className={styles.savedsinglegenerate1}>SavedSingleGenerate</p>
-        </div>
+
+      <div className={styles.savedsinglegeneratecontainer}>
+        <div className={styles.savedsinglegenerate}>SavedSingleGenerate</div>
       </div>
+      
     </div>
   );
 };
