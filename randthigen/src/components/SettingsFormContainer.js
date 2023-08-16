@@ -1,12 +1,19 @@
+import React, { useState } from "react";
+import GenerateContainer from "./GenerateContainer";
 import { FormControlLabel, Radio } from "@mui/material";
 import styles from "./SettingsFormContainer.module.css";
-const SettingsFormContainer = () => {
+const SettingsFormContainer = ({ onGenerateButtonClick }) => {
+
   return (
     <div className={styles.settingscontainer}>
       <h1 className={styles.settings}>Settings</h1>
-      <button className={styles.generatebutton}>
+      <button 
+      className={styles.generatebutton} onClick={onGenerateButtonClick} >
         <div className={styles.generate}>Generate</div>
-        <img className={styles.mdimagicIcon} alt="" src="/mdimagic.svg" />
+        <img
+         className={styles.mdimagicIcon} 
+         alt="" 
+         src="/mdimagic.svg" />
       </button>
       <h2 className={styles.genre}>Genre:</h2>
       <div className={styles.genreradiobuttons}>
