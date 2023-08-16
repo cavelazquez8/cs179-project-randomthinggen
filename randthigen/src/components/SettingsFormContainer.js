@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import GenerateContainer from "./GenerateContainer";
 import { FormControlLabel, Radio } from "@mui/material";
 import styles from "./SettingsFormContainer.module.css";
 const SettingsFormContainer = ({ onGenerateButtonClick }) => {
@@ -21,17 +20,12 @@ const SettingsFormContainer = ({ onGenerateButtonClick }) => {
     setSelectedAI(event.target.value);
   };
 
-
   return (
     <div className={styles.settingscontainer}>
       <h1 className={styles.settings}>Settings</h1>
-      <button 
-      className={styles.generatebutton} onClick={onGenerateButtonClick} >
+      <button className={styles.generatebutton} onClick={onGenerateButtonClick}>
         <div className={styles.generate}>Generate</div>
-        <img
-         className={styles.mdimagicIcon} 
-         alt="" 
-         src="/mdimagic.svg" />
+        <img className={styles.mdimagicIcon} alt="" src="/mdimagic.svg" />
       </button>
       <h2 className={styles.genre}>Genre:</h2>
       <div className={styles.genreradiobuttons}>
@@ -40,21 +34,21 @@ const SettingsFormContainer = ({ onGenerateButtonClick }) => {
           label="Fantasy"
           labelPlacement="end"
           control={<Radio
-             color="primary" 
-             size="medium"
-             checked={selectedGenre === "Fantasy"} //ADDED
-             onChange={handleGenreChange} />} //ADDED
+            color="primary"
+            size="medium"
+            checked={selectedGenre === "Fantasy"} //ADDED
+            onChange={handleGenreChange} />} //ADDED
         />
         <FormControlLabel
           value="Sci-Fi"
           label="Sci-Fi"
           labelPlacement="end"
-          control={<Radio 
+          control={<Radio
             color="primary"
-             size="medium"
-             checked={selectedGenre === "Sci-Fi"} //ADDED
-             onChange={handleGenreChange} //ADDED
-              />}
+            size="medium"
+            checked={selectedGenre === "Sci-Fi"} //ADDED
+            onChange={handleGenreChange} //ADDED
+          />}
         />
       </div>
       <h2 className={styles.generate1}>Generate:</h2>
@@ -64,23 +58,23 @@ const SettingsFormContainer = ({ onGenerateButtonClick }) => {
           label="Person"
           labelPlacement="end"
           control={
-          <Radio 
-          color="primary" 
-          size="medium"
-          checked={selectedGenerateType === "Person"} //ADDED
-          onChange={handleGenerateTypeChange} //ADDED
-           />}
+            <Radio
+              color="primary"
+              size="medium"
+              checked={selectedGenerateType === "Person"} //ADDED
+              onChange={handleGenerateTypeChange} //ADDED
+            />}
         />
         <FormControlLabel
           value="Place" //ADDED
           label="Place"
           labelPlacement="end"
           control={
-          <Radio color="primary" 
-          size="medium"
-          checked={selectedGenerateType === "Place"} //ADDED
-          onChange={handleGenerateTypeChange} //ADDED
-           />}
+            <Radio color="primary"
+              size="medium"
+              checked={selectedGenerateType === "Place"} //ADDED
+              onChange={handleGenerateTypeChange} //ADDED
+            />}
         />
       </div>
       <FormControlLabel
@@ -89,11 +83,11 @@ const SettingsFormContainer = ({ onGenerateButtonClick }) => {
         label="Thing"
         labelPlacement="end"
         control={
-        <Radio
-         color="primary" 
-         size="medium" 
-         checked={selectedGenerateType === "Thing"} //ADDED
-         onChange={handleGenerateTypeChange} //ADDED
+          <Radio
+            color="primary"
+            size="medium"
+            checked={selectedGenerateType === "Thing"} //ADDED
+            onChange={handleGenerateTypeChange} //ADDED
           />}
       />
       <h2 className={styles.ai}>AI:</h2>
@@ -103,51 +97,51 @@ const SettingsFormContainer = ({ onGenerateButtonClick }) => {
           label="On"
           labelPlacement="end"
           control={
-          <Radio 
-          color="primary"
-           size="medium" 
-           checked={selectedAI === "On"} //ADDED
-           onChange={handleAIChange} //ADDED
-           />}
+            <Radio
+              color="primary"
+              size="medium"
+              checked={selectedAI === "On"} //ADDED
+              onChange={handleAIChange} //ADDED
+            />}
         />
         <FormControlLabel
           value="Off"//ADDED
           label="Off"
           labelPlacement="end"
-          control={<Radio 
+          control={<Radio
             color="primary"
-             size="medium"
-             checked={selectedAI === "Off"} //ADDED
-             onChange={handleAIChange} />} //ADDED
+            size="medium"
+            checked={selectedAI === "Off"} //ADDED
+            onChange={handleAIChange} />} //ADDED
         />
       </div>
       <div className={styles.aisettings}>
         <div className={styles.aiinput}>
           Height:
           <div className={styles.aisettingtextbox}>
-          Tall
+            Tall
           </div>
         </div>
         <div className={styles.aiinput}>
           Build:
           <div className={styles.aisettingtextbox}>
-          Thin
+            Thin
           </div>
         </div>
         <div className={styles.aiinput}>
           Job:
           <div className={styles.aisettingtextbox}>
-          Welder
+            Welder
           </div>
         </div>
         <div className={styles.aiinput}>
           Hobbies:
           <div className={styles.aisettingtextbox}>
-              Reading, Writing
-            </div>
+            Reading, Writing
           </div>
         </div>
       </div>
+    </div>
   );
 };
 

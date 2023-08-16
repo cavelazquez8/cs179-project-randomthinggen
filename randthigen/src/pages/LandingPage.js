@@ -4,17 +4,15 @@ import SettingsFormContainer from "../components/SettingsFormContainer";
 import GenerateContainer from "../components/GenerateContainer";
 import ContainerFooter from "../components/ContainerFooter";
 import styles from "./LandingPage.module.css";
-import generatecontainerstyles from "../components/GenerateContainer.module.css"; // Adjust the import path
-
+import generatecontainer from "../components/GenerateContainer.module.css";;
 const LandingPage = () => {
-
   const [generatedContainers, setGeneratedContainers] = useState([]);
   const handleGenerateButtonClick = () => {
     setGeneratedContainers((prevContainers) => [
       ...prevContainers,
       <GenerateContainer 
       key={prevContainers.length} 
-      className={generatecontainerstyles.generatecontainerstyles}
+      className={generatecontainer.generatecontainer}
       />,
 
     ]);
@@ -51,21 +49,21 @@ const LandingPage = () => {
         <div className={styles.generationscontainer}>
           <GenerateContainer />
           <GenerateContainer />
-          {generatedContainers.map((container, index) => (
-          <div key={index} className={generatecontainerstyles.generatecontainerstyles}>
+           {generatedContainers.map((container, index) => (
+          <div key={index} className={generatecontainer.generatecontainer}>
           {container}
           </div>
           ))}
         </div>
       </div>
       <ContainerFooter />
-      <div className={styles.copyright}>
+      <footer className={styles.copyright}>
         <div className={styles.privacyPolicyParent}>
           <div className={styles.saved}>Privacy Policy</div>
           <div className={styles.saved}>Terms of use</div>
         </div>
         <div className={styles.saved}>Test</div>
-      </div>
+      </footer>
     </div>
   );
 };
