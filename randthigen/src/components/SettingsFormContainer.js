@@ -1,14 +1,24 @@
+import React, { useState } from "react";
+import GenerateContainer from "./GenerateContainer";
 import { FormControlLabel, Radio } from "@mui/material";
 import styles from "./SettingsFormContainer.module.css";
-const SettingsFormContainer = () => {
+
+const SettingsFormContainer = ({ onGenerateButtonClick }) => {
+
+
   return (
     <div className={styles.settingscontainer}>
-      <h1 className={styles.settings}>Settings</h1>
-      <button className={styles.generatebutton}>
+      <div className={styles.settings}>Settings</div>
+      <button
+        className={styles.generatebutton} onClick={onGenerateButtonClick} >
         <div className={styles.generate}>Generate</div>
-        <img className={styles.mdimagicIcon} alt="" src="/mdimagic.svg" />
+        <img
+          className={styles.materialSymbolsdownloadIcon}
+          alt=""
+          src="/materialsymbolsdownload.svg"
+        />
       </button>
-      <h2 className={styles.genre}>Genre:</h2>
+      <div className={styles.genre}>Genre:</div>
       <div className={styles.genreradiobuttons}>
         <FormControlLabel
           label="Fantasy"
@@ -21,7 +31,7 @@ const SettingsFormContainer = () => {
           control={<Radio color="primary" size="medium" />}
         />
       </div>
-      <h2 className={styles.generate1}>Generate:</h2>
+      <div className={styles.generate1}>Generate:</div>
       <div className={styles.generateradiobuttons}>
         <FormControlLabel
           label="Person"
@@ -40,7 +50,7 @@ const SettingsFormContainer = () => {
         labelPlacement="end"
         control={<Radio color="primary" size="medium" />}
       />
-      <h2 className={styles.ai}>AI:</h2>
+      <div className={styles.ai}>AI:</div>
       <div className={styles.airadiobuttons}>
         <FormControlLabel
           label="On"
@@ -55,31 +65,35 @@ const SettingsFormContainer = () => {
       </div>
       <div className={styles.aisettings}>
         <div className={styles.aiinput}>
-          Height:
+          <div className={styles.height}>Height:</div>
           <div className={styles.aisettingtextbox}>
-          Tall
+            <div className={styles.tall}>Tall</div>
           </div>
         </div>
         <div className={styles.aiinput}>
-          Build:
+          <div className={styles.height}>Build:</div>
           <div className={styles.aisettingtextbox}>
-          Thin
+            <div className={styles.tall}>Thin</div>
           </div>
         </div>
         <div className={styles.aiinput}>
-          Job:
+          <div className={styles.height}>Job:</div>
           <div className={styles.aisettingtextbox}>
-          Welder
+            <div className={styles.tall}>Welder</div>
           </div>
         </div>
         <div className={styles.aiinput}>
-          Hobbies:
+          <div className={styles.height}>Hobbies:</div>
           <div className={styles.aisettingtextbox}>
-              Reading, Writing
+            <div className={styles.tall}>
+              <p className={styles.reading}>Reading</p>
+              <p className={styles.reading}>Writing</p>
             </div>
           </div>
         </div>
       </div>
+
+    </div>
   );
 };
 

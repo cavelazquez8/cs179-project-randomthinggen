@@ -1,32 +1,26 @@
 .test {
   position: relative;
 }
-.addressParent,
-.testParent {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-}
 .addressParent {
+  flex-direction: column;
+  justify-content: flex-start;
   gap: var(--gap-3xs);
   font-size: var(--font-size-xs);
 }
+.addressParent,
+.frameParent,
 .testParent {
-  gap: var(--gap-11xl);
+  display: flex;
+  align-items: flex-start;
 }
-.usefulLinks {
-  margin: 0;
-  position: relative;
-  font-size: inherit;
-  font-weight: 400;
-  font-family: inherit;
+.testParent {
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: var(--gap-11xl);
 }
 .frameParent {
   width: 35.44rem;
-  display: flex;
   flex-direction: row;
-  align-items: flex-start;
   justify-content: space-between;
 }
 .bimagicIcon {
