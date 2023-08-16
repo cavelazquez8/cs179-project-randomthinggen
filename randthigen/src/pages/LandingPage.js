@@ -1,25 +1,9 @@
-import React, { useState } from "react";
 import SavedResultsContainer from "../components/SavedResultsContainer";
 import SettingsFormContainer from "../components/SettingsFormContainer";
 import GenerateContainer from "../components/GenerateContainer";
 import ContainerFooter from "../components/ContainerFooter";
 import styles from "./LandingPage.module.css";
-import generatecontainerstyles from "../components/GenerateContainer.module.css"; // Adjust the import path
-
 const LandingPage = () => {
-
-  const [generatedContainers, setGeneratedContainers] = useState([]);
-  const handleGenerateButtonClick = () => {
-    setGeneratedContainers((prevContainers) => [
-      ...prevContainers,
-      <GenerateContainer 
-      key={prevContainers.length} 
-      className={generatecontainerstyles.generatecontainerstyles}
-      />,
-
-    ]);
-  };
-
   return (
     <div className={styles.landingPage}>
       <div className={styles.fantasy}>
@@ -47,25 +31,20 @@ const LandingPage = () => {
           </button>
         </div>
         <SavedResultsContainer />
-        <SettingsFormContainer onGenerateButtonClick={handleGenerateButtonClick}/>
+        <SettingsFormContainer />
         <div className={styles.generationscontainer}>
           <GenerateContainer />
           <GenerateContainer />
-          {generatedContainers.map((container, index) => (
-          <div key={index} className={generatecontainerstyles.generatecontainerstyles}>
-          {container}
-          </div>
-          ))}
         </div>
       </div>
       <ContainerFooter />
-      <div className={styles.copyright}>
+      <footer className={styles.copyright}>
         <div className={styles.privacyPolicyParent}>
           <div className={styles.saved}>Privacy Policy</div>
           <div className={styles.saved}>Terms of use</div>
         </div>
         <div className={styles.saved}>Test</div>
-      </div>
+      </footer>
     </div>
   );
 };
