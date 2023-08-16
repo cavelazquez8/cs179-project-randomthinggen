@@ -46,26 +46,28 @@ const LandingPage = () => {
         </div>
         <SavedResultsContainer />
         <SettingsFormContainer onGenerateButtonClick={handleGenerateButtonClick}/>
-        <div className={styles.generationscontainer}>
-          <GenerateContainer />
-          <GenerateContainer />
-           {generatedContainers.map((container, index) => (
-          <div key={index} className={generatecontainer.generatecontainer}>
-          {container}
+          
+          <div className={styles.generationscontainer} style={{ overflowY: "scroll", height: "100vh"}}>
+            
+            <GenerateContainer />
+            <GenerateContainer />
+            {generatedContainers.map((container, index) => (
+            <div key={index} className={generatecontainer.generatecontainer}>
+            {container}
+            </div>
+            ))}
           </div>
-          ))}
         </div>
+        <ContainerFooter />
+        <footer className={styles.copyright}>
+          <div className={styles.privacyPolicyParent}>
+            <div className={styles.saved}>Privacy Policy</div>
+            <div className={styles.saved}>Terms of use</div>
+          </div>
+          <div className={styles.saved}>Test</div>
+        </footer>
       </div>
-      <ContainerFooter />
-      <footer className={styles.copyright}>
-        <div className={styles.privacyPolicyParent}>
-          <div className={styles.saved}>Privacy Policy</div>
-          <div className={styles.saved}>Terms of use</div>
-        </div>
-        <div className={styles.saved}>Test</div>
-      </footer>
-    </div>
-  );
-};
+    );
+  };
 
 export default LandingPage;

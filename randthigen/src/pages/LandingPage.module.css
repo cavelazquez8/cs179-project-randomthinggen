@@ -65,7 +65,11 @@
   justify-content: space-between;
   z-index: 0;
 }
+
+
 .generationscontainer {
+  overflow-y: auto; /* ADDED (Allows vertical scrolling) */
+
   align-self: stretch;
   flex: 1;
   overflow: hidden;
