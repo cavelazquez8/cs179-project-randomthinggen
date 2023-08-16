@@ -1,9 +1,22 @@
+import React, { useState } from "react";
 import SavedResultsContainer from "../components/SavedResultsContainer";
 import SettingsFormContainer from "../components/SettingsFormContainer";
 import GenerateContainer from "../components/GenerateContainer";
 import ContainerFooter from "../components/ContainerFooter";
 import styles from "./LandingPage.module.css";
+import generatecontainer from "../components/GenerateContainer.module.css";;
 const LandingPage = () => {
+  const [generatedContainers, setGeneratedContainers] = useState([]);
+  const handleGenerateButtonClick = () => {
+    setGeneratedContainers((prevContainers) => [
+      ...prevContainers,
+      <GenerateContainer 
+      key={prevContainers.length} 
+      className={generatecontainer.generatecontainer}
+      />,
+    ]);
+  };
+
   return (
     <div className={styles.landingPage}>
       <div className={styles.fantasy}>
@@ -31,10 +44,9 @@ const LandingPage = () => {
           </button>
         </div>
         <SavedResultsContainer />
-        <SettingsFormContainer />
+        <SettingsFormContainer onGenerateButtonClick={handleGenerateButtonClick}/>
         <div className={styles.generationscontainer}>
-          <GenerateContainer />
-          <GenerateContainer />
+          {generatedContainers}
         </div>
       </div>
       <ContainerFooter />
