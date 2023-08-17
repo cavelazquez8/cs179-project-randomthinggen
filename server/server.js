@@ -8,7 +8,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 //mongodb+srv://skang121:<password>@cluster0.wka1sml.mongodb.net/?retryWrites=true&w=majority
-const API_KEY = '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';
+//const API_KEY = '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';
+const API_KEY = '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';
 app.post('/completions', async (req, res) => {
 	const options = {
 		method: 'POST',
