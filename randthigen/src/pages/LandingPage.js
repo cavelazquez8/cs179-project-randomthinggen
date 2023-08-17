@@ -7,14 +7,18 @@ import styles from "./LandingPage.module.css";
 import generatecontainer from "../components/GenerateContainer.module.css";;
 const LandingPage = () => {
   const [generatedContainers, setGeneratedContainers] = useState([]);
+  const [savedResults, setSavedResults] = useState([]);
+  const handleSave = (content) => {
+    setSavedResults(prevResults => [...prevResults, content]);
+  };
   const handleGenerateButtonClick = () => {
     setGeneratedContainers((prevContainers) => [
       ...prevContainers,
       <GenerateContainer 
       key={prevContainers.length} 
       className={generatecontainer.generatecontainer}
+      onSave={handleSave}
       />,
-
     ]);
   };
 
@@ -46,16 +50,8 @@ const LandingPage = () => {
         </div>
         <SavedResultsContainer />
         <SettingsFormContainer onGenerateButtonClick={handleGenerateButtonClick}/>
-          
           <div className={styles.generationscontainer} style={{ overflowY: "scroll", height: "100vh"}}>
-            
-            <GenerateContainer />
-            <GenerateContainer />
-            {generatedContainers.map((container, index) => (
-            <div key={index} className={generatecontainer.generatecontainer}>
-            {container}
-            </div>
-            ))}
+          {generatedContainers}
           </div>
         </div>
         <ContainerFooter />

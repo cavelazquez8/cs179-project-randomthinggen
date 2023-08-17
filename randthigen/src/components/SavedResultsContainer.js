@@ -1,5 +1,5 @@
 import styles from "./SavedResultsContainer.module.css";
-const SavedResultsContainer = () => {
+const SavedResultsContainer = ({results}) => {
   return (
     <div className={styles.savedresultscontainer}>
       <h1 className={styles.savedResults}>Saved Results</h1>
@@ -11,14 +11,11 @@ const SavedResultsContainer = () => {
           src="/materialsymbolsdownload.svg"
         />
       </button>
-      <div className={styles.savedsinglegeneratecontainer}>
-        <div className={styles.savedsinglegenerate}>SavedSingleGenerate</div>
-      </div>
-
-      <div className={styles.savedsinglegeneratecontainer}>
-        <div className={styles.savedsinglegenerate}>SavedSingleGenerate</div>
-      </div>
-      
+     {results.map((result, index) => (
+        <div key={index} className={styles.savedsinglegeneratecontainer}>
+          <div className={styles.savedsinglegenerate}>{result}</div>
+        </div>
+      ))}
     </div>
   );
 };
