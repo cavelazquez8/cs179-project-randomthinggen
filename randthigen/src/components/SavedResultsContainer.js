@@ -11,6 +11,8 @@ const SavedResultsContainer = ({results}) => {
     document.body.appendChild(downloadLink);
     downloadLink.click();
     document.body.removeChild(downloadLink);
+
+  
   };
   return (
     <div className={styles.savedresultscontainer}>
@@ -23,13 +25,13 @@ const SavedResultsContainer = ({results}) => {
           src="/materialsymbolsdownload.svg"
         />
       </button>
-      
+    <div className={styles.resultListContainer}>  
       {results && results.map((result, index) => (
         <div key={index} className={styles.savedsinglegeneratecontainer}>
           <div className={styles.savedsinglegenerate}>{result}</div>
         </div>
       ))}
-      
+     </div> 
     </div>
   );
 };
