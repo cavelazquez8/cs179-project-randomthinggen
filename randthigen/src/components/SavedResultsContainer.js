@@ -11,11 +11,13 @@ const SavedResultsContainer = ({results}) => {
           src="/materialsymbolsdownload.svg"
         />
       </button>
-     {results.map((result, index) => (
+      
+      {results && results.map((result, index) => (
         <div key={index} className={styles.savedsinglegeneratecontainer}>
           <div className={styles.savedsinglegenerate}>{result}</div>
         </div>
       ))}
+      
     </div>
   );
 };
