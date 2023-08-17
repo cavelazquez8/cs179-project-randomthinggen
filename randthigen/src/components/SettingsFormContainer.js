@@ -23,7 +23,7 @@ const SettingsFormContainer = ({ onGenerateButtonClick }) => {
   return (
     <div className={styles.settingscontainer}>
       <h1 className={styles.settings}>Settings</h1>
-      <button className={styles.generatebutton} onClick={onGenerateButtonClick}>
+      <button className={styles.generatebutton} onClick = {onGenerateButtonClick}>
         <div className={styles.generate}>Generate</div>
         <img className={styles.mdimagicIcon} alt="" src="/mdimagic.svg" />
       </button>
