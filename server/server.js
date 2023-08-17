@@ -2,10 +2,12 @@ const PORT = 8000;
 const express = require('express');
 const cors = require('cors');
 const app = express();
+const mongoose = require('mongoose');
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-
+//mongodb+srv://skang121:<password>@cluster0.wka1sml.mongodb.net/?retryWrites=true&w=majority
 const API_KEY = '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';
 app.post('/completions', async (req, res) => {
 	const options = {
@@ -36,4 +38,16 @@ app.post('/completions', async (req, res) => {
 	}
 });
 
-app.listen(PORT, () => console.log('Your server is running on PORT ' + PORT));
+app.listen(PORT, () => {
+	mongoose
+		.connect(
+			'mongodb+srv://skang121:Jl2LLsKH2uMxr5CF@cluster0.wka1sml.mongodb.net/?retryWrites=true&w=majority'
+		)
+		.then(() => {
+			console.log('Connecting MongoDB');
+			console.log('Your server is running on PORT ' + PORT);
+		})
+		.catch((err) => {
+			console.log(`${err}`);
+		});
+});
