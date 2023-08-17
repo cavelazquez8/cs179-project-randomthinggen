@@ -29,15 +29,15 @@ const LandingPage = () => {
           <div className={styles.selectionmenu}>
             <div className={styles.randomthinggen}>RandomThingGen</div>
             <div className={styles.selectionmenuChild} />
-            <div className={styles.saved}>Saved</div>
+            Saved
             <div className={styles.selectionmenuChild} />
-            <div className={styles.saved}>History</div>
+            History
             <div className={styles.selectionmenuChild} />
-            <div className={styles.saved}>Chat</div>
+            Chat
             <div className={styles.selectionmenuChild} />
-            <div className={styles.saved}>Analytics</div>
+            Analytics
             <div className={styles.selectionmenuChild} />
-            <div className={styles.profile}>Profile</div>
+            Profile
           </div>
           <button className={styles.loginbutton}>
             <div className={styles.login}>Login</div>

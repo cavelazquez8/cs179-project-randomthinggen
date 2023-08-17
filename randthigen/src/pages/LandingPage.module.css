@@ -9,15 +9,7 @@
   width: 0.06rem;
   height: 1.19rem;
 }
-.profile,
-.saved {
-  position: relative;
-}
-.profile {
-  display: inline-block;
-  width: 2.5rem;
-  flex-shrink: 0;
-}
+
 .selectionmenu {
   width: 27.44rem;
   display: flex;
