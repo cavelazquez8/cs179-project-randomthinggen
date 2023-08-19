@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Link, Routes, Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function ChatGPTApi() {
 	const [response, setResponse] = useState('');
@@ -9,11 +10,15 @@ function ChatGPTApi() {
 	const [message, setMessage] = useState(null);
 	const [previousChats, setPreviousChats] = useState([]);
 	const [currentTitle, setCurrentTitle] = useState('');
+	const user = useSelector((state) => state.user);
+	const uid = user.uid;
+	console.log('uid:', uid);
 	const getMessages = async () => {
 		const options = {
 			method: 'POST',
 			body: JSON.stringify({
 				message: value,
+				uid: user.uid,
 			}),
 			headers: {
 				'Content-Type': 'application/json',
@@ -21,7 +26,7 @@ function ChatGPTApi() {
 		};
 		try {
 			const response = await fetch(
-				'http://localhost:8000/completions',
+				'http://localhost:8000/api/post/completions',
 				options
 			);
 			console.log(response);
@@ -83,7 +88,7 @@ function ChatGPTApi() {
 						value={value}
 						onChange={(e) => setValue(e.target.value)}
 					/>
-					<button type='submit'>Submit</button>
+					<`button` type='submit'>Submit</>
 				</form> */}
 				<div className='input-container'>
 					<input value={value} onChange={(e) => setValue(e.target.value)} />

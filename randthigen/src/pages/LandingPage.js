@@ -4,8 +4,21 @@ import GenerateContainer from '../components/GenerateContainer';
 import ContainerFooter from '../components/ContainerFooter';
 import styles from './LandingPage.module.css';
 import ChatGPTApi from '../components/ChatGPTApi';
+import Login from '../components/user/Login';
+import Register from '../components/user/Register';
+import { Link, Navigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import firebase from '../firebase.js';
+import { useNavigate } from 'react-router-dom';
 
 const LandingPage = () => {
+	const user = useSelector((state) => state.user);
+	const navigate = useNavigate();
+	const logoutHandler = () => {
+		firebase.auth().signOut();
+		navigate('/');
+		window.location.reload();
+	};
 	return (
 		<div className={styles.landingPage}>
 			<div className={styles.fantasy}>
@@ -23,14 +36,35 @@ const LandingPage = () => {
 						<div className={styles.selectionmenuChild} />
 						<div className={styles.profile}>Profile</div>
 					</div>
-					<button className={styles.loginbutton}>
-						<div className={styles.login}>Login</div>
-						<img
-							className={styles.materialSymbolsloginIcon}
-							alt=''
-							src='/materialsymbolslogin.svg'
-						/>
-					</button>
+					{user.accessToken ? (
+						<button
+							className={styles.loginbutton}
+							onClick={() => logoutHandler()}
+						>
+							{/* <div className={styles.login}>Login</div> */}
+							{/* <Link to='/' className={styles.login}> */}
+							Logout
+							{/* </Link> */}
+							<img
+								className={styles.materialSymbolsloginIcon}
+								alt=''
+								src='/materialsymbolslogin.svg'
+							/>
+						</button>
+					) : (
+						<button className={styles.loginbutton}>
+							{/* <div className={styles.login}>Login</div> */}
+
+							<Link to='/login' className={styles.login}>
+								Login
+							</Link>
+							<img
+								className={styles.materialSymbolsloginIcon}
+								alt=''
+								src='/materialsymbolslogin.svg'
+							/>
+						</button>
+					)}
 				</div>
 				<SavedResultsContainer />
 				<SettingsFormContainer />

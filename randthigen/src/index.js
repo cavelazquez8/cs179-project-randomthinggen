@@ -1,31 +1,33 @@
-import React from "react";
-import { createRoot } from "react-dom/client";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter } from "react-router-dom";
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
 import {
-  CssBaseline,
-  ThemeProvider,
-  createTheme,
-  StyledEngineProvider,
-} from "@mui/material";
+	CssBaseline,
+	ThemeProvider,
+	createTheme,
+	StyledEngineProvider,
+} from '@mui/material';
+import store from './Reducer/store';
+import './global.css';
+import { Provider } from 'react-redux';
 
-import "./global.css";
+const muiTheme = createTheme({ palette: { mode: 'light' } });
 
-const muiTheme = createTheme({ palette: { mode: "light" } });
-
-const container = document.getElementById("root");
+const container = document.getElementById('root');
 const root = createRoot(container);
 
 root.render(
-  <BrowserRouter>
-    <StyledEngineProvider injectFirst>
-      <ThemeProvider theme={muiTheme}>
-        <CssBaseline />
-        <App />
-      </ThemeProvider>
-    </StyledEngineProvider>
-  </BrowserRouter>
+	<BrowserRouter>
+		<StyledEngineProvider injectFirst>
+			<ThemeProvider theme={muiTheme}>
+				<Provider store={store}>
+					<App />
+				</Provider>
+			</ThemeProvider>
+		</StyledEngineProvider>
+	</BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
