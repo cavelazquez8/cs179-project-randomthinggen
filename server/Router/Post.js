@@ -40,7 +40,11 @@ router.post('/completions', async (req, res) => {
 		await chatPostAnswer.save();
 		console.log('data is ');
 		console.log(data.choices[0].message.content);
-		res.send(data);
+		await Chat.find({ uid: req.body.uid })
+			.exec()
+			.then((chats) => {
+				res.status(200).json({ success: true, post: chats });
+			});
 	} catch (error) {
 		console.log('data is ');
 		console.error(error);

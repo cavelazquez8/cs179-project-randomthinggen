@@ -3,17 +3,26 @@ import axios from 'axios';
 import { BrowserRouter as Router, Link, Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-function ChatGPTApi() {
+function ChatGPTApi(props) {
 	const [response, setResponse] = useState('');
 
 	const [value, setValue] = useState('');
 	const [message, setMessage] = useState(null);
 	const [previousChats, setPreviousChats] = useState([]);
 	const [currentTitle, setCurrentTitle] = useState('');
+	const [posts, setPosts] = useState([]);
 	const user = useSelector((state) => state.user);
 	const uid = user.uid;
+	const trigg = props.trigger;
+	console.log(props);
 	console.log('uid:', uid);
+	console.log('msgFromLanding: ', props.msgFromLanding);
+	console.log(trigg);
+
+	//씨발 뭐지? Too many re-renders.
+	//setValue(props.msgFromLanding);
 	const getMessages = async () => {
+		//e.preventDefault();
 		const options = {
 			method: 'POST',
 			body: JSON.stringify({
@@ -32,13 +41,23 @@ function ChatGPTApi() {
 			console.log(response);
 			const data = await response.json();
 			console.log(data);
-			setMessage(data.choices[0].message);
-			console.log(message);
-			setResponse(data.choices[0].message.content);
+			console.log(data.post);
+			setPosts(data.post);
+
+			console.log(posts);
+			// setMessage(data.choices[0].message);
+			// console.log(message);
+			// setResponse(data.choices[0].message.content);
 		} catch (error) {
 			console.error(error);
 		}
 	};
+	//getMessages();
+	useEffect(() => {
+		setValue(props.msgFromLanding);
+		console.log('props.generateMessage: ', props.msgFromLanding);
+		//getMessages();
+	}, [props]);
 	useEffect(() => {
 		//console.log(currentTitle, value, message);
 		if (!currentTitle && value && message) {
@@ -60,7 +79,15 @@ function ChatGPTApi() {
 			]);
 		}
 	}, [message, currentTitle]);
-
+	// useEffect(() => {
+	// 	setValue(props.message);
+	// 	getMessages();
+	// }, [props.message]);
+	// useEffect(async () => {
+	// 	//console.log('Hello!!!!!!!!!!', props.trigger);
+	// 	setValue(props.msgFromLanding);
+	// 	await getMessages();
+	// }, [props.trigger]);
 	console.log(previousChats);
 	// console.log(message);
 
@@ -91,7 +118,12 @@ function ChatGPTApi() {
 					<`button` type='submit'>Submit</>
 				</form> */}
 				<div className='input-container'>
-					<input value={value} onChange={(e) => setValue(e.target.value)} />
+					<textarea
+						value={value}
+						width='48px'
+						height='48px'
+						onChange={(e) => setValue(e.target.value)}
+					/>
 					<div id='submit' onClick={getMessages}>
 						Submit
 					</div>
@@ -99,6 +131,17 @@ function ChatGPTApi() {
 
 				<ul className='feed'>
 					{previousChats?.map((message, index) => (
+						<li key={index}>
+							<p className='role' style={{ color: 'red' }}>
+								{message.role}
+							</p>
+							<p style={{ color: 'blue' }}>{message.content}</p>
+						</li>
+					))}
+				</ul>
+
+				<ul className='feed'>
+					{posts?.map((message, index) => (
 						<li key={index}>
 							<p className='role' style={{ color: 'red' }}>
 								{message.role}

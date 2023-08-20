@@ -10,10 +10,14 @@ import { Link, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import firebase from '../firebase.js';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const LandingPage = () => {
 	const user = useSelector((state) => state.user);
 	const navigate = useNavigate();
+	const [message, setMessage] = useState('');
+	const [trigger, setTrigger] = useState(0);
+	console.log(message);
 	const logoutHandler = () => {
 		firebase.auth().signOut();
 		navigate('/');
@@ -67,11 +71,18 @@ const LandingPage = () => {
 					)}
 				</div>
 				<SavedResultsContainer />
-				<SettingsFormContainer />
+				<SettingsFormContainer message={message} setMessage={setMessage} />
+				<button
+					className={styles.generatebutton}
+					onClick={() => setTrigger((trigger) => setTrigger(trigger + 1))}
+				>
+					<div className={styles.generate}>Generate</div>
+					<img className={styles.mdimagicIcon} alt='' src='/mdimagic.svg' />
+				</button>
 				<div className={styles.generationscontainer}>
 					<GenerateContainer />
 					<GenerateContainer />
-					<ChatGPTApi />
+					<ChatGPTApi msgFromLanding={message} trigger={trigger} />
 				</div>
 			</div>
 			<ContainerFooter />
