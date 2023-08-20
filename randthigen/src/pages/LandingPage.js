@@ -72,13 +72,13 @@ const LandingPage = () => {
 				</div>
 				<SavedResultsContainer />
 				<SettingsFormContainer message={message} setMessage={setMessage} />
-				<button
+				{/* <button
 					className={styles.generatebutton}
 					onClick={() => setTrigger((trigger) => setTrigger(trigger + 1))}
 				>
 					<div className={styles.generate}>Generate</div>
 					<img className={styles.mdimagicIcon} alt='' src='/mdimagic.svg' />
-				</button>
+				</button> */}
 				<div className={styles.generationscontainer}>
 					<GenerateContainer />
 					<GenerateContainer />

@@ -19,7 +19,7 @@ const SettingsFormContainer = (props) => {
 	const msg = `
   generate random thing with these conditions: 
   Genre: ${selection.genre}
-  Generate: ${selection.generate}
+  Object: ${selection.generate}
   height: tall
   build: thin
   job: welder
@@ -75,10 +75,7 @@ const SettingsFormContainer = (props) => {
 		<div className={styles.settingscontainer}>
 			<h1 className={styles.settings}>Settings</h1>
 			{/* onClick={ChatGPTApi generateMessage={message}} */}
-			<button className={styles.generatebutton}>
-				<div className={styles.generate}>Generate</div>
-				<img className={styles.mdimagicIcon} alt='' src='/mdimagic.svg' />
-			</button>
+
 			{/* <h2 className={styles.genre}>Genre:</h2> */}
 
 			<FormControl>

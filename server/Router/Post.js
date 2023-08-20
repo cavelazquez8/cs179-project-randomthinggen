@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-const API_KEY = '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';
+//const API_KEY = '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';
+const API_KEY = '';
 
 const { Chat } = require('../Model/Chat');
 
@@ -15,7 +16,7 @@ router.post('/completions', async (req, res) => {
 		body: JSON.stringify({
 			model: 'gpt-3.5-turbo',
 			messages: [{ role: 'user', content: req.body.message }],
-			max_tokens: 100,
+			max_tokens: 1000,
 		}),
 	};
 
