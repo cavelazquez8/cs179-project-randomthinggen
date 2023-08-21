@@ -4,31 +4,13 @@ import SettingsFormContainer from "../components/SettingsFormContainer";
 import GenerateContainer from "../components/GenerateContainer";
 import ContainerFooter from "../components/ContainerFooter";
 import styles from "./LandingPage.module.css";
-import LoginModal from "../components/LoginModal";
 import generatecontainer from "../components/GenerateContainer.module.css";
-
-
 const LandingPage = () => {
   const [generatedContainers, setGeneratedContainers] = useState([]);
   const [savedResults, setSavedResults] = useState([]);
-  const [showLoginModal, setShowLoginModal] = useState(false);
   const handleSave = (content) => {
     setSavedResults(prevResults => [...prevResults, content]);
   };
-  
-  const handleShowLoginModal = () => {
-    setShowLoginModal(true);
-  };
-
-  const handleCloseLoginModal = () => {
-    setShowLoginModal(false);
-  };
-
-  const handleSwitchToSignup = () => {
-    // Logic to switch to signup form can be added here
-    console.log("Switched to signup form");
-  };
-
   const handleGenerateButtonClick = () => {
     setGeneratedContainers((prevContainers) => [
       ...prevContainers,
@@ -57,7 +39,7 @@ const LandingPage = () => {
             <div className={styles.selectionmenuChild} />
             Profile
           </div>
-          <button className={styles.loginbutton} onClick={handleShowLoginModal}>
+          <button className={styles.loginbutton}>
             <div className={styles.login}>Login</div>
             <img
               className={styles.materialSymbolsloginIcon}
@@ -73,11 +55,6 @@ const LandingPage = () => {
         </div>
       </div>
       <ContainerFooter />
-
-      {showLoginModal && (
-        <LoginModal onClose={handleCloseLoginModal} onSwitchToSignup={handleSwitchToSignup} />
-      )}
-
       <footer className={styles.copyright}>
         <div className={styles.privacyPolicyParent}>
           <div className={styles.saved}>Privacy Policy</div>
