@@ -5,7 +5,9 @@ import GenerateContainer from "../components/GenerateContainer";
 import ContainerFooter from "../components/ContainerFooter";
 import styles from "./LandingPage.module.css";
 import LoginModal from "../components/LoginModal";
-import generatecontainer from "../components/GenerateContainer.module.css";;
+import generatecontainer from "../components/GenerateContainer.module.css";
+
+
 const LandingPage = () => {
   const [generatedContainers, setGeneratedContainers] = useState([]);
   const [savedResults, setSavedResults] = useState([]);
@@ -66,7 +68,7 @@ const LandingPage = () => {
         </div>
         <SavedResultsContainer results = {savedResults}/>
         <SettingsFormContainer onGenerateButtonClick={handleGenerateButtonClick} />
-        <div className={styles.generationscontainer}>
+        <div className={styles.generationscontainer} style = {{ overflowY: "scroll", height: "100vh"}}>
           {generatedContainers}
         </div>
       </div>
