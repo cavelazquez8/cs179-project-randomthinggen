@@ -36,6 +36,7 @@ const SettingsFormContainer = ({ onGenerateButtonClick }) => {
           control={<Radio
             color="primary"
             size="medium"
+            id="fantasy"
             checked={selectedGenre === "Fantasy"} //ADDED
             onChange={handleGenreChange} />} //ADDED
         />
@@ -46,6 +47,7 @@ const SettingsFormContainer = ({ onGenerateButtonClick }) => {
           control={<Radio
             color="primary"
             size="medium"
+            id="scifi"
             checked={selectedGenre === "Sci-Fi"} //ADDED
             onChange={handleGenreChange} //ADDED
           />}
@@ -61,6 +63,7 @@ const SettingsFormContainer = ({ onGenerateButtonClick }) => {
             <Radio
               color="primary"
               size="medium"
+              id="person"
               checked={selectedGenerateType === "Person"} //ADDED
               onChange={handleGenerateTypeChange} //ADDED
             />}
@@ -72,6 +75,7 @@ const SettingsFormContainer = ({ onGenerateButtonClick }) => {
           control={
             <Radio color="primary"
               size="medium"
+              id="place"
               checked={selectedGenerateType === "Place"} //ADDED
               onChange={handleGenerateTypeChange} //ADDED
             />}
@@ -86,6 +90,7 @@ const SettingsFormContainer = ({ onGenerateButtonClick }) => {
           <Radio
             color="primary"
             size="medium"
+            id="thing"
             checked={selectedGenerateType === "Thing"} //ADDED
             onChange={handleGenerateTypeChange} //ADDED
           />}
