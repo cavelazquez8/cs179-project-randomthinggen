@@ -118,19 +118,27 @@ const SettingsFormContainer = ({ onGenerateButtonClick }) => {
       <div className={styles.aisettings}>
         <div className={styles.aiinput}>
           Height:
-         <input className={styles.aisettingtextbox} type="text"/>
+          <div className={styles.aisettingtextbox}>
+            Tall
+          </div>
         </div>
         <div className={styles.aiinput}>
           Build:
-         <input className={styles.aisettingtextbox} type="text"/>
+          <div className={styles.aisettingtextbox}>
+            Thin
+          </div>
         </div>
         <div className={styles.aiinput}>
           Job:
-         <input className={styles.aisettingtextbox} type="text"/>
+          <div className={styles.aisettingtextbox}>
+            Welder
+          </div>
         </div>
         <div className={styles.aiinput}>
           Hobbies:
-         <input className={styles.aisettingtextbox} type="text"/>
+          <div className={styles.aisettingtextbox}>
+            Reading, Writing
+          </div>
         </div>
       </div>
     </div>
