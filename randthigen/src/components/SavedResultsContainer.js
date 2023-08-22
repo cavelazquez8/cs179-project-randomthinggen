@@ -1,13 +1,14 @@
 import styles from "./SavedResultsContainer.module.css";
 const SavedResultsContainer = ({results}) => {
   const downloadResults = () => {
-    const jsonString = JSON.stringify(results, null, 2);
-    const blob = new Blob([jsonString], { type: 'application/json' });
+
+    const txtString = results.map((result, index) => `${index + 1}. ${result}`).join('\n');
+    const blob = new Blob([txtString], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
 
     const downloadLink = document.createElement('a');
     downloadLink.href = url;
-    downloadLink.download = 'saved_results.json';
+    downloadLink.download = 'saved_results.txt';
     document.body.appendChild(downloadLink);
     downloadLink.click();
     document.body.removeChild(downloadLink);
