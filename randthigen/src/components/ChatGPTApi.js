@@ -13,6 +13,7 @@ function ChatGPTApi(props) {
 	const [currentTitle, setCurrentTitle] = useState('');
 	const [posts, setPosts] = useState([]);
 	const user = useSelector((state) => state.user);
+	const selection = useSelector((state) => state.selection);
 	const uid = user.uid;
 	const trigg = props.trigger;
 	console.log(props);
@@ -118,17 +119,19 @@ function ChatGPTApi(props) {
 					/>
 					<`button` type='submit'>Submit</>
 				</form> */}
-				<div className='input-container'>
-					<textarea
-						value={value}
-						width='48px'
-						height='48px'
-						onChange={(e) => setValue(e.target.value)}
-					/>
-					<div id='submit' onClick={getMessages}>
-						Submit
+				{selection.AI === 'On' && (
+					<div className='input-container'>
+						<textarea
+							value={value}
+							width='48px'
+							height='48px'
+							onChange={(e) => setValue(e.target.value)}
+						/>
+						<div id='submit' onClick={getMessages}>
+							Submit
+						</div>
 					</div>
-				</div>
+				)}
 
 				<ul className='feed'>
 					{previousChats?.map((message, index) => (

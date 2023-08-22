@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 //const API_KEY = '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';
-const API_KEY = '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';
+const API_KEY = '';
 
 const { Chat } = require('../Model/Chat');
 

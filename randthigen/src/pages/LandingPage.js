@@ -15,6 +15,7 @@ import generatecontainer from '../components/GenerateContainer.module.css';
 
 const LandingPage = () => {
 	const user = useSelector((state) => state.user);
+	const selection = useSelector((state) => state.selection);
 	const navigate = useNavigate();
 	const [message, setMessage] = useState('');
 	const [trigger, setTrigger] = useState(0);
@@ -86,21 +87,8 @@ const LandingPage = () => {
 							/>
 						</button>
 					)}
-					<button className={styles.loginbutton}>
-						{/* <div className={styles.login}>Login</div> */}
-
-						<Link to='//localhost:3001' className={styles.login}>
-							Another
-						</Link>
-
-						<img
-							className={styles.materialSymbolsloginIcon}
-							alt=''
-							src='/materialsymbolslogin.svg'
-						/>
-					</button>
 				</div>
-				<SavedResultsContainer />
+				<SavedResultsContainer results={savedResults} />
 				<SettingsFormContainer
 					message={message}
 					setMessage={setMessage}
