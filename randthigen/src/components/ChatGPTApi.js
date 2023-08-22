@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Link, Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import GenerateContainer from './GenerateContainer';
 
 function ChatGPTApi(props) {
 	const [response, setResponse] = useState('');
@@ -135,7 +136,7 @@ function ChatGPTApi(props) {
 							<p className='role' style={{ color: 'red' }}>
 								{message.role}
 							</p>
-							<p style={{ color: 'blue' }}>{message.content}</p>
+							<p style={{ color: 'white' }}>{message.content}</p>
 						</li>
 					))}
 				</ul>
@@ -146,11 +147,12 @@ function ChatGPTApi(props) {
 							<p className='role' style={{ color: 'red' }}>
 								{message.role}
 							</p>
-							<p style={{ color: 'blue' }}>{message.content}</p>
+							<p style={{ color: 'white' }}>{message.content}</p>
 						</li>
 					))}
 				</ul>
 			</div>
+			{/* <GenerateContainer /> */}
 		</div>
 	);
 }

@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import firebase from '../firebase.js';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import generatecontainer from '../components/GenerateContainer.module.css';
 
 const LandingPage = () => {
 	const user = useSelector((state) => state.user);
@@ -22,6 +23,21 @@ const LandingPage = () => {
 		firebase.auth().signOut();
 		navigate('/');
 		window.location.reload();
+	};
+	const [generatedContainers, setGeneratedContainers] = useState([]);
+	const [savedResults, setSavedResults] = useState([]);
+	const handleSave = (content) => {
+		setSavedResults((prevResults) => [...prevResults, content]);
+	};
+	const handleGenerateButtonClick = () => {
+		setGeneratedContainers((prevContainers) => [
+			...prevContainers,
+			<GenerateContainer
+				key={prevContainers.length}
+				className={generatecontainer.generatecontainer}
+				onSave={handleSave}
+			/>,
+		]);
 	};
 	return (
 		<div className={styles.landingPage}>
@@ -62,6 +78,7 @@ const LandingPage = () => {
 							<Link to='/login' className={styles.login}>
 								Login
 							</Link>
+
 							<img
 								className={styles.materialSymbolsloginIcon}
 								alt=''
@@ -69,9 +86,27 @@ const LandingPage = () => {
 							/>
 						</button>
 					)}
+					<button className={styles.loginbutton}>
+						{/* <div className={styles.login}>Login</div> */}
+
+						<Link to='//localhost:3001' className={styles.login}>
+							Another
+						</Link>
+
+						<img
+							className={styles.materialSymbolsloginIcon}
+							alt=''
+							src='/materialsymbolslogin.svg'
+						/>
+					</button>
 				</div>
 				<SavedResultsContainer />
-				<SettingsFormContainer message={message} setMessage={setMessage} />
+				<SettingsFormContainer
+					message={message}
+					setMessage={setMessage}
+					onGenerateButtonClick={handleGenerateButtonClick}
+				/>
+
 				{/* <button
 					className={styles.generatebutton}
 					onClick={() => setTrigger((trigger) => setTrigger(trigger + 1))}
@@ -79,10 +114,13 @@ const LandingPage = () => {
 					<div className={styles.generate}>Generate</div>
 					<img className={styles.mdimagicIcon} alt='' src='/mdimagic.svg' />
 				</button> */}
-				<div className={styles.generationscontainer}>
-					<GenerateContainer />
-					<GenerateContainer />
+
+				<div
+					className={styles.generationscontainer}
+					style={{ overflowY: 'scroll', height: '100vh' }}
+				>
 					<ChatGPTApi msgFromLanding={message} trigger={trigger} />
+					{generatedContainers}
 				</div>
 			</div>
 			<ContainerFooter />

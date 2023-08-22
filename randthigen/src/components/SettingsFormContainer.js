@@ -8,6 +8,7 @@ import {
 import styles from './SettingsFormContainer.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import ChatGPTApi from './ChatGPTApi';
+import { useState, useEffect } from 'react';
 
 import {
 	genreSelect,
@@ -16,29 +17,54 @@ import {
 } from '../Reducer/selectionSlice';
 const SettingsFormContainer = (props) => {
 	const selection = useSelector((state) => state.selection);
-	const msg = `
-  generate random thing with these conditions: 
-  Genre: ${selection.genre}
-  Object: ${selection.generate}
-  height: tall
-  build: thin
-  job: welder
-  hobbies: reading, writing
-  limit response to be two paragraph
-  `;
-	props.setMessage(msg);
+
 	const user = useSelector((state) => state.user);
+	const [selectedGenre, setSelectedGenre] = useState('Fantasy');
+	const [selectedGenerateType, setSelectedGenerateType] = useState('Person'); // ADDED (Default value "Person")
+	const [selectedAI, setSelectedAI] = useState('On'); // ADDED (Default value "On")
+
 	const dispatch = useDispatch();
 	//const [genre, setGenre] = useState('fantasy');
 	const handleGenreChange = (event, value) => {
-		dispatch(genreSelect({ genre: value }));
+		setSelectedGenre(
+			event.target.value,
+			dispatch(genreSelect({ genre: selectedGenre }))
+		);
+		console.log('selection: ', event.target.value);
 	};
 	const handleGenerateChange = (event, value) => {
-		dispatch(generateSelect({ generate: value }));
+		setSelectedGenerateType(
+			event.target.value,
+			dispatch(generateSelect({ generate: selectedGenerateType }))
+		);
 	};
 	const handleAIChange = (event, value) => {
-		dispatch(AISelect({ AI: value }));
+		setSelectedAI(event.target.value, dispatch(AISelect({ AI: value })));
 	};
+	const msg = `
+	generate random thing with these conditions: 
+	Genre: ${selection.genre}
+	Object: ${selection.generate}
+	height: tall
+	build: thin
+	job: welder
+	hobbies: reading, writing
+	limit response to be two paragraph
+	`;
+	//props.setMessage(msg);
+	useEffect(() => {
+		const msg = `
+		generate random thing with these conditions: 
+		Genre: ${selection.genre}
+		Object: ${selection.generate}
+		height: tall
+		build: thin
+		job: welder
+		hobbies: reading, writing
+		limit response to be two paragraph
+		`;
+		props.setMessage(msg);
+	}, [selectedGenre, selectedGenerateType, selectedAI]);
 	//console.log(message);
 	// const getMessages = async () => {
 	// 	const options = {
@@ -75,10 +101,16 @@ const SettingsFormContainer = (props) => {
 		<div className={styles.settingscontainer}>
 			<h1 className={styles.settings}>Settings</h1>
 			{/* onClick={ChatGPTApi generateMessage={message}} */}
-
+			<button
+				className={styles.generatebutton}
+				onClick={props.onGenerateButtonClick}
+			>
+				<div className={styles.generate}>Generate!</div>
+				<img className={styles.mdimagicIcon} alt='' src='/mdimagic.svg' />
+			</button>
 			{/* <h2 className={styles.genre}>Genre:</h2> */}
 
-			<FormControl>
+			{/* <FormControl>
 				<FormLabel id='genre-radio-buttons-group-label'>Genre</FormLabel>
 				<RadioGroup
 					aria-labelledby='genre-radio-buttons-group-label'
@@ -118,7 +150,113 @@ const SettingsFormContainer = (props) => {
 					<FormControlLabel value='On' control={<Radio />} label='On' />
 					<FormControlLabel value='Off' control={<Radio />} label='Off' />
 				</RadioGroup>
-			</FormControl>
+			</FormControl> */}
+			<h2 className={styles.genre}>Genre:</h2>
+			<div className={styles.genreradiobuttons}>
+				<FormControlLabel
+					value='Fantasy' //ADDED
+					label='Fantasy'
+					labelPlacement='end'
+					control={
+						<Radio
+							color='primary'
+							size='medium'
+							id='fantasy'
+							checked={selectedGenre === 'Fantasy'} //ADDED
+							onChange={handleGenreChange}
+						/>
+					} //ADDED
+				/>
+				<FormControlLabel
+					value='Sci-Fi'
+					label='Sci-Fi'
+					labelPlacement='end'
+					control={
+						<Radio
+							color='primary'
+							size='medium'
+							id='scifi'
+							checked={selectedGenre === 'Sci-Fi'} //ADDED
+							onChange={handleGenreChange} //ADDED
+						/>
+					}
+				/>
+			</div>
+			<h2 className={styles.generate1}>Generate:</h2>
+			<div className={styles.generateradiobuttons}>
+				<FormControlLabel
+					value='Person' //ADDED
+					label='Person'
+					labelPlacement='end'
+					control={
+						<Radio
+							color='primary'
+							size='medium'
+							id='person'
+							checked={selectedGenerateType === 'Person'} //ADDED
+							onChange={handleGenerateChange} //ADDED
+						/>
+					}
+				/>
+				<FormControlLabel
+					value='Place' //ADDED
+					label='Place'
+					labelPlacement='end'
+					control={
+						<Radio
+							color='primary'
+							size='medium'
+							id='place'
+							checked={selectedGenerateType === 'Place'} //ADDED
+							onChange={handleGenerateChange} //ADDED
+						/>
+					}
+				/>
+			</div>
+			<FormControlLabel
+				className={styles.generateradiobuttons1}
+				value='Thing' //ADDED
+				label='Thing'
+				labelPlacement='end'
+				control={
+					<Radio
+						color='primary'
+						size='medium'
+						id='thing'
+						checked={selectedGenerateType === 'Thing'} //ADDED
+						onChange={handleGenerateChange} //ADDED
+					/>
+				}
+			/>
+			<h2 className={styles.ai}>AI:</h2>
+			<div className={styles.airadiobuttons}>
+				<FormControlLabel
+					value='On' //ADDED
+					label='On'
+					labelPlacement='end'
+					control={
+						<Radio
+							color='primary'
+							size='medium'
+							checked={selectedAI === 'On'} //ADDED
+							onChange={handleAIChange} //ADDED
+						/>
+					}
+				/>
+				<FormControlLabel
+					value='Off' //ADDED
+					label='Off'
+					labelPlacement='end'
+					control={
+						<Radio
+							color='primary'
+							size='medium'
+							checked={selectedAI === 'Off'} //ADDED
+							onChange={handleAIChange}
+						/>
+					} //ADDED
+				/>
+			</div>
 			<div className={styles.aisettings}>
 				<div className={styles.aiinput}>
 					Height:

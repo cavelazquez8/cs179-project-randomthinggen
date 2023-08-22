@@ -3,9 +3,9 @@ import { createSlice } from '@reduxjs/toolkit';
 export const selectionSlice = createSlice({
 	name: 'selection',
 	initialState: {
-		genre: 'fantasy',
-		generate: 'person',
-		AI: 'on',
+		genre: 'Fantasy',
+		generate: 'Person',
+		AI: 'On',
 	},
 	reducers: {
 		genreSelect: (state, action) => {
