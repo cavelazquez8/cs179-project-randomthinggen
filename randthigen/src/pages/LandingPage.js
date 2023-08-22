@@ -22,11 +22,6 @@ const LandingPage = () => {
     setShowLoginModal(false);
   };
 
-  const handleSwitchToSignup = () => {
-    // Logic to switch to signup form can be added here
-    console.log("Switched to signup form");
-  };
-
   const handleGenerateButtonClick = () => {
     setGeneratedContainers((prevContainers) => [
       ...prevContainers,
@@ -73,7 +68,7 @@ const LandingPage = () => {
       <ContainerFooter />
 
       {showLoginModal && (
-        <LoginModal onClose={handleCloseLoginModal} onSwitchToSignup={handleSwitchToSignup} />
+        <LoginModal onClose={handleCloseLoginModal}/>
       )}
 
       <footer className={styles.copyright}>
