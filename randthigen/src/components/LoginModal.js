@@ -6,6 +6,7 @@ const LoginModal = ({ onClose, onSwitchToSignup }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState(""); // New state for confirm password
+  const [name, setName] = useState(""); // New state for name
   const [isSignup, setIsSignup] = useState(false); // New state to determine if signup form should be displayed
 
   const handleSubmit = (e) => {
@@ -25,6 +26,15 @@ const LoginModal = ({ onClose, onSwitchToSignup }) => {
         <button className={styles.closeButton} onClick={onClose}>X</button>
         <h2>{isSignup ? "Signup" : "Login"}</h2>
         <form onSubmit={handleSubmit}>
+          {isSignup && (
+            <input
+              type="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Name"
+              required
+            />
+          )}
           <input 
             type="email" 
             value={email} 
