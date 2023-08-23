@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 //const API_KEY = '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';
-const API_KEY = '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';
+const API_KEY = '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';
 
 const { Chat } = require('../Model/Chat');
 const { Chat_no_ai } = require('../Model/Chat_no_ai');
@@ -84,7 +84,9 @@ router.post('/completions_no_ai', async (req, res) => {
 
 router.get('/get_no_ai_posts', async (req, res) => {
 	try {
-		const chat_no_ai = await Chat_no_ai.find()
+		console.log('Serverside: ', req.query.uid);
+		//console.log('Serverside: ', req.body.uid);
+		const chat_no_ai = await Chat_no_ai.find({ uid: req.query.uid })
 			.exec()
 			.then((chats) => {
 				res.status(200).json({ success: true, post: chats });
