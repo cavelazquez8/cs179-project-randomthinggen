@@ -113,13 +113,11 @@ function HistoryPage() {
 					className={styles.generationscontainer}
 					style={{ overflowY: 'scroll', height: '100vh' }}
 				>
-                 <div className={styles.content}>
                  {userHistory.map(item => (
                      <div key={item._id}>
                          {item.content}
                      </div>
                  ))}
-                 </div> 
 				</div>
 			</div>
 			<ContainerFooter />

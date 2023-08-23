@@ -9,15 +9,7 @@
   width: 0.06rem;
   height: 1.19rem;
 }
-.profile,
-.saved {
-  position: relative;
-}
-.profile {
-  display: inline-block;
-  width: 2.5rem;
-  flex-shrink: 0;
-}
+
 .selectionmenu {
   width: 27.44rem;
   display: flex;
@@ -65,7 +57,11 @@
   justify-content: space-between;
   z-index: 0;
 }
+
+
 .generationscontainer {
+  overflow-y: auto; /* ADDED (Allows vertical scrolling) */
+
   align-self: stretch;
   flex: 1;
   overflow: hidden;

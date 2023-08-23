@@ -52,10 +52,14 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  padding: var(--padding-3xs) var(--padding-8xs);
+  padding: var(--padding-11xs) var(--padding-8xs);
   align-items: flex-start;
   justify-content: flex-start;
   z-index: 2;
+  font-size: var(--font-size-sm);
+  margin-bottom: 10px;
+
+  
 }
 
 .savedresultscontainer
@@ -86,4 +90,10 @@
   font-size: var(--font-size-xl);
   color: var(--color-black);
   font-family: var(--font-im-fell-english);
+}
+.resultListContainer {
+  max-height: 650px; /* Adjust this value to your preference */
+  overflow-y: auto;
+  border: 1px linear-gradient(180deg, #faeaca, #efcfa4);
+  margin-top: 10px;
 }

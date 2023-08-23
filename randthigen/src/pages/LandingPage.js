@@ -113,7 +113,7 @@ const LandingPage = () => {
 						/>
 					</button>
 				</div>
-				<SavedResultsContainer />
+				<SavedResultsContainer results = {savedResults} />
 				<SettingsFormContainer
 					message={message}
 					setMessage={setMessage}
