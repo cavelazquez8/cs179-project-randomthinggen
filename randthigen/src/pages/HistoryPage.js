@@ -13,47 +13,42 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import generatecontainer from '../components/GenerateContainer.module.css';
 import axios from 'axios';
+import { useEffect } from 'react';
+import {  Redirect } from 'react-router-dom';
 
-const LandingPage = () => {
-	const user = useSelector((state) => state.user);
-	const navigate = useNavigate();
-	const [message, setMessage] = useState('');
-	const [trigger, setTrigger] = useState(0);
-	console.log(message);
-	const logoutHandler = () => {
+
+function HistoryPage() {
+    const user = useSelector((state) => state.user);
+    const [userHistory, setUserHistory] = useState([]);
+    const [generatedContainers, setGeneratedContainers] = useState([]);
+	const [savedResults, setSavedResults] = useState([]);
+    const navigate = useNavigate();
+
+    const logoutHandler = () => {
 		firebase.auth().signOut();
 		navigate('/');
 		window.location.reload();
 	};
-	const [generatedContainers, setGeneratedContainers] = useState([]);
-	const [savedResults, setSavedResults] = useState([]);
-	const handleSave = (content) => {
-		setSavedResults((prevResults) => [...prevResults, content]);
+    
+    useEffect(() => {
         if (user && user._id) {
-        axios.post('/api/user/history', {
-            userId: user._id,
-            content: content
-        })
-        .then(response => {
-            console.log("Content saved to user history:", response.data);
-        })
-        .catch(error => {
-            console.error("Error saving content to user history:", error);
-        });
+            axios.get(`/api/user/history/${user._id}`)
+                .then(response => {
+                    setUserHistory(response.data);
+                })
+                .catch(error => {
+                    console.error("Error fetching user history:", error);
+                });
+        }
+    }, [user]);
+
+    if (!user.displayName) {
+        // If the user is not logged in, redirect to the main landing page
+        navigate("/");
+        return null;
     }
-	};
-	const handleGenerateButtonClick = () => {
-		setGeneratedContainers((prevContainers) => [
-			...prevContainers,
-			<GenerateContainer
-				key={prevContainers.length}
-				className={generatecontainer.generatecontainer}
-				onSave={handleSave}
-			/>,
-		]);
-	};
-	return (
-		<div className={styles.landingPage}>
+    return (
+        <div className={styles.landingPage}>
 			<div className={styles.fantasy}>
 				<div className={styles.tabcontainer}>
 					<div className={styles.selectionmenu}>
@@ -114,26 +109,17 @@ const LandingPage = () => {
 					</button>
 				</div>
 				<SavedResultsContainer />
-				<SettingsFormContainer
-					message={message}
-					setMessage={setMessage}
-					onGenerateButtonClick={handleGenerateButtonClick}
-				/>
-
-				{/* <button
-					className={styles.generatebutton}
-					onClick={() => setTrigger((trigger) => setTrigger(trigger + 1))}
-				>
-					<div className={styles.generate}>Generate</div>
-					<img className={styles.mdimagicIcon} alt='' src='/mdimagic.svg' />
-				</button> */}
-
 				<div
 					className={styles.generationscontainer}
 					style={{ overflowY: 'scroll', height: '100vh' }}
 				>
-					<ChatGPTApi msgFromLanding={message} trigger={trigger} />
-					{generatedContainers}
+                 <div className={styles.content}>
+                 {userHistory.map(item => (
+                     <div key={item._id}>
+                         {item.content}
+                     </div>
+                 ))}
+                 </div> 
 				</div>
 			</div>
 			<ContainerFooter />
@@ -145,7 +131,8 @@ const LandingPage = () => {
 				<div className={styles.saved}>Test</div>
 			</footer>
 		</div>
-	);
-};
+    );
+}
 
-export default LandingPage;
+export default HistoryPage;
+

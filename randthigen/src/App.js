@@ -5,6 +5,7 @@ import {
 	useLocation,
 } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
+import HistoryPage from './pages/HistoryPage';
 import { useEffect } from 'react';
 import Login from './components/user/Login';
 import Register from './components/user/Register';
@@ -68,6 +69,7 @@ function App() {
 	return (
 		<Routes>
 			<Route path='/' element={<LandingPage />} />
+			<Route path='/history' element={<HistoryPage />} />
 			<Route path='/login' element={<Login />} />
 			<Route path='/register' element={<Register />} />
 		</Routes>

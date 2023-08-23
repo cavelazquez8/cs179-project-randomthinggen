@@ -17,4 +17,50 @@ router.post('/register', (req, res) => {
 		});
 });
 
+router.post('/history', (req, res) => {
+    const userId = req.body.userId;
+    const contentItem = req.body.content;
+
+    User.findById(userId, (err, user) => {
+        if (err) {
+            res.status(500).send({ message: 'Error finding user.' });
+            return;
+        }
+
+        if (!user) {
+            res.status(404).send({ message: 'User not found.' });
+            return;
+        }
+
+        // Add the content to the user's history
+        user.history.push(contentItem);
+        user.save(err => {
+            if (err) {
+                res.status(500).send({ message: 'Error saving user history.' });
+                return;
+            }
+
+            res.status(200).send({ message: 'Content saved to user history.' });
+        });
+    });
+});
+router.get('/history/:userId', (req, res) => {
+    const userId = req.params.userId;
+
+    User.findById(userId, (err, user) => {
+        if (err) {
+            res.status(500).send({ message: 'Error finding user.' });
+            return;
+        }
+
+        if (!user) {
+            res.status(404).send({ message: 'User not found.' });
+            return;
+        }
+
+        res.status(200).send(user.history);
+    });
+});
+
+
 module.exports = router;
