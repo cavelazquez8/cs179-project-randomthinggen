@@ -4,6 +4,7 @@ import { LoginDiv } from './UserCSS';
 import firebase from '../../firebase';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import styles from './LoginModal.module.css';
 
 function Register() {
 	const [name, setName] = useState('');
@@ -44,43 +45,47 @@ function Register() {
 	};
 	return (
 		<LoginDiv>
-			<form>
-				<label>Name</label>
-				<input
-					type='name'
-					value={name}
-					onChange={(e) => setName(e.target.value)}
-				/>
-				<label>Email</label>
-				<input
-					type='email'
-					value={email}
-					onChange={(e) => setEmail(e.target.value)}
-				/>
-				<label>Password</label>
-				<input
-					type='password'
-					value={password}
-					onChange={(e) => setPassword(e.target.value)}
-				/>
-				<label>Password Check</label>
-				<input
-					type='password'
-					value={passwordCheck}
-					onChange={(e) => setPasswordCheck(e.target.value)}
-				/>
+			<div className={styles.modalBackdrop}>
+				<div className={styles.modalContent}>
+					<form>
+						<label>Name</label>
+						<input
+							type='name'
+							value={name}
+							onChange={(e) => setName(e.target.value)}
+						/>
+						<label>Email</label>
+						<input
+							type='email'
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
+						/>
+						<label>Password</label>
+						<input
+							type='password'
+							value={password}
+							onChange={(e) => setPassword(e.target.value)}
+						/>
+						<label>Password Check</label>
+						<input
+							type='password'
+							value={passwordCheck}
+							onChange={(e) => setPasswordCheck(e.target.value)}
+						/>
 
-				<Link to='/register'>
-					<button
-						disabled={disabled}
-						onClick={(e) => {
-							register(e);
-						}}
-					>
-						Register
-					</button>
-				</Link>
-			</form>
+						<Link to='/register'>
+							<button
+								disabled={disabled}
+								onClick={(e) => {
+									register(e);
+								}}
+							>
+								Register
+							</button>
+						</Link>
+					</form>
+				</div>
+			</div>
 		</LoginDiv>
 	);
 }

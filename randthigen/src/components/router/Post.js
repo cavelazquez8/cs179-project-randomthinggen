@@ -5,7 +5,6 @@ var router = express.Router();
 const API_KEY = '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';
 
 const { Chat } = require('../Model/Chat');
-const { Chat_no_ai } = require('../Model/Chat_no_ai');
 
 router.post('/completions', async (req, res) => {
 	const options = {
@@ -50,48 +49,6 @@ router.post('/completions', async (req, res) => {
 	} catch (error) {
 		console.log('data is ');
 		console.error(error);
-	}
-});
-
-router.post('/completions_no_ai', async (req, res) => {
-	try {
-		console.log(req.body);
-
-		// const chatPostQuestion = new Chat({
-		// 	role: 'user',
-		// 	content: req.body.message,
-		// 	uid: req.body.uid,
-		// });
-		// await chatPostQuestion.save();
-		const chatPostAnswer = new Chat_no_ai({
-			role: 'assistant',
-			content: req.body.message,
-			uid: req.body.uid,
-		});
-		await chatPostAnswer.save();
-		console.log('data is ');
-		console.log(req.body.message);
-		await Chat_no_ai.find({ uid: req.body.uid })
-			.exec()
-			.then((chats) => {
-				res.status(200).json({ success: true, post: chats });
-			});
-	} catch (error) {
-		console.log('data is ');
-		console.error(error);
-	}
-});
-
-router.get('/get_no_ai_posts', async (req, res) => {
-	try {
-		const chat_no_ai = await Chat_no_ai.find()
-			.exec()
-			.then((chats) => {
-				res.status(200).json({ success: true, post: chats });
-			});
-	} catch (err) {
-		console.log(err);
-		res.status(500).json({ error: 'server error' });
 	}
 });
 

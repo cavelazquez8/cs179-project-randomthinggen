@@ -12,6 +12,8 @@ import firebase from '../firebase.js';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import generatecontainer from '../components/GenerateContainer.module.css';
+import axios from 'axios';
+import GenerateContainerAI from '../components/GenerateContainerAI';
 
 const LandingPage = () => {
 	const user = useSelector((state) => state.user);
@@ -19,6 +21,7 @@ const LandingPage = () => {
 	const navigate = useNavigate();
 	const [message, setMessage] = useState('');
 	const [trigger, setTrigger] = useState(0);
+	const [post, setPost] = useState([]);
 	console.log(message);
 	const logoutHandler = () => {
 		firebase.auth().signOut();
@@ -30,7 +33,22 @@ const LandingPage = () => {
 	const handleSave = (content) => {
 		setSavedResults((prevResults) => [...prevResults, content]);
 	};
-	const handleGenerateButtonClick = () => {
+	const getPosts = () => {
+		axios
+			.get('/api/post/get_no_ai_posts')
+			.then(async (res) => {
+				console.log('res.data.post: ', res.data.post);
+				setPost(
+					[...res.data.post].map((post) => {
+						return <GenerateContainerAI text={post} onSave={handleSave} />;
+					})
+				);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+	const handleGenerateButtonClick = async () => {
 		setGeneratedContainers((prevContainers) => [
 			...prevContainers,
 			<GenerateContainer
@@ -39,6 +57,16 @@ const LandingPage = () => {
 				onSave={handleSave}
 			/>,
 		]);
+		await getPosts();
+		//console.log('getPosts: ', post);
+		// setGeneratedContainers((prevContainers) => [
+		// 	...post,
+		// 	<GenerateContainer
+		// 		key={prevContainers.length}
+		// 		className={generatecontainer.generatecontainer}
+		// 		onSave={handleSave}
+		// 	/>,
+		// ]);
 	};
 	return (
 		<div className={styles.landingPage}>
@@ -108,7 +136,7 @@ const LandingPage = () => {
 					style={{ overflowY: 'scroll', height: '100vh' }}
 				>
 					<ChatGPTApi msgFromLanding={message} trigger={trigger} />
-					{generatedContainers}
+					<ul className='feed'>{generatedContainers}</ul>
 				</div>
 			</div>
 			<ContainerFooter />

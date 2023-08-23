@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './GenerateContainer.module.css';
-
+import { useSelector } from 'react-redux';
 let used = [];
 
 // person gen functions
@@ -1921,7 +1921,7 @@ function newGen() {
 
 const GenerateContainer = (props) => {
 	const boxCont = newGen();
-
+	const user = useSelector((state) => state.user);
 	const [content, setContent] = useState(boxCont); // Default content
 	const handleSave = () => {
 		props.onSave(content);
@@ -1931,6 +1931,39 @@ const GenerateContainer = (props) => {
 		console.log('delete attempt');
 	};
 	console.log(content);
+	const getMessage = async () => {
+		try {
+			const options = {
+				method: 'POST',
+				body: JSON.stringify({
+					message: content,
+					uid: user.uid,
+				}),
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			};
+			const response = await fetch(
+				'http://localhost:8000/api/post/completions_no_ai',
+				options
+			);
+			console.log(response);
+			const data = await response.json();
+			console.log('Data from no ai', data);
+			//console.log(data);
+			// setPosts(data.post);
+
+			// console.log(posts);
+			// setMessage(data.choices[0].message);
+			// console.log(message);
+			// setResponse(data.choices[0].message.content);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+	useEffect(() => {
+		getMessage();
+	}, []);
 	return (
 		<div className={styles.singlegeneratecontainer}>
 			<div className={styles.generatecontainer}>{boxCont}</div>
