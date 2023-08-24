@@ -18,8 +18,8 @@ function ChatGPTApi(props) {
 	const selection = useSelector((state) => state.selection);
 	const uid = user.uid;
 	const trigg = props.trigger;
-	const handleSave = (content) => {
-		setSavedResults((prevResults) => [...prevResults, content]);
+	const handleSave = (value) => {
+		setSavedResults((prevResults) => [...prevResults, value]);
 	};
 	console.log(props);
 	console.log('uid:', uid);
@@ -50,7 +50,7 @@ function ChatGPTApi(props) {
 			console.log(data);
 			console.log(data.post);
 			setPosts(data.post);
-
+			SVGTextContentElement();
 			console.log(posts);
 			// setMessage(data.choices[0].message);
 			// console.log(message);
@@ -128,13 +128,19 @@ function ChatGPTApi(props) {
 					<div className='input-container'>
 						<textarea
 							value={value}
-							width='48px'
-							height='48px'
+							rows='15'
+							cols='90'
 							onChange={(e) => setValue(e.target.value)}
 						/>
-						<div id='submit' onClick={getMessages}>
+						<button
+							style={{
+								backgroundColor: 'white',
+							}}
+							id='submit'
+							onClick={getMessages}
+						>
 							Submit
-						</div>
+						</button>
 					</div>
 				)}
 

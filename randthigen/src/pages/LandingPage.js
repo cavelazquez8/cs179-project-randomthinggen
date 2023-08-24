@@ -10,7 +10,7 @@ import { Link, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import firebase from '../firebase.js';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import generatecontainer from '../components/GenerateContainer.module.css';
 import axios from 'axios';
 import GenerateContainerAI from '../components/GenerateContainerAI';
@@ -23,6 +23,7 @@ const LandingPage = () => {
 	const [message, setMessage] = useState('');
 	const [trigger, setTrigger] = useState(0);
 	const [post, setPost] = useState([]);
+	const [style, setStyle] = useState();
 	console.log(message);
 	const logoutHandler = () => {
 		firebase.auth().signOut();
@@ -91,9 +92,16 @@ const LandingPage = () => {
 		console.log('getPosts: ', post);
 		setGeneratedContainers([...post]);
 	};
+	useEffect(() => {
+		if (selection.genre === 'Fantasy') {
+			setStyle(styles.fantasy);
+		} else {
+			setStyle(styles.scifi);
+		}
+	}, [selection.genre]);
 	return (
 		<div className={styles.landingPage}>
-			<div className={styles.fantasy}>
+			<div className={`${style}`}>
 				<div className={styles.tabcontainer}>
 					<div className={styles.selectionmenu}>
 						<div className={styles.randomthinggen}>RandomThingGen</div>
