@@ -17,10 +17,9 @@ import { useEffect } from 'react';
 import {  Redirect } from 'react-router-dom';
 
 
-function HistoryPage() {
+function SavedPage() {
     const user = useSelector((state) => state.user);
-    const [userHistory, setUserHistory] = useState([]);
-    const [generatedContainers, setGeneratedContainers] = useState([]);
+    const [userSaved, setUserSaved] = useState([]);
 	const [savedResults, setSavedResults] = useState([]);
     const navigate = useNavigate();
 
@@ -31,13 +30,14 @@ function HistoryPage() {
 	};
     
     useEffect(() => {
-        if (user && user._id) {
-            axios.get(`/api/user/history/${user._id}`)
+		console.log('user: ', user);
+        if (user && user.uid) {
+            axios.get(`/api/user/saved/${user.uid}`)
                 .then(response => {
-                    setUserHistory(response.data);
+                    setUserSaved(response.data);
                 })
                 .catch(error => {
-                    console.error("Error fetching user history:", error);
+                    console.error("Error fetching user Saved:", error);
                 });
         }
     }, [user]);
@@ -113,8 +113,8 @@ function HistoryPage() {
 					className={styles.generationscontainer}
 					style={{ overflowY: 'scroll', height: '100vh' }}
 				>
-                 {userHistory.map(item => (
-                     <div key={item._id}>
+                 {userSaved.map(item => (
+                     <div key={item._id} className = {generatecontainer.generatecontainer}>
                          {item.content}
                      </div>
                  ))}
@@ -132,5 +132,5 @@ function HistoryPage() {
     );
 }
 
-export default HistoryPage;
+export default SavedPage;
 

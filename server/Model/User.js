@@ -4,7 +4,7 @@ const userSchema = new mongoose.Schema({
 	email: String,
 	displayName: String,
 	uid: String,
-    history: [{
+    saved: [{
     content: String,
     date: { type: Date, default: Date.now }
     }]

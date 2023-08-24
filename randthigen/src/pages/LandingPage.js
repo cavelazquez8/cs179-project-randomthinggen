@@ -29,16 +29,16 @@ const LandingPage = () => {
 	const [savedResults, setSavedResults] = useState([]);
 	const handleSave = (content) => {
 		setSavedResults((prevResults) => [...prevResults, content]);
-        if (user && user._id) {
-        axios.post('/api/user/history', {
-            userId: user._id,
+        if (user && user.uid) {
+        axios.post('/api/user/saved', {
+            userId: user.uid,
             content: content
         })
         .then(response => {
-            console.log("Content saved to user history:", response.data);
+            console.log("Content saved to user saved:", response.data);
         })
         .catch(error => {
-            console.error("Error saving content to user history:", error);
+            console.error("Error saving content to user saved:", error);
         });
     }
 	};
