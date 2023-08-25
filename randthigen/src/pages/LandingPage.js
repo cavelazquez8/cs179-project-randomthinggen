@@ -59,9 +59,9 @@ const LandingPage = () => {
 					<div className={styles.selectionmenu}>
 						<div className={styles.randomthinggen}>RandomThingGen</div>
 						<div className={styles.selectionmenuChild} />
-						<div className={styles.saved}>Saved</div>
+						<div className={styles.saved} onClick={() => navigate('/saved')}>Saved</div>
 						<div className={styles.selectionmenuChild} />
-						<div className={styles.saved}>History</div>
+						<div className={styles.saved} onClick={() => navigate('/history')}>History</div>
 						<div className={styles.selectionmenuChild} />
 						<div className={styles.saved}>Chat</div>
 						<div className={styles.selectionmenuChild} />

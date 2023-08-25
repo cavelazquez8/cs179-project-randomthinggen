@@ -120,3 +120,8 @@
   color: var(--color-tan);
   font-family: var(--font-im-fell-english);
 }
+.saved:hover {
+  background-color: #f2f2f2;  /* Change background color */
+  cursor: pointer;  /* Change cursor to pointer */
+  /* Add any other styles you want to apply on hover */
+}

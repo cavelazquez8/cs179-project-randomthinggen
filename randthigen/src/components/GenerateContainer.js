@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
 import styles from './GenerateContainer.module.css';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 let used = [];
 
@@ -1921,11 +1923,29 @@ function newGen() {
 
 const GenerateContainer = (props) => {
 	const boxCont = newGen();
-
 	const [content, setContent] = useState(boxCont); // Default content
+	const user = useSelector((state) => state.user);  // Assuming you're using Redux for user state
 	const handleSave = () => {
 		props.onSave(content);
 	};
+	  const handleHistory = () => {
+    if (user && user.uid) {
+      axios.post('/api/user/history', {
+        userId: user.uid,
+        content: content
+      })
+      .then(response => {
+        console.log("Content saved to user history:", response.data);
+      })
+      .catch(error => {
+        console.error("Error saving content to user history:", error);
+      });
+    }
+  };
+  useEffect(() => {
+    handleHistory();  // Save to history whenever content changes
+  }, [content]);
+
 	const handleDelete = () => {
 		//deletion code here
 		console.log('delete attempt');

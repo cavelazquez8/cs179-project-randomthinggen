@@ -1,67 +1,65 @@
-import ContainerFooter from '../components/ContainerFooter';
-import styles from './LandingPage.module.css';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import firebase from '../firebase.js';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import generatecontainer from '../components/GenerateContainer.module.css';
+import styles from './LandingPage.module.css';
 import axios from 'axios';
-import { useEffect } from 'react';
-import SavedContainer from '../components/SavedContainer';
+import ContainerFooter from '../components/ContainerFooter';
+import firebase from '../firebase.js';
+import HistoryContainer from '../components/HistoryContainer';
+import { Link } from 'react-router-dom';
+function HistoryPage() {
+  const user = useSelector((state) => state.user);
+  const [userHistory, setUserHistory] = useState([]);
+  const navigate = useNavigate();
 
-
-function SavedPage() {
-    const user = useSelector((state) => state.user);
-    const [userSaved, setUserSaved] = useState([]);
-	const [savedResults, setSavedResults] = useState([]);
-    const navigate = useNavigate();
-
-    const logoutHandler = () => {
-		firebase.auth().signOut();
-		navigate('/');
-		window.location.reload();
-	};
-    
-    useEffect(() => {
-		console.log('user: ', user);
-        if (user && user.uid) {
-            axios.get(`/api/user/saved/${user.uid}`)
-                .then(response => {
-                    setUserSaved(response.data);
-                })
-                .catch(error => {
-                    console.error("Error fetching user Saved:", error);
-                });
-        }
-    }, [user]);
-
-	const handleDelete = (id) => {
-    axios.delete(`/api/user/saved/${id}`)
-      .then(response => {
-        const updatedUserSaved = userSaved.filter(item => item._id !== id);
-        setUserSaved(updatedUserSaved);
-      })
-      .catch(error => {
-        console.error("Error deleting saved item:", error);
-      });
+  const logoutHandler = () => {
+    firebase.auth().signOut();
+    navigate('/');
+    window.location.reload();
   };
 
-    if (!user.displayName) {
+  useEffect(() => {
+    if (user && user.uid) {
+      axios.get(`/api/user/history/${user.uid}`)
+        .then(response => {
+          setUserHistory(response.data);
+        })
+        .catch(error => {
+          console.error("Error fetching user history:", error);
+        });
+    }
+  }, [user]);
+
+  if (!user.displayName) {
+    // If the user is not logged in, redirect to the main landing page
+    navigate("/");
+    return null;
+  }
+const handleDelete = (id) => {
+    axios.delete(`/api/user/history/${id}`)
+      .then(response => {
+        const updatedUserHistory = userHistory.filter(item => item._id !== id);
+        setUserHistory(updatedUserHistory);
+      })
+      .catch(error => {
+        console.error("Error deleting history item:", error);
+      });
+  };
+if (!user.displayName) {
         // If the user is not logged in, redirect to the main landing page
         navigate("/");
         return null;
     }
-    return (
-        <div className={styles.landingPage}>
+  return (
+    <div className={styles.landingPage}>
 			<div className={styles.fantasy}>
 				<div className={styles.tabcontainer}>
 					<div className={styles.selectionmenu}>
 						<div className={styles.randomthinggen}>RandomThingGen</div>
 						<div className={styles.selectionmenuChild} />
-						<div className={styles.saved}>Saved</div>
+						<div className={styles.saved} onClick={() => navigate('/saved')}>Saved</div>
 						<div className={styles.selectionmenuChild} />
-						<div className={styles.saved} onClick={() => navigate('/history')}>History</div>
+						<div className={styles.saved}>History</div>
 						<div className={styles.selectionmenuChild} />
 						<div className={styles.saved}>Chat</div>
 						<div className={styles.selectionmenuChild} />
@@ -114,8 +112,8 @@ function SavedPage() {
 					</button>
 				</div>
 				<div className={styles.generationscontainer} style={{ overflowY: 'scroll', height: '100vh' }}>
-					{userSaved.map(item => (
-  <SavedContainer 
+					{userHistory.map(item => (
+  <HistoryContainer 
     key={item._id} 
     id={item._id} 
     content={item.content} 
@@ -137,5 +135,4 @@ function SavedPage() {
     );
 }
 
-export default SavedPage;
-
+export default HistoryPage;

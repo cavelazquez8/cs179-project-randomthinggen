@@ -7,7 +7,12 @@ const userSchema = new mongoose.Schema({
     saved: [{
     content: String,
     date: { type: Date, default: Date.now }
+    }],
+    history: [{
+    content: String,
+    date: { type: Date, default: Date.now }
     }]
+
 
 });
 

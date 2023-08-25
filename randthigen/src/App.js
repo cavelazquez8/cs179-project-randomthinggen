@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import SavedPage from './pages/SavedPage';
+import HistoryPage from './pages/HistoryPage';
 import { useEffect } from 'react';
 import Login from './components/user/Login';
 import Register from './components/user/Register';
@@ -70,6 +71,7 @@ function App() {
 		<Routes>
 			<Route path='/' element={<LandingPage />} />
 			<Route path='/saved' element={<SavedPage />} />
+			<Route path='/history' element={<HistoryPage />} />
 			<Route path='/login' element={<Login />} />
 			<Route path='/register' element={<Register />} />
 		</Routes>
