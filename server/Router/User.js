@@ -53,6 +53,27 @@ router.get('/saved/:userId', async (req, res) => {
     }
 });
 
+router.delete('/saved/:id', async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const user = await User.findOne({ "saved._id": id });
+
+        if (!user) {
+            res.status(404).send({ message: 'Saved item not found.' });
+            return;
+        }
+
+        user.saved = user.saved.filter(item => item._id.toString() !== id);
+
+        await user.save();
+        res.status(200).send({ message: 'Saved item deleted successfully.' });
+    } catch (err) {
+        console.error("Database Error:", err);
+        res.status(500).send({ message: 'Error deleting saved item.' });
+    }
+});
+
 
 
 

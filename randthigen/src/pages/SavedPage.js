@@ -16,6 +16,8 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import {  Redirect } from 'react-router-dom';
 
+import SavedContainer from '../components/SavedContainer';
+
 
 function SavedPage() {
     const user = useSelector((state) => state.user);
@@ -41,6 +43,17 @@ function SavedPage() {
                 });
         }
     }, [user]);
+
+	const handleDelete = (id) => {
+    axios.delete(`/api/user/saved/${id}`)
+      .then(response => {
+        const updatedUserSaved = userSaved.filter(item => item._id !== id);
+        setUserSaved(updatedUserSaved);
+      })
+      .catch(error => {
+        console.error("Error deleting saved item:", error);
+      });
+  };
 
     if (!user.displayName) {
         // If the user is not logged in, redirect to the main landing page
@@ -108,17 +121,17 @@ function SavedPage() {
 						/>
 					</button>
 				</div>
-				<SavedResultsContainer />
-				<div
-					className={styles.generationscontainer}
-					style={{ overflowY: 'scroll', height: '100vh' }}
-				>
-                 {userSaved.map(item => (
-                     <div key={item._id} className = {generatecontainer.generatecontainer}>
-                         {item.content}
-                     </div>
-                 ))}
-				</div>
+				<div className={styles.generationscontainer} style={{ overflowY: 'scroll', height: '100vh' }}>
+					{userSaved.map(item => (
+  <SavedContainer 
+    key={item._id} 
+    id={item._id} 
+    content={item.content} 
+	onDelete={handleDelete}
+  />
+))}
+
+</div>
 			</div>
 			<ContainerFooter />
 			<footer className={styles.copyright}>
