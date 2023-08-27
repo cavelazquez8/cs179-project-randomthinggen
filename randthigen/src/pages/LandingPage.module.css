@@ -110,6 +110,21 @@
 	background-position: top;
 }
 
+.customized {
+	align-self: stretch;
+	height: 64.06rem;
+	flex-direction: column;
+	padding: var(--padding-xl) 15rem;
+	box-sizing: border-box;
+	align-items: center;
+	position: relative;
+	gap: 4.25rem;
+	background-image: url(/public/customizedImage.jpg);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: top;
+}
+
 .privacyPolicyParent {
 	flex-direction: row;
 	align-items: flex-start;

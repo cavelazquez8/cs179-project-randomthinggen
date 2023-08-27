@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
-
+const multer = require('multer');
 //const API_KEY = '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';
-const API_KEY = '';
+const API_KEY = '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';
 
 const { Chat } = require('../Model/Chat');
 const { Chat_no_ai } = require('../Model/Chat_no_ai');
@@ -95,6 +95,27 @@ router.get('/get_no_ai_posts', async (req, res) => {
 		console.log(err);
 		res.status(500).json({ error: 'server error' });
 	}
+});
+const storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		cb(null, '../randthigen/public/');
+	},
+	filename: function (req, file, cb) {
+		cb(null, 'customizedImage.jpg');
+	},
+});
+
+const upload = multer({ storage: storage }).single('file');
+
+router.post('/image/upload', (req, res) => {
+	console.log(req.body, req.formData);
+	upload(req, res, (err) => {
+		if (err) {
+			res.status(400).json({ success: false });
+		} else {
+			res.status(200).json({ success: true, filePath: res.req.file.path });
+		}
+	});
 });
 
 module.exports = router;

@@ -15,6 +15,8 @@ import generatecontainer from '../components/GenerateContainer.module.css';
 import axios from 'axios';
 import GenerateContainerAI from '../components/GenerateContainerAI';
 import { newGen } from '../components/newGen';
+import ImageUpload from '../components/ImageUpload';
+import styled from 'styled-components';
 
 const LandingPage = () => {
 	const user = useSelector((state) => state.user);
@@ -24,6 +26,7 @@ const LandingPage = () => {
 	const [trigger, setTrigger] = useState(0);
 	const [post, setPost] = useState([]);
 	const [style, setStyle] = useState();
+	const [image, setImage] = useState('');
 	console.log(message);
 	const logoutHandler = () => {
 		firebase.auth().signOut();
@@ -92,6 +95,28 @@ const LandingPage = () => {
 		console.log('getPosts: ', post);
 		setGeneratedContainers([...post]);
 	};
+
+	const changeBackground = () => {
+		let imagePath = './' + image;
+		console.log('imagePath: ', imagePath);
+
+		const newStyle = styled.div`
+			align-self: stretch;
+			height: 64.06rem;
+			flex-direction: column;
+			padding: var(--padding-xl) 15rem;
+			box-sizing: border-box;
+			align-items: center;
+			position: relative;
+			gap: 4.25rem;
+			background-image: url('');
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: top;
+		`;
+		setStyle(styles.customized);
+	};
+
 	useEffect(() => {
 		if (selection.genre === 'Fantasy') {
 			setStyle(styles.fantasy);
@@ -116,6 +141,13 @@ const LandingPage = () => {
 						<div className={styles.selectionmenuChild} />
 						<div className={styles.profile}>Profile</div>
 					</div>
+					<ImageUpload setImage={setImage} />
+					<button
+						// className={styles.loginbutton}
+						onClick={() => changeBackground()}
+					>
+						Change the background
+					</button>
 					{user.accessToken ? (
 						<button
 							className={styles.loginbutton}
