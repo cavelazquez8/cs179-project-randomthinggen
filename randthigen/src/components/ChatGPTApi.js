@@ -3,9 +3,11 @@ import axios from 'axios';
 import { BrowserRouter as Router, Link, Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import GenerateContainer from './GenerateContainer';
+import GenerateContainerAI from './GenerateContainerAI';
 
 function ChatGPTApi(props) {
 	const [response, setResponse] = useState('');
+	const [savedResults, setSavedResults] = useState([]);
 
 	const [value, setValue] = useState('');
 	const [message, setMessage] = useState(null);
@@ -13,8 +15,12 @@ function ChatGPTApi(props) {
 	const [currentTitle, setCurrentTitle] = useState('');
 	const [posts, setPosts] = useState([]);
 	const user = useSelector((state) => state.user);
+	const selection = useSelector((state) => state.selection);
 	const uid = user.uid;
 	const trigg = props.trigger;
+	const handleSave = (value) => {
+		setSavedResults((prevResults) => [...prevResults, value]);
+	};
 	console.log(props);
 	console.log('uid:', uid);
 	console.log('msgFromLanding: ', props.msgFromLanding);
@@ -44,7 +50,7 @@ function ChatGPTApi(props) {
 			console.log(data);
 			console.log(data.post);
 			setPosts(data.post);
-
+			SVGTextContentElement();
 			console.log(posts);
 			// setMessage(data.choices[0].message);
 			// console.log(message);
@@ -118,19 +124,27 @@ function ChatGPTApi(props) {
 					/>
 					<`button` type='submit'>Submit</>
 				</form> */}
-				<div className='input-container'>
-					<textarea
-						value={value}
-						width='48px'
-						height='48px'
-						onChange={(e) => setValue(e.target.value)}
-					/>
-					<div id='submit' onClick={getMessages}>
-						Submit
+				{selection.AI === 'On' && (
+					<div className='input-container'>
+						<textarea
+							value={value}
+							rows='15'
+							cols='90'
+							onChange={(e) => setValue(e.target.value)}
+						/>
+						<button
+							style={{
+								backgroundColor: 'white',
+							}}
+							id='submit'
+							onClick={getMessages}
+						>
+							Submit
+						</button>
 					</div>
-				</div>
+				)}
 
-				<ul className='feed'>
+				{/* <ul className='feed'>
 					{previousChats?.map((message, index) => (
 						<li key={index}>
 							<p className='role' style={{ color: 'red' }}>
@@ -139,16 +153,17 @@ function ChatGPTApi(props) {
 							<p style={{ color: 'white' }}>{message.content}</p>
 						</li>
 					))}
-				</ul>
+				</ul> */}
 
 				<ul className='feed'>
 					{posts?.map((message, index) => (
-						<li key={index}>
-							<p className='role' style={{ color: 'red' }}>
-								{message.role}
-							</p>
-							<p style={{ color: 'white' }}>{message.content}</p>
-						</li>
+						// <li key={index}>
+						// 	<p className='role' style={{ color: 'red' }}>
+						// 		{message.role}
+						// 	</p>
+						// 	<p style={{ color: 'white' }}>{message.content}</p>
+						// </li>
+						<GenerateContainerAI text={message.content} onSave={handleSave} />
 					))}
 				</ul>
 			</div>

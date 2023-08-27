@@ -16,10 +16,10 @@ NodeJS, React, likely Express
 |----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
 | 10       | Randomly generate a description of a specific thing (e.g. person, location, object, etc.) from databases of relevant words.                                     | 10           |
 | 9        | Generation history (each new generated thing appears at the top of the page, so user can scroll down through things generated in the past)                      | 5            |
-| 8        | Incorporate OpenAI libraries to generate with various prompts from user (location: altitude, temperature, location type, etc; person: age, gender, height, etc) | 8            |
+| 8        | Incorporate OpenAI libraries to generate based off of templated result                                                                                          | 8            |
 | 7        | Save favorite descriptions to sidebar                                                                                                                           | 4            |
 | 6        | Download contents of sidebar as JSON                                                                                                                            | 4            |
-| 5        | Random writing prompt generator that incorporates items from other generators                                                                                   | 10           |
+| 5        | Random writing prompt generator that incorporates generated items                                                                                   | 10           |
 | 4        | Generators branch off from each other (generate person who lives in generated location or object owned by generated person, etc)                                | 8            |
 | 3        | Change website theme, changing theme of prompts as well (fantasy/sci-fi)                                                                                    | 10           |
 
@@ -36,3 +36,5 @@ NodeJS, React, likely Express
 10. As a user, I want there to be a large amount of possible true-random results.
 11. As a user, I want to log in to the randomgen website to keep and see my histories.
 12. As a user, I want to be able to provide information that will be reflected in my results.
+13. As a user, I want the results I receive to be unique every time.
+14. As a user, I want to be able to log in to RandomThingGen to see my past results.

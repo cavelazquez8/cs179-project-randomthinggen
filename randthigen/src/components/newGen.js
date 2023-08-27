@@ -1,12 +1,4 @@
-import styles from './GenerateContainer.module.css';
-import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import axios from 'axios';
-
 let used = [];
-
-// person gen functions
-
 function firstName() {
 	if (document.getElementById('fantasy').checked) {
 		var res = '';
@@ -1921,85 +1913,4 @@ function newGen() {
 	return desc;
 }
 
-const GenerateContainer = (props) => {
-	const boxCont = newGen();
-	const [content, setContent] = useState(boxCont); // Default content
-	const user = useSelector((state) => state.user);  // Assuming you're using Redux for user state
-	const handleSave = () => {
-		props.onSave(content);
-	};
-	  const handleHistory = () => {
-    if (user && user.uid) {
-      axios.post('/api/user/history', {
-        userId: user.uid,
-        content: content
-      })
-      .then(response => {
-        console.log("Content saved to user history:", response.data);
-      })
-      .catch(error => {
-        console.error("Error saving content to user history:", error);
-      });
-    }
-  };
-  useEffect(() => {
-    handleHistory();  // Save to history whenever content changes
-  }, [content]);
-
-	const handleDelete = () => {
-		//deletion code here
-		console.log('delete attempt');
-	};
-	console.log(content);
-	const getMessage = async () => {
-		try {
-			const options = {
-				method: 'POST',
-				body: JSON.stringify({
-					message: content,
-					uid: user.uid,
-				}),
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			};
-			const response = await fetch(
-				'http://localhost:8000/api/post/completions_no_ai',
-				options
-			);
-			console.log(response);
-			const data = await response.json();
-			console.log('Data from no ai', data);
-			//console.log(data);
-			// setPosts(data.post);
-
-			// console.log(posts);
-			// setMessage(data.choices[0].message);
-			// console.log(message);
-			// setResponse(data.choices[0].message.content);
-		} catch (error) {
-			console.error(error);
-		}
-	};
-	useEffect(() => {
-		getMessage();
-	}, []);
-	return (
-		<div className={styles.singlegeneratecontainer}>
-			<div className={styles.generatecontainer}>{boxCont}</div>
-			<button className={styles.savegeneratebutton} onClick={handleSave}>
-				<div className={styles.save}>Save</div>
-				<img
-					className={styles.materialSymbolssaveIcon}
-					alt=''
-					src='/materialsymbolssave.svg'
-				/>
-			</button>
-			<button className={styles.deletebutton} onClick={handleDelete}>
-				<img className={styles.typcndeleteIcon} alt='' src='/typcndelete.svg' />
-			</button>
-		</div>
-	);
-};
-
-export default GenerateContainer;
+export { newGen };

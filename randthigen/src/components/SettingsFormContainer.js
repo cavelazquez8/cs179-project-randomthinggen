@@ -24,22 +24,26 @@ const SettingsFormContainer = (props) => {
 	const [selectedAI, setSelectedAI] = useState('On'); // ADDED (Default value "On")
 
 	const dispatch = useDispatch();
+
 	//const [genre, setGenre] = useState('fantasy');
 	const handleGenreChange = (event, value) => {
 		setSelectedGenre(
 			event.target.value,
-			dispatch(genreSelect({ genre: selectedGenre }))
+			dispatch(genreSelect({ genre: event.target.value }))
 		);
 		console.log('selection: ', event.target.value);
 	};
 	const handleGenerateChange = (event, value) => {
 		setSelectedGenerateType(
 			event.target.value,
-			dispatch(generateSelect({ generate: selectedGenerateType }))
+			dispatch(generateSelect({ generate: event.target.value }))
 		);
 	};
 	const handleAIChange = (event, value) => {
-		setSelectedAI(event.target.value, dispatch(AISelect({ AI: value })));
+		setSelectedAI(
+			event.target.value,
+			dispatch(AISelect({ AI: event.target.value }))
+		);
 	};
 	const msg = `
 	generate random thing with these conditions: 
@@ -101,13 +105,15 @@ const SettingsFormContainer = (props) => {
 		<div className={styles.settingscontainer}>
 			<h1 className={styles.settings}>Settings</h1>
 			{/* onClick={ChatGPTApi generateMessage={message}} */}
-			<button
-				className={styles.generatebutton}
-				onClick={props.onGenerateButtonClick}
-			>
-				<div className={styles.generate}>Generate!</div>
-				<img className={styles.mdimagicIcon} alt='' src='/mdimagic.svg' />
-			</button>
+			{selection.AI === 'Off' && (
+				<button
+					className={styles.generatebutton}
+					onClick={props.onGenerateButtonClick}
+				>
+					<div className={styles.generate}>Generate!</div>
+					<img className={styles.mdimagicIcon} alt='' src='/mdimagic.svg' />
+				</button>
+			)}
 			{/* <h2 className={styles.genre}>Genre:</h2> */}
 
 			{/* <FormControl>
@@ -274,6 +280,35 @@ const SettingsFormContainer = (props) => {
 					Hobbies:
 					<div className={styles.aisettingtextbox}>Reading, Writing</div>
 				</div>
+			</div>
+			<h2 className={styles.ai}>AI:</h2>
+			<div className={styles.airadiobuttons}>
+				<FormControlLabel
+					value='On' //ADDED
+					label='On'
+					labelPlacement='end'
+					control={
+						<Radio
+							color='primary'
+							size='medium'
+							checked={selectedAI === 'On'} //ADDED
+							onChange={handleAIChange} //ADDED
+						/>
+					}
+				/>
+				<FormControlLabel
+					value='Off' //ADDED
+					label='Off'
+					labelPlacement='end'
+					control={
+						<Radio
+							color='primary'
+							size='medium'
+							checked={selectedAI === 'Off'} //ADDED
+							onChange={handleAIChange}
+						/>
+					} //ADDED
+				/>
 			</div>
 		</div>
 	);
