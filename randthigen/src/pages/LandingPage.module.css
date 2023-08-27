@@ -120,6 +120,7 @@
   color: var(--color-tan);
   font-family: var(--font-im-fell-english);
 }
+.randomthinggen:hover,
 .saved:hover {
   background-color: #f2f2f2;  /* Change background color */
   cursor: pointer;  /* Change cursor to pointer */

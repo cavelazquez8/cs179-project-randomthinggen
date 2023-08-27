@@ -57,7 +57,7 @@ const LandingPage = () => {
 			<div className={styles.fantasy}>
 				<div className={styles.tabcontainer}>
 					<div className={styles.selectionmenu}>
-						<div className={styles.randomthinggen}>RandomThingGen</div>
+						<div className={styles.randomthinggen} onClick={() => navigate('/')}>RandomThingGen</div>
 						<div className={styles.selectionmenuChild} />
 						<div className={styles.saved} onClick={() => navigate('/saved')}>Saved</div>
 						<div className={styles.selectionmenuChild} />
