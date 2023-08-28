@@ -152,9 +152,8 @@
 .scifi,
 .generationscontainer,
 .privacyPolicyParent {
-	flex-direction: row;
-	align-items: flex-start;
-	gap: 1.25rem;
+	display: flex;
+	justify-content: flex-start;
 }
 .copyright,
 .landingPage {

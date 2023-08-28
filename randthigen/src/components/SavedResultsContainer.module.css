@@ -115,6 +115,13 @@
 	margin-top: 10px;
 }
 
+.scifiresultListContainer {
+	max-height: 650px; /* Adjust this value to your preference */
+	overflow-y: auto;
+	border: 1px linear-gradient(180deg, #ffffff, #8a8eb3);
+	margin-top: 10px;
+}
+
 .savedresultscontainer {
 	margin: 0 !important;
 	position: absolute;

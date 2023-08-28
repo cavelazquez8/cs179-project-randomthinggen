@@ -143,7 +143,7 @@ const LandingPage = () => {
 					</div>
 					{user.accessToken ? (
 						<button
-							className={selection.genre === 'Sci-Fi' ? styles.scifiloginbuton : styles.loginbutton}
+							className={selection.genre === 'Sci-Fi' ? styles.scifiloginbutton : styles.loginbutton}
 							onClick={() => logoutHandler()}
 						>
 							{/* <div className={styles.login}>Login</div> */}
@@ -157,7 +157,7 @@ const LandingPage = () => {
 							/>
 						</button>
 					) : (
-						<button className={styles.loginbutton}>
+						<button className={selection.genre === 'Sci-Fi' ? styles.scifiloginbutton : styles.loginbutton}>
 							{/* <div className={styles.login}>Login</div> */}
 
 							<Link to='/login' className={styles.login}>
