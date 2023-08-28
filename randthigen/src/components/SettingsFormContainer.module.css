@@ -102,7 +102,7 @@
 }
 .aisettingtextbox {
   flex: 1;
-  border-radius: var(--br-5xs);
+  border-radius: var(--br-mini);
   border: 1px solid var(--color-black);
   overflow: hidden;
   flex-direction: column;
