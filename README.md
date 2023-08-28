@@ -9,7 +9,7 @@ A website to allow writers to randomly generate various things (characters, loca
 - Alison Stewart-Jones, JSJ-ucr
 
 ## Technologies
-NodeJS, React, likely Express
+NodeJS, React, ChatGPT
 
 ## Major Features
 | Priority | Feature                                                                                                                                                         | Story Points |
