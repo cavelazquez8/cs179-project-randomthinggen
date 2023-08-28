@@ -3,7 +3,6 @@ import SettingsFormContainer from '../components/SettingsFormContainer';
 import GenerateContainer from '../components/GenerateContainer';
 import ContainerFooter from '../components/ContainerFooter';
 import styles from './LandingPage.module.css';
-
 import ChatGPTApi from '../components/ChatGPTApi';
 import Login from '../components/user/Login';
 import Register from '../components/user/Register';
