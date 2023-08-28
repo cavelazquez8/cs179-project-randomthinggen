@@ -38,7 +38,21 @@ const LandingPage = () => {
 	const [savedResults, setSavedResults] = useState([]);
 	const handleSave = (content) => {
 		setSavedResults((prevResults) => [...prevResults, content]);
+		if (user && user.uid) {
+			axios
+				.post('/api/user/saved', {
+					userId: user.uid,
+					content: content,
+				})
+				.then((response) => {
+					console.log('Content saved to user saved:', response.data);
+				})
+				.catch((error) => {
+					console.error('Error saving content to user saved:', error);
+				});
+		}
 	};
+
 	const getPosts = () => {
 		const uid_ = user.uid;
 		axios
@@ -83,7 +97,6 @@ const LandingPage = () => {
 			console.error(error);
 		}
 	};
-
 	const handleGenerateButtonClick = async () => {
 		// setGeneratedContainers((prevContainers) => [
 		// 	...prevContainers,
@@ -139,11 +152,20 @@ const LandingPage = () => {
 			<div className={`${style}`}>
 				<div className={styles.tabcontainer}>
 					<div className={styles.selectionmenu}>
-						<div className={styles.randomthinggen}>RandomThingGen</div>
+						<div
+							className={styles.randomthinggen}
+							onClick={() => navigate('/')}
+						>
+							RandomThingGen
+						</div>
 						<div className={styles.selectionmenuChild} />
-						<div className={styles.saved}>Saved</div>
+						<div className={styles.saved} onClick={() => navigate('/saved')}>
+							Saved
+						</div>
 						<div className={styles.selectionmenuChild} />
-						<div className={styles.saved}>History</div>
+						<div className={styles.saved} onClick={() => navigate('/history')}>
+							History
+						</div>
 						<div className={styles.selectionmenuChild} />
 						<div className={styles.saved}>Chat</div>
 						<div className={styles.selectionmenuChild} />
