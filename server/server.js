@@ -94,3 +94,5 @@ app.post('/api/user/register', (req, res) => {
 			res.status(400).json({ success: false });
 		});
 });
+
+app.use('/api/piece', require('./Router/TrueRandom.js'));

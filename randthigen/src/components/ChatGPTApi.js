@@ -59,6 +59,22 @@ function ChatGPTApi(props) {
 			console.error(error);
 		}
 	};
+
+	// /completions_with_no_generation
+	const getPostsWithoutGen = () => {
+		axios
+			.get('/api/post/completions_with_no_generation', {
+				params: { uid: user.uid },
+			})
+			.then(async (res) => {
+				// await console.log('res.data.post.withoutGen: ', res.data.post);
+				// await console.log('res.data.post.withoutGen: ', res);
+				setPosts([...res.data.post]);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
 	//getMessages();
 	useEffect(() => {
 		setValue(props.msgFromLanding);
@@ -86,10 +102,9 @@ function ChatGPTApi(props) {
 			]);
 		}
 	}, [message, currentTitle]);
-	// useEffect(() => {
-	// 	setValue(props.message);
-	// 	getMessages();
-	// }, [props.message]);
+	useEffect(() => {
+		getPostsWithoutGen();
+	}, []);
 	// useEffect(async () => {
 	// 	//console.log('Hello!!!!!!!!!!', props.trigger);
 	// 	setValue(props.msgFromLanding);
@@ -163,7 +178,11 @@ function ChatGPTApi(props) {
 						// 	</p>
 						// 	<p style={{ color: 'white' }}>{message.content}</p>
 						// </li>
-						<GenerateContainerAI text={message.content} onSave={handleSave} />
+						<GenerateContainerAI
+							text={message.content}
+							onSave={handleSave}
+							setPosts={setPosts}
+						/>
 					))}
 				</ul>
 			</div>

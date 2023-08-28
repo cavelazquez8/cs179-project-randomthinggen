@@ -17,6 +17,7 @@ import GenerateContainerAI from '../components/GenerateContainerAI';
 import { newGen } from '../components/newGen';
 import ImageUpload from '../components/ImageUpload';
 import styled from 'styled-components';
+import { putPieceToDB } from '../components/postPieces';
 
 const LandingPage = () => {
 	const user = useSelector((state) => state.user);
@@ -39,6 +40,7 @@ const LandingPage = () => {
 		setSavedResults((prevResults) => [...prevResults, content]);
 	};
 	const getPosts = () => {
+		const uid_ = user.uid;
 		axios
 			.get('/api/post/get_no_ai_posts', { params: { uid: user.uid } })
 			.then(async (res) => {
@@ -52,10 +54,11 @@ const LandingPage = () => {
 
 	const postMessage = async () => {
 		try {
+			const message = await newGen();
 			const options = {
 				method: 'POST',
 				body: JSON.stringify({
-					message: newGen(),
+					message: message,
 					uid: user.uid,
 				}),
 				headers: {
@@ -124,6 +127,13 @@ const LandingPage = () => {
 			setStyle(styles.scifi);
 		}
 	}, [selection.genre]);
+	useEffect(() => {
+		getPosts();
+	}, []);
+	// useEffect(() => {
+	// 	putPieceToDB();
+	// }, []);
+
 	return (
 		<div className={styles.landingPage}>
 			<div className={`${style}`}>
@@ -208,7 +218,11 @@ const LandingPage = () => {
 							// 	</p>
 							// 	<p style={{ color: 'white' }}>{message.content}</p>
 							// </li>
-							<GenerateContainerAI text={message.content} onSave={handleSave} />
+							<GenerateContainerAI
+								text={message.content}
+								onSave={handleSave}
+								setPosts={setGeneratedContainers}
+							/>
 						))}
 					</ul>
 				</div>
