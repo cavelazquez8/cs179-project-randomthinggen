@@ -1,116 +1,11 @@
+import { getOnePiece, postMessage, firstName3 } from './postPieces';
+import axios from 'axios';
+import useState from 'react';
 let used = [];
-function firstName() {
+async function firstName() {
 	if (document.getElementById('fantasy').checked) {
 		var res = '';
 		var nameStart = [
-			'Ab',
-			'Ac',
-			'Ae',
-			'Ag',
-			'Ai',
-			'Al',
-			'Am',
-			'An',
-			'Ap',
-			'Ar',
-			'As',
-			'At',
-			'Ax',
-			'Ba',
-			'Be',
-			'Bi',
-			'Bo',
-			'Bu',
-			'Ca',
-			'Ci',
-			'Co',
-			'Da',
-			'De',
-			'Di',
-			'Do',
-			'Eb',
-			'Ec',
-			'Ed',
-			'Ei',
-			'El',
-			'Em',
-			'En',
-			'Er',
-			'Es',
-			'Et',
-			'Ew',
-			'Ey',
-			'Fa',
-			'Fe',
-			'Fi',
-			'Fo',
-			'Ga',
-			'Ge',
-			'Go',
-			'Ha',
-			'He',
-			'Hi',
-			'Hu',
-			'Ib',
-			'Ic',
-			'Id',
-			'Ih',
-			'Ij',
-			'Im',
-			'In',
-			'Ip',
-			'Ir',
-			'Is',
-			'It',
-			'Ix',
-			'Ja',
-			'Je',
-			'Ji',
-			'Jo',
-			'Ju',
-			"J'",
-			'Ka',
-			'Ke',
-			'Ki',
-			'Ko',
-			'Ku',
-			"K'",
-			'La',
-			'Li',
-			'Lu',
-			'Le',
-			'Lo',
-			'Ma',
-			'Me',
-			'Mi',
-			'Mo',
-			'Mu',
-			'Na',
-			'Ne',
-			'Ni',
-			'No',
-			'Nu',
-			'Ob',
-			'Oc',
-			'Od',
-			'Og',
-			'Ol',
-			'Om',
-			'On',
-			'Or',
-			'Os',
-			'Ot',
-			'Ow',
-			'Ox',
-			'Pa',
-			'Pe',
-			'Pi',
-			'Po',
-			'Pu',
-			'Qu',
-			"Q'",
-			'Ra',
-			'Re',
 			'Ri',
 			'Ro',
 			'Ru',
@@ -121,101 +16,20 @@ function firstName() {
 			'Su',
 			'Ta',
 			'Te',
-			'Ti',
-			'To',
-			'Tu',
-			"T'",
-			'Wa',
-			'We',
-			'Wu',
-			'Xa',
-			'Xo',
-			'Ya',
-			'Ye',
-			'Yi',
-			'Yl',
-			'Yo',
-			'Yu',
-			'Za',
-			'Ze',
-			'Zi',
-			"Z'",
 		];
-		var nameMid = [
-			'ba',
-			'be',
-			'bi',
-			'bo',
-			'bu',
-			'ca',
-			'ci',
-			'co',
-			'da',
-			'de',
-			'di',
-			'do',
-			'fa',
-			'fe',
-			'fi',
-			'fo',
-			'ga',
-			'ge',
-			'go',
-			'ha',
-			'he',
-			'hi',
-			'hu',
-			'ja',
-			'je',
-			'ji',
-			'jo',
-			'ju',
-			"j'",
-			'ka',
-			'ke',
-			'ki',
-			'ko',
-			'ku',
-			"k'",
-			'la',
-			'li',
-			'lu',
-			'le',
-			'lo',
-			'ma',
-			'me',
-			'mi',
-			'mo',
-			'mu',
-			'na',
-			'ne',
-			'ni',
-			'no',
-			'nu',
-			'pa',
-			'pe',
-			'pi',
-			'po',
-			'pu',
-			'qu',
-			"q'",
-			'ra',
-			're',
-			'ri',
-			'ro',
-			'ru',
-			'sa',
-			'se',
-			'si',
-			'so',
-			'su',
-			'ta',
-			'te',
-			'ti',
-			'to',
-			'tu',
-			"t'",
-		];
+		var nameMid = ['ba', 'be', 'bi', 'bo', 'bu', 'ca', 'ci', 'co'];
+		nameMid.forEach(async (message) => {
+			//console.log('Message: ', message);
+			await postMessage(message, 'nameStart');
+		});
+		// nameMid.forEach(async (message) => {
+		// 	//console.log('Message: ', message);
+		// 	await postMessage(message, 'nameMid');
+		// });
+
+		// console.log('fir: ', firstFunc);
+		// console.log('sec: ', sec);
+
 		var nameEnd = [
 			'a',
 			'aba',
@@ -1851,11 +1665,33 @@ function trngsent() {
 	return res;
 }
 
-function newGen() {
+async function newGen() {
 	var desc;
+
+	var name = '';
+	var firstName = (role) =>
+		axios
+			.get('/api/piece/get_piece', { params: { role: `${role}` } })
+			.then(async (res) => {
+				// await console.log('nameStart: ', res.data.post[0].content);
+				// firstName_v = res.data.post[0].content;
+				//res.status(200).json({ result: firstName });
+				console.log('RES: ', res.data.post[0].content);
+				return res.data.post[0].content;
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+
+	const nameStart = await firstName('nameStart');
+	const nameMid = await firstName('nameMid');
+	const nameLast = await getOnePiece('nameStart');
+	console.log('nameStart:', nameStart);
+	console.log('nameMid:', nameMid);
+	console.log('nameLast:', nameLast);
 	if (document.getElementById('person').checked) {
 		desc =
-			firstName() +
+			name +
 			' ' +
 			lastName() +
 			', ' +

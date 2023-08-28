@@ -79,4 +79,24 @@ app.listen(PORT, () => {
 });
 
 app.use('/api/post', require('./Router/Post.js'));
+<<<<<<< HEAD
+//app.use('/api/user', require('./Router/User.js'));
+
+app.post('/api/user/register', (req, res) => {
+	console.log(req.body);
+	const userData = new User(req.body);
+	userData
+		.save()
+		.then(() => {
+			res.status(200).json({ success: true });
+		})
+		.catch((err) => {
+			console.log(err);
+			res.status(400).json({ success: false });
+		});
+});
+
+app.use('/api/piece', require('./Router/TrueRandom.js'));
+=======
 app.use('/api/user', require('./Router/User.js'));
+>>>>>>> main
