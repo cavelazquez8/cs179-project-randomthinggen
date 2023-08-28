@@ -1,7 +1,10 @@
 import styles from "./Footer.module.css";
+import { useSelector } from 'react-redux';
+
 const ContainerFooter = () => {
+  const selection = useSelector((state) => state.selection); 
   return (
-    <footer className={styles.footer}>
+    <footer className={selection.genre === 'Sci-Fi' ? styles.scififooter : styles.footer}>
       <div className={styles.frameParent}>
         <div className={styles.testParent}>
           <div className={styles.test}>Test</div>
