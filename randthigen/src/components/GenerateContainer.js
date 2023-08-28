@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import styles from "./GenerateContainer.module.css";
-const GenerateContainer = ({onSave}) => {
+const GenerateContainer = ({onSave, onDelete, containerKey}) => {
 const [content, setContent] = useState("GenerateContainer"); // Default content
   const handleSave = () => {
     onSave(content);
   };
+
+  const handleDelete = () => {
+    onDelete(containerKey);
+  };
+
+  
   return (
     <div className={styles.singlegeneratecontainer}>
       <div className={styles.generatecontainer}>
@@ -18,7 +24,8 @@ const [content, setContent] = useState("GenerateContainer"); // Default content
           src="/materialsymbolssave.svg"
         />
       </button>
-      <button className={styles.deletebutton}>
+      <button className={styles.deletebutton} onClick={handleDelete}>
+        
         <img className={styles.typcndeleteIcon} alt="" src="/typcndelete.svg" />
       </button>
     </div>

@@ -6,12 +6,25 @@ import ContainerFooter from "../components/ContainerFooter";
 import styles from "./LandingPage.module.css";
 import LoginModal from "../components/LoginModal";
 import generatecontainer from "../components/GenerateContainer.module.css";
+
+
+
 const LandingPage = () => {
   const [generatedContainers, setGeneratedContainers] = useState([]);
   const [savedResults, setSavedResults] = useState([]);
   const [showLoginModal, setShowLoginModal] = useState(false);
+
   const handleSave = (content) => {
     setSavedResults(prevResults => [...prevResults, content]);
+  };
+
+  const handleDelete = (containerKey) => {
+    const index = generatedContainers.findIndex(container => container.containerKey === containerKey);
+    if (index !== -1){
+      const updatedContainers = [...generatedContainers];
+      updatedContainers.splice(index, 1);
+      setGeneratedContainers(updatedContainers);
+    }
   };
 
   const handleShowLoginModal = () => {
@@ -26,14 +39,17 @@ const LandingPage = () => {
     // Logic to switch to signup form can be added here
     console.log("Switched to signup form");
   };
+  
+
 
   const handleGenerateButtonClick = () => {
     setGeneratedContainers((prevContainers) => [
       ...prevContainers,
-      <GenerateContainer 
-      key={prevContainers.length} 
-      className={generatecontainer.generatecontainer}
-      onSave={handleSave}
+      <GenerateContainer
+        containerKey={prevContainers.length}
+        className={generatecontainer.generatecontainer}
+        onSave={handleSave}
+        onDelete={handleDelete}   
       />,
     ]);
   };
