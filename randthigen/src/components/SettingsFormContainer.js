@@ -281,35 +281,6 @@ const SettingsFormContainer = (props) => {
 					<div className={styles.aisettingtextbox}>Reading, Writing</div>
 				</div>
 			</div>
-			<h2 className={styles.ai}>AI:</h2>
-			<div className={styles.airadiobuttons}>
-				<FormControlLabel
-					value='On' //ADDED
-					label='On'
-					labelPlacement='end'
-					control={
-						<Radio
-							color='primary'
-							size='medium'
-							checked={selectedAI === 'On'} //ADDED
-							onChange={handleAIChange} //ADDED
-						/>
-					}
-				/>
-				<FormControlLabel
-					value='Off' //ADDED
-					label='Off'
-					labelPlacement='end'
-					control={
-						<Radio
-							color='primary'
-							size='medium'
-							checked={selectedAI === 'Off'} //ADDED
-							onChange={handleAIChange}
-						/>
-					} //ADDED
-				/>
-			</div>
 		</div>
 	);
 };
