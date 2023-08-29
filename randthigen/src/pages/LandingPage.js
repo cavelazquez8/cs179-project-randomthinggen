@@ -167,10 +167,6 @@ const LandingPage = () => {
 							History
 						</div>
 						<div className={styles.selectionmenuChild} />
-						<div className={styles.saved}>Chat</div>
-						<div className={styles.selectionmenuChild} />
-						<div className={styles.saved}>Analytics</div>
-						<div className={styles.selectionmenuChild} />
 						<div className={styles.profile}>Profile</div>
 					</div>
 					<ImageUpload setImage={setImage} />

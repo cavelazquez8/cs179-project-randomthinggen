@@ -9,63 +9,70 @@ import generatecontainer from '../components/GenerateContainer.module.css';
 import axios from 'axios';
 import { useEffect } from 'react';
 import SavedContainer from '../components/SavedContainer';
-
+import SavedResultsContainer from '../components/SavedResultsContainer';
 
 function SavedPage() {
-    const user = useSelector((state) => state.user);
-    const [userSaved, setUserSaved] = useState([]);
+	const user = useSelector((state) => state.user);
+	const [userSaved, setUserSaved] = useState([]);
 	const [savedResults, setSavedResults] = useState([]);
-    const navigate = useNavigate();
+	const navigate = useNavigate();
 
-    const logoutHandler = () => {
+	const logoutHandler = () => {
 		firebase.auth().signOut();
 		navigate('/');
 		window.location.reload();
 	};
-    
-    useEffect(() => {
+
+	useEffect(() => {
 		console.log('user: ', user);
-        if (user && user.uid) {
-            axios.get(`/api/user/saved/${user.uid}`)
-                .then(response => {
-                    setUserSaved(response.data);
-                })
-                .catch(error => {
-                    console.error("Error fetching user Saved:", error);
-                });
-        }
-    }, [user]);
+		if (user && user.uid) {
+			axios
+				.get(`/api/user/saved/${user.uid}`)
+				.then((response) => {
+					setUserSaved(response.data);
+				})
+				.catch((error) => {
+					console.error('Error fetching user Saved:', error);
+				});
+		}
+	}, [user]);
 
 	const handleDelete = (id) => {
-    axios.delete(`/api/user/saved/${id}`)
-      .then(response => {
-        const updatedUserSaved = userSaved.filter(item => item._id !== id);
-        setUserSaved(updatedUserSaved);
-      })
-      .catch(error => {
-        console.error("Error deleting saved item:", error);
-      });
-  };
+		axios
+			.delete(`/api/user/saved/${id}`)
+			.then((response) => {
+				const updatedUserSaved = userSaved.filter((item) => item._id !== id);
+				setUserSaved(updatedUserSaved);
+			})
+			.catch((error) => {
+				console.error('Error deleting saved item:', error);
+			});
+	};
 
-    if (!user.displayName) {
-        // If the user is not logged in, redirect to the main landing page
-        navigate("/");
-        return null;
-    }
-    return (
-        <div className={styles.landingPage}>
+	if (!user.displayName) {
+		// If the user is not logged in, redirect to the main landing page
+		navigate('/');
+		return null;
+	}
+	return (
+		<div className={styles.landingPage}>
 			<div className={styles.fantasy}>
 				<div className={styles.tabcontainer}>
 					<div className={styles.selectionmenu}>
-						<div className={styles.randomthinggen} onClick={() => navigate('/')}>RandomThingGen</div>
+						<div
+							className={styles.randomthinggen}
+							onClick={() => navigate('/')}
+						>
+							RandomThingGen
+						</div>
 						<div className={styles.selectionmenuChild} />
-						<div className={styles.saved}>Saved</div>
+						<div className={styles.saved} onClick={() => navigate('/saved')}>
+							Saved
+						</div>
 						<div className={styles.selectionmenuChild} />
-						<div className={styles.saved} onClick={() => navigate('/history')}>History</div>
-						<div className={styles.selectionmenuChild} />
-						<div className={styles.saved}>Chat</div>
-						<div className={styles.selectionmenuChild} />
-						<div className={styles.saved}>Analytics</div>
+						<div className={styles.saved} onClick={() => navigate('/history')}>
+							History
+						</div>
 						<div className={styles.selectionmenuChild} />
 						<div className={styles.profile}>Profile</div>
 					</div>
@@ -99,31 +106,23 @@ function SavedPage() {
 							/>
 						</button>
 					)}
-					<button className={styles.loginbutton}>
-						{/* <div className={styles.login}>Login</div> */}
-
-						<Link to='//localhost:3001' className={styles.login}>
-							Another
-						</Link>
-
-						<img
-							className={styles.materialSymbolsloginIcon}
-							alt=''
-							src='/materialsymbolslogin.svg'
-						/>
-					</button>
 				</div>
-				<div className={styles.generationscontainer} style={{ overflowY: 'scroll', height: '100vh' }}>
-					{userSaved.map(item => (
-  <SavedContainer 
-    key={item._id} 
-    id={item._id} 
-    content={item.content} 
-	onDelete={handleDelete}
-  />
-))}
-
-</div>
+				<SavedResultsContainer
+					results={userSaved.map((savedResult) => savedResult.content)}
+				/>
+				<div
+					className={styles.generationscontainer}
+					style={{ overflowY: 'scroll', height: '100vh' }}
+				>
+					{userSaved.map((item) => (
+						<SavedContainer
+							key={item._id}
+							id={item._id}
+							content={item.content}
+							onDelete={handleDelete}
+						/>
+					))}
+				</div>
 			</div>
 			<ContainerFooter />
 			<footer className={styles.copyright}>
@@ -134,8 +133,7 @@ function SavedPage() {
 				<div className={styles.saved}>Test</div>
 			</footer>
 		</div>
-    );
+	);
 }
 
 export default SavedPage;
-
