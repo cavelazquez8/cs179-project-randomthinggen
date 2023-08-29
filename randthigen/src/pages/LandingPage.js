@@ -1,6 +1,6 @@
 import SavedResultsContainer from '../components/SavedResultsContainer';
 import SettingsFormContainer from '../components/SettingsFormContainer';
-import GenerateContainer from '../components/GenerateContainer';
+//import GenerateContainer from '../components/GenerateContainer';
 import ContainerFooter from '../components/ContainerFooter';
 import styles from './LandingPage.module.css';
 import ChatGPTApi from '../components/ChatGPTApi';

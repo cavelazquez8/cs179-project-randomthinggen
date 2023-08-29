@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Link, Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import GenerateContainer from './GenerateContainer';
+//import GenerateContainer from './GenerateContainer';
 import GenerateContainerAI from './GenerateContainerAI';
 
 function ChatGPTApi(props) {
