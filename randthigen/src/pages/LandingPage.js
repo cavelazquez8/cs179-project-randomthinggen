@@ -13,6 +13,9 @@ import generatecontainer from '../components/GenerateContainer.module.css';
 import axios from 'axios';
 import GenerateContainerAI from '../components/GenerateContainerAI';
 import { newGen } from '../components/newGen';
+import ImageUpload from '../components/ImageUpload';
+import styled from 'styled-components';
+import { putPieceToDB } from '../components/postPieces';
 import LoginModal from "../components/LoginModal";
 
 const LandingPage = () => {
@@ -25,6 +28,7 @@ const LandingPage = () => {
 	const [trigger, setTrigger] = useState(0);
 	const [post, setPost] = useState([]);
 	const [style, setStyle] = useState();
+	const [image, setImage] = useState('');
 	console.log(message);
 	const [generatedContainers, setGeneratedContainers] = useState([]);
 	const [savedResults, setSavedResults] = useState([]);
@@ -43,18 +47,19 @@ const LandingPage = () => {
 	};
 	const handleSave = (content) => {
 		setSavedResults((prevResults) => [...prevResults, content]);
-        if (user && user.uid) {
-        axios.post('/api/user/saved', {
-            userId: user.uid,
-            content: content
-        })
-        .then(response => {
-            console.log("Content saved to user saved:", response.data);
-        })
-        .catch(error => {
-            console.error("Error saving content to user saved:", error);
-        });
-    }
+		if (user && user.uid) {
+			axios
+				.post('/api/user/saved', {
+					userId: user.uid,
+					content: content,
+				})
+				.then((response) => {
+					console.log('Content saved to user saved:', response.data);
+				})
+				.catch((error) => {
+					console.error('Error saving content to user saved:', error);
+				});
+		}
 	};
 
 	const handleShowLoginModal = () => {
@@ -80,10 +85,11 @@ const LandingPage = () => {
 
 	const postMessage = async () => {
 		try {
+			const message = await newGen();
 			const options = {
 				method: 'POST',
 				body: JSON.stringify({
-					message: newGen(),
+					message: message,
 					uid: user.uid,
 				}),
 				headers: {
@@ -122,7 +128,28 @@ const LandingPage = () => {
 		console.log('getPosts: ', post);
 		setGeneratedContainers([...post]);
 	};
-	
+
+	const changeBackground = () => {
+		let imagePath = './' + image;
+		console.log('imagePath: ', imagePath);
+
+		const newStyle = styled.div`
+			align-self: stretch;
+			height: 64.06rem;
+			flex-direction: column;
+			padding: var(--padding-xl) 15rem;
+			box-sizing: border-box;
+			align-items: center;
+			position: relative;
+			gap: 4.25rem;
+			background-image: url('');
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: top;
+		`;
+		setStyle(styles.customized);
+	};
+
 	useEffect(() => {
 		if (selection.genre === 'Fantasy') {
 			setStyle(styles.fantasy);
@@ -130,16 +157,32 @@ const LandingPage = () => {
 			setStyle(styles.scifi);
 		}
 	}, [selection.genre]);
+	useEffect(() => {
+		getPosts();
+	}, []);
+	// useEffect(() => {
+	// 	putPieceToDB();
+	// }, []);
+
 	return (
 		<div className={styles.landingPage}>
 			<div className={`${style}`}>
 				<div className={styles.tabcontainer}>
 					<div className={styles.selectionmenu}>
-						<div className={styles.randomthinggen} onClick={() => navigate('/')}>RandomThingGen</div>
+						<div
+							className={styles.randomthinggen}
+							onClick={() => navigate('/')}
+						>
+							RandomThingGen
+						</div>
 						<div className={styles.selectionmenuChild} />
-						<div className={styles.saved} onClick={() => navigate('/saved')}>Saved</div>
+						<div className={styles.saved} onClick={() => navigate('/saved')}>
+							Saved
+						</div>
 						<div className={styles.selectionmenuChild} />
-						<div className={styles.saved} onClick={() => navigate('/history')}>History</div>
+						<div className={styles.saved} onClick={() => navigate('/history')}>
+							History
+						</div>
 						<div className={styles.selectionmenuChild} />
 						<div className={styles.saved}>Chat</div>
 						<div className={styles.selectionmenuChild} />
@@ -147,6 +190,13 @@ const LandingPage = () => {
 						<div className={styles.selectionmenuChild} />
 						<div className={styles.profile}>Profile</div>
 					</div>
+					<ImageUpload setImage={setImage} />
+					<button
+						// className={styles.loginbutton}
+						onClick={() => changeBackground()}
+					>
+						Change the background
+					</button>
 					<button className={styles.loginbutton} onClick={user ? logoutHandler : handleShowLoginModal}>
             <div className={styles.login}>{user ? 'Logout' : 'Login'}</div>
             <img
@@ -156,7 +206,7 @@ const LandingPage = () => {
             />
           </button>
 				</div>
-				<SavedResultsContainer results = {savedResults} />
+				<SavedResultsContainer results={savedResults} />
 				<SettingsFormContainer
 					message={message}
 					setMessage={setMessage}
@@ -185,7 +235,11 @@ const LandingPage = () => {
 							// 	</p>
 							// 	<p style={{ color: 'white' }}>{message.content}</p>
 							// </li>
-							<GenerateContainerAI text={message.content} onSave={handleSave} />
+							<GenerateContainerAI
+								text={message.content}
+								onSave={handleSave}
+								setPosts={setGeneratedContainers}
+							/>
 						))}
 					</ul>
 				</div>

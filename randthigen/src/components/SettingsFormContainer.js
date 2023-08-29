@@ -15,9 +15,10 @@ import {
 	generateSelect,
 	AISelect,
 } from '../Reducer/selectionSlice';
+import ImageUpload from './ImageUpload';
 const SettingsFormContainer = (props) => {
 	const selection = useSelector((state) => state.selection);
-
+	const [image, setImage] = useState('');
 	const user = useSelector((state) => state.user);
 	const [selectedGenre, setSelectedGenre] = useState('Fantasy');
 	const [selectedGenerateType, setSelectedGenerateType] = useState('Person'); // ADDED (Default value "Person")
@@ -281,6 +282,8 @@ const SettingsFormContainer = (props) => {
 					<div className={styles.aisettingtextbox}>Reading, Writing</div>
 				</div>
 			</div>
+
+			{/* <ImageUpload setImage={setImage} /> */}
 		</div>
 	);
 };
