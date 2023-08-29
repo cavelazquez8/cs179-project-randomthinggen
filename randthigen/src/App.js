@@ -5,6 +5,8 @@ import {
 	useLocation,
 } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
+import SavedPage from './pages/SavedPage';
+import HistoryPage from './pages/HistoryPage';
 import { useEffect } from 'react';
 import { loginUser, clearUser } from './Reducer/userSlice';
 import firebase from './firebase.js';
@@ -66,6 +68,8 @@ function App() {
 	return (
 		<Routes>
 			<Route path='/' element={<LandingPage />} />
+			<Route path='/saved' element={<SavedPage />} />
+			<Route path='/history' element={<HistoryPage />} />
 		</Routes>
 	);
 }
