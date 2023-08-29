@@ -54,8 +54,9 @@ const LandingPage = () => {
     };
 
 	const getPosts = () => {
+		const params = user ? { uid: user.uid } : {};
 		axios
-			.get('/api/post/get_no_ai_posts', { params: { uid: user.uid } })
+			.get('/api/post/get_no_ai_posts', { params })
 			.then(async (res) => {
 				console.log('res.data.post: ', res.data.post);
 				setPost([...res.data.post]);
