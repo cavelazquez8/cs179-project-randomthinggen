@@ -1,22 +1,60 @@
 
 import React, { useState } from "react";
 import styles from "./LoginModal.module.css";
+import firebase from '../firebase.js';
+import axios from 'axios';
 
-const LoginModal = ({ onClose, onSwitchToSignup }) => {
+
+const LoginModal = ({ onClose }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState(""); // New state for confirm password
-  const [name, setName] = useState(""); // New state for name
-  const [isSignup, setIsSignup] = useState(false); // New state to determine if signup form should be displayed
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [name, setName] = useState("");
+  const [isSignup, setIsSignup] = useState(false);
+  const [errMessage, setErrMessage] = useState(''); // For error messages
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isSignup) {
-      // Handle signup logic here
-      console.log("Signup attempted with email:", email);
-    } else {
-      // Handle login logic here
-      console.log("Login attempted with email:", email);
+    setErrMessage(''); // Reset error message
+    
+    if (!email || !password || (isSignup && !name)) {
+      return setErrMessage('Fill all the values');
+    }
+
+    if (isSignup && password !== confirmPassword) {
+      return setErrMessage('PW and PW Check should be identical');
+    }
+
+    try {
+      let userCredential;
+      if (isSignup) {
+        userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+        await userCredential.user.updateProfile({
+          displayName: name,
+        });
+        const body = {
+        email: userCredential.user.email,
+        displayName: userCredential.user.displayName,
+        uid: userCredential.user.uid,
+      };
+
+      const response = await axios.post('/api/user/register', body);
+      
+      if (!response.data.success) {
+        return setErrMessage('Registration failed');
+      }
+      } else {
+        userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+      }
+      onClose(); // Close the modal on successful login or registration
+    } catch (error) {
+      if (error.code === 'auth/user-not-found') {
+        setErrMessage('Email does not exist');
+      } else if (error.code === 'auth/wrong-password') {
+        setErrMessage('Password does not match');
+      } else {
+        setErrMessage('Login failed');
+      }
     }
   };
 
@@ -25,6 +63,7 @@ const LoginModal = ({ onClose, onSwitchToSignup }) => {
       <div className={styles.modalContent}>
         <button className={styles.closeButton} onClick={onClose}>X</button>
         <h2>{isSignup ? "Signup" : "Login"}</h2>
+                {errMessage && <p>{errMessage}</p>}
         <form onSubmit={handleSubmit}>
           {isSignup && (
             <input

@@ -4,8 +4,6 @@ import GenerateContainer from '../components/GenerateContainer';
 import ContainerFooter from '../components/ContainerFooter';
 import styles from './LandingPage.module.css';
 import ChatGPTApi from '../components/ChatGPTApi';
-import Login from '../components/user/Login';
-import Register from '../components/user/Register';
 import { Link, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import firebase from '../firebase.js';
@@ -15,9 +13,12 @@ import generatecontainer from '../components/GenerateContainer.module.css';
 import axios from 'axios';
 import GenerateContainerAI from '../components/GenerateContainerAI';
 import { newGen } from '../components/newGen';
+import LoginModal from "../components/LoginModal";
 
 const LandingPage = () => {
-	const user = useSelector((state) => state.user);
+	
+	const [user, setUser] = useState(null); // To keep track of the user's login status
+    const [showLoginModal, setShowLoginModal] = useState(false);
 	const selection = useSelector((state) => state.selection);
 	const navigate = useNavigate();
 	const [message, setMessage] = useState('');
@@ -25,16 +26,33 @@ const LandingPage = () => {
 	const [post, setPost] = useState([]);
 	const [style, setStyle] = useState();
 	console.log(message);
-	const logoutHandler = () => {
+	const [generatedContainers, setGeneratedContainers] = useState([]);
+	const [savedResults, setSavedResults] = useState([]);
+
+	useEffect(() => {
+    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+      setUser(user);
+    });
+    return () => unsubscribe(); // Cleanup on component unmount
+    }, []);
+
+    const logoutHandler = () => {
 		firebase.auth().signOut();
 		navigate('/');
 		window.location.reload();
 	};
-	const [generatedContainers, setGeneratedContainers] = useState([]);
-	const [savedResults, setSavedResults] = useState([]);
 	const handleSave = (content) => {
 		setSavedResults((prevResults) => [...prevResults, content]);
 	};
+
+	const handleShowLoginModal = () => {
+    setShowLoginModal(true);
+    };
+
+    const handleCloseLoginModal = () => {
+    setShowLoginModal(false);
+    };
+
 	const getPosts = () => {
 		axios
 			.get('/api/post/get_no_ai_posts', { params: { uid: user.uid } })
@@ -116,36 +134,14 @@ const LandingPage = () => {
 						<div className={styles.selectionmenuChild} />
 						<div className={styles.profile}>Profile</div>
 					</div>
-					{user.accessToken ? (
-						<button
-							className={styles.loginbutton}
-							onClick={() => logoutHandler()}
-						>
-							{/* <div className={styles.login}>Login</div> */}
-							{/* <Link to='/' className={styles.login}> */}
-							Logout
-							{/* </Link> */}
-							<img
-								className={styles.materialSymbolsloginIcon}
-								alt=''
-								src='/materialsymbolslogin.svg'
-							/>
-						</button>
-					) : (
-						<button className={styles.loginbutton}>
-							{/* <div className={styles.login}>Login</div> */}
-
-							<Link to='/login' className={styles.login}>
-								Login
-							</Link>
-
-							<img
-								className={styles.materialSymbolsloginIcon}
-								alt=''
-								src='/materialsymbolslogin.svg'
-							/>
-						</button>
-					)}
+					<button className={styles.loginbutton} onClick={user ? logoutHandler : handleShowLoginModal}>
+            <div className={styles.login}>{user ? 'Logout' : 'Login'}</div>
+            <img
+              className={styles.materialSymbolsloginIcon}
+              alt=""
+              src="/materialsymbolslogin.svg"
+            />
+          </button>
 				</div>
 				<SavedResultsContainer results={savedResults} />
 				<SettingsFormContainer
@@ -182,6 +178,9 @@ const LandingPage = () => {
 				</div>
 			</div>
 			<ContainerFooter />
+			{showLoginModal && (
+        <LoginModal onClose={handleCloseLoginModal}/>
+      )}
 			<footer className={styles.copyright}>
 				<div className={styles.privacyPolicyParent}>
 					<div className={styles.saved}>Privacy Policy</div>
