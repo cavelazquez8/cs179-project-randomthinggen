@@ -163,7 +163,7 @@ function HistoryPage() {
 						</button>
 					)}
 				</div>
-				<SavedResultsContainer results={savedResults} />
+				{/* <SavedResultsContainer results={savedResults} /> */}
 				<div
 					className={styles.generationscontainer}
 					style={{ overflowY: 'scroll', height: '100vh' }}
@@ -199,14 +199,14 @@ function HistoryPage() {
 					</ul>
 				</div>
 			</div>
-			<ContainerFooter />
+			{/* <ContainerFooter />
 			<footer className={styles.copyright}>
 				<div className={styles.privacyPolicyParent}>
 					<div className={styles.saved}>Privacy Policy</div>
 					<div className={styles.saved}>Terms of use</div>
 				</div>
 				<div className={styles.saved}>Test</div>
-			</footer>
+			</footer> */}
 		</div>
 	);
 }

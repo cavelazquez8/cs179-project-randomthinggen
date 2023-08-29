@@ -14,7 +14,7 @@ const SavedResultsContainer = ({ results }) => {
 	};
 	return (
 		<div className={styles.savedresultscontainer}>
-			<h1 className={styles.savedResults}>Saved Results</h1>
+			<h1 className={styles.savedResults}>Texts to Download</h1>
 			<button className={styles.downloadbutton} onClick={downloadResults}>
 				<div className={styles.download}>{`Download `}</div>
 				<img

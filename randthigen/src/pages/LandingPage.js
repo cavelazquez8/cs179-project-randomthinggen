@@ -83,9 +83,12 @@ const LandingPage = () => {
 				'http://localhost:8000/api/post/completions_no_ai',
 				options
 			);
-			console.log(response);
+			//console.log('RESPONSE: ', response.json);
 			const data = await response.json();
-			console.log('Data from no ai', data);
+			console.log('Data from no ai', data.post[data.post.length - 1]);
+			setPost((posts) => {
+				return [...posts, data.post[data.post.length - 1]];
+			});
 			//console.log(data);
 			// setPosts(data.post);
 
@@ -107,7 +110,7 @@ const LandingPage = () => {
 		// 	/>,
 		// ]);
 		await postMessage();
-		await getPosts();
+		//await getPosts();
 		console.log('getPosts: ', post);
 		setGeneratedContainers([...post]);
 	};
@@ -140,9 +143,9 @@ const LandingPage = () => {
 			setStyle(styles.scifi);
 		}
 	}, [selection.genre]);
-	useEffect(() => {
-		getPosts();
-	}, []);
+	// useEffect(() => {
+	// 	//getPosts();
+	// }, []);
 	// useEffect(() => {
 	// 	putPieceToDB();
 	// }, []);
@@ -207,7 +210,7 @@ const LandingPage = () => {
 						</button>
 					)}
 				</div>
-				<SavedResultsContainer results={savedResults} />
+				{/* <SavedResultsContainer results={savedResults} /> */}
 				<SettingsFormContainer
 					message={message}
 					setMessage={setMessage}
@@ -245,14 +248,14 @@ const LandingPage = () => {
 					</ul>
 				</div>
 			</div>
-			<ContainerFooter />
+			{/* <ContainerFooter />
 			<footer className={styles.copyright}>
 				<div className={styles.privacyPolicyParent}>
 					<div className={styles.saved}>Privacy Policy</div>
 					<div className={styles.saved}>Terms of use</div>
 				</div>
 				<div className={styles.saved}>Test</div>
-			</footer>
+			</footer> */}
 		</div>
 	);
 };
