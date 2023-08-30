@@ -5,16 +5,16 @@ const SavedResultsContainer = ({ results }) => {
 	const selection = useSelector((state) => state.selection); 
 	const savedResultsStyle = selection.genre === 'Sci-Fi' ? styles.scifisavedresultscontainer : '';
 	const downloadResults = () => {
-		const jsonString = JSON.stringify(results, null, 2);
-		const blob = new Blob([jsonString], { type: 'application/json' });
-		const url = URL.createObjectURL(blob);
+		const txtString = results.map((result, index) => `${index + 1}. ${result}`).join('\n');
+        const blob = new Blob([txtString], { type: 'text/plain' });
+    	const url = URL.createObjectURL(blob);
 
-		const downloadLink = document.createElement('a');
-		downloadLink.href = url;
-		downloadLink.download = 'saved_results.json';
-		document.body.appendChild(downloadLink);
-		downloadLink.click();
-		document.body.removeChild(downloadLink);
+    	const downloadLink = document.createElement('a');
+    	downloadLink.href = url;
+    	downloadLink.download = 'saved_results.txt';
+    	document.body.appendChild(downloadLink);
+    	downloadLink.click();
+    	document.body.removeChild(downloadLink);
 	};
 	
 	return (
