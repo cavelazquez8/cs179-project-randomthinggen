@@ -18,9 +18,9 @@ const SavedResultsContainer = ({ results }) => {
 	};
 	
 	return (
-<div className={selection.genre === 'Sci-Fi' ? styles.scifisavedresultscontainer : styles.savedresultscontainer}>
+		<div className={styles.savedresultscontainer}>
 			<h1 className={styles.savedResults}>To Download</h1>
-			<button className={selection.genre === 'Sci-Fi' ? styles.scifidownloadbutton : styles.downloadbutton} onClick={downloadResults}>
+			<button className={styles.downloadbutton} onClick={downloadResults}>
 				<div className={styles.download}>{`Download `}</div>
 				<img
 					className={styles.materialSymbolsdownloadIcon}
@@ -28,13 +28,8 @@ const SavedResultsContainer = ({ results }) => {
 					src='/materialsymbolsdownload.svg'
 				/>
 			</button>
-			<div className={selection.genre === 'Sci-Fi' ? styles.scifiResultListContainer : styles.resultListContainer}>
-				{results &&
-					results.map((result, index) => (
-						<div key={index} className={styles.savedsinglegeneratecontainer}>
-							<div className={selection.genre === 'Sci-Fi' ? styles.scifisavedresultscontainer : styles.savedresultscontainer}>{result}</div>
-						</div>
-					))}
+			<div className={styles.resultListContainer}>
+				
 			</div>
 		</div>
 	);
