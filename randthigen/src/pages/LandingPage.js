@@ -13,6 +13,10 @@ import generatecontainer from '../components/GenerateContainer.module.css';
 import axios from 'axios';
 import GenerateContainerAI from '../components/GenerateContainerAI';
 import { newGen } from '../components/newGen';
+import ImageUpload from '../components/ImageUpload';
+import styled from 'styled-components';
+import { putPieceToDB } from '../components/postPieces';
+import LoginModal from "../components/LoginModal";
 
 const LandingPage = () => {
 	
@@ -58,7 +62,18 @@ const LandingPage = () => {
 				});
 		}
 	};
+
+
+	const handleShowLoginModal = () => {
+    setShowLoginModal(true);
+    };
+
+    const handleCloseLoginModal = () => {
+    setShowLoginModal(false);
+    };
+
 	const getPosts = () => {
+		const params = user ? { uid: user.uid } : {};
 		axios
 			.get('/api/post/get_no_ai_posts', { params })
 			.then(async (res) => {
@@ -227,7 +242,7 @@ const LandingPage = () => {
 					>
 						Change the background
 					</button>
-					<button className={styles.loginbutton} onClick={user ? logoutHandler : handleShowLoginModal}>
+					<button className={selection.genre === 'Sci-Fi' ? styles.scifiloginbutton : styles.loginbutton} onClick={user ? logoutHandler : handleShowLoginModal}>
             <div className={styles.login}>{user ? 'Logout' : 'Login'}</div>
             <img
               className={styles.materialSymbolsloginIcon}
@@ -284,13 +299,16 @@ const LandingPage = () => {
 				</div>
 			</div>
 			<ContainerFooter />
+			{showLoginModal && (
+        <LoginModal onClose={handleCloseLoginModal}/>
+      )}
 			<footer className={styles.copyright}>
 				<div className={styles.privacyPolicyParent}>
 					<div className={styles.saved}>Privacy Policy</div>
 					<div className={styles.saved}>Terms of use</div>
 				</div>
 				<div className={styles.saved}>Test</div>
-			</footer> */}
+			</footer>
 		</div>
 	);
 };
