@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styles from './LandingPage.module.css';
+import styles from './SavedResultsContainer.module.css';
 import axios from 'axios';
 import ContainerFooter from '../components/ContainerFooter';
 import firebase from '../firebase.js';
@@ -115,9 +116,9 @@ function HistoryPage() {
 	};
 
 	return (
-		<div className={styles.landingPage}>
-			<div className={styles.fantasy}>
-				<div className={styles.tabcontainer}>
+		<div className={selection.genre === 'Sci-Fi' ? styles.scifilandingPage : styles.landingPage}>
+			<div className={selection.genre === 'Sci-Fi' ? styles.scifi : styles.fantasy}>
+				<div className={selection.genre === 'Sci-Fi' ? styles.scifitabcontainer : styles.tabcontainer}>
 					<div className={styles.selectionmenu}>
 						<div
 							className={styles.randomthinggen}
@@ -138,7 +139,7 @@ function HistoryPage() {
 					</div>
 					{user.accessToken ? (
 						<button
-							className={styles.loginbutton}
+							className={selection.genre === 'Sci-Fi' ? styles.scifiloginbutton : styles.loginbutton}
 							onClick={() => logoutHandler()}
 						>
 							{/* <div className={styles.login}>Login</div> */}
@@ -152,7 +153,7 @@ function HistoryPage() {
 							/>
 						</button>
 					) : (
-						<button className={styles.loginbutton}>
+						<button className={selection.genre === 'Sci-Fi' ? styles.scifiloginbutton : styles.loginbutton}>
 							{/* <div className={styles.login}>Login</div> */}
 
 							<Link to='/login' className={styles.login}>

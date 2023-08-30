@@ -4,8 +4,6 @@ import SettingsFormContainer from '../components/SettingsFormContainer';
 import ContainerFooter from '../components/ContainerFooter';
 import styles from './LandingPage.module.css';
 import ChatGPTApi from '../components/ChatGPTApi';
-import Login from '../components/user/Login';
-import Register from '../components/user/Register';
 import { Link, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import firebase from '../firebase.js';
@@ -18,9 +16,12 @@ import { newGen } from '../components/newGen';
 import ImageUpload from '../components/ImageUpload';
 import styled from 'styled-components';
 import { putPieceToDB } from '../components/postPieces';
+import LoginModal from "../components/LoginModal";
 
 const LandingPage = () => {
-	const user = useSelector((state) => state.user);
+	
+	const [user, setUser] = useState(null); // To keep track of the user's login status
+    const [showLoginModal, setShowLoginModal] = useState(false);
 	const selection = useSelector((state) => state.selection);
 	const navigate = useNavigate();
 	const [message, setMessage] = useState('');
@@ -30,13 +31,21 @@ const LandingPage = () => {
 	const [image, setImage] = useState('');
 	const [context, getContext] = useState('');
 	console.log(message);
-	const logoutHandler = () => {
+	const [generatedContainers, setGeneratedContainers] = useState([]);
+	const [savedResults, setSavedResults] = useState([]);
+
+	useEffect(() => {
+    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+      setUser(user);
+    });
+    return () => unsubscribe(); // Cleanup on component unmount
+    }, []);
+
+    const logoutHandler = () => {
 		firebase.auth().signOut();
 		navigate('/');
 		window.location.reload();
 	};
-	const [generatedContainers, setGeneratedContainers] = useState([]);
-	const [savedResults, setSavedResults] = useState([]);
 	const handleSave = (content) => {
 		setSavedResults((prevResults) => [...prevResults, content]);
 		if (user && user.uid) {
@@ -54,10 +63,18 @@ const LandingPage = () => {
 		}
 	};
 
+	const handleShowLoginModal = () => {
+    setShowLoginModal(true);
+    };
+
+    const handleCloseLoginModal = () => {
+    setShowLoginModal(false);
+    };
+
 	const getPosts = () => {
-		const uid_ = user.uid;
+		const params = user ? { uid: user.uid } : {};
 		axios
-			.get('/api/post/get_no_ai_posts', { params: { uid: user.uid } })
+			.get('/api/post/get_no_ai_posts', { params })
 			.then(async (res) => {
 				console.log('res.data.post: ', res.data.post);
 				setPost([...res.data.post]);
@@ -144,8 +161,6 @@ const LandingPage = () => {
 		} else {
 			setStyle(styles.scifi);
 		}
-		console.log('Genre:', selection.genre); // Add this line to check the genre value
-
 	}, [selection.genre]);
 	// useEffect(() => {
 	// 	//getPosts();
@@ -224,40 +239,17 @@ const LandingPage = () => {
 					>
 						Change the background
 					</button>
-					{user.accessToken ? (
-						<button
-							className={styles.loginbutton}
-							onClick={() => logoutHandler()}
-						>
-							{/* <div className={styles.login}>Login</div> */}
-							{/* <Link to='/' className={styles.login}> */}
-							Logout
-							{/* </Link> */}
-							<img
-								className={styles.materialSymbolsloginIcon}
-								alt=''
-								src='/materialsymbolslogin.svg'
-							/>
-						</button>
-					) : (
-						<button className={selection.genre === 'Sci-Fi' ? styles.scifiloginbutton : styles.loginbutton}>
-							{/* <div className={styles.login}>Login</div> */}
-
-							<Link to='/login' className={styles.login}>
-								Login
-							</Link>
-
-							<img
-								className={styles.materialSymbolsloginIcon}
-								alt=''
-								src='/materialsymbolslogin.svg'
-							/>
-						</button>
-					)}
+					<button className={selection.genre === 'Sci-Fi' ? styles.scifiloginbutton : styles.loginbutton} onClick={user ? logoutHandler : handleShowLoginModal}>
+            <div className={styles.login}>{user ? 'Logout' : 'Login'}</div>
+            <img
+              className={styles.materialSymbolsloginIcon}
+              alt=""
+              src="/materialsymbolslogin.svg"
+            />
+          </button>
 				</div>
 				{/* <SavedResultsContainer results={savedResults} /> */}
 				<SettingsFormContainer
-					className={selection.genre === 'Sci-Fi' ? styles.scifisettingscontainer : styles.settingscontainer}
 					message={message}
 					setMessage={setMessage}
 					onGenerateButtonClick={handleGenerateButtonClick}
@@ -302,14 +294,11 @@ const LandingPage = () => {
 					</ul>
 				</div>
 			</div>
-			{/* <ContainerFooter />
-			<footer className={styles.copyright}>
-				<div className={styles.privacyPolicyParent}>
-					<div className={styles.saved}>Privacy Policy</div>
-					<div className={styles.saved}>Terms of use</div>
-				</div>
-				<div className={styles.saved}>Test</div>
-			</footer> */}
+			
+			{showLoginModal && (
+        <LoginModal onClose={handleCloseLoginModal}/>
+      )}
+
 		</div>
 	);
 };
