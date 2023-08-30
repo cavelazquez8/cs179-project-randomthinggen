@@ -29,7 +29,12 @@ const SavedResultsContainer = ({ results }) => {
 				/>
 			</button>
 			<div className={styles.resultListContainer}>
-				
+				{results &&
+					results.map((result, index) => (
+						<div key={index} className={styles.savedsinglegeneratecontainer}>
+							<div className={styles.savedsinglecontainer}>{result}</div>
+						</div>
+					))}
 			</div>
 		</div>
 	);
