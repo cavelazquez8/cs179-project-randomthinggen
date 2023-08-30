@@ -107,7 +107,7 @@ const SettingsFormContainer = (props) => {
 			{/* onClick={ChatGPTApi generateMessage={message}} */}
 			{selection.AI === 'Off' && (
 				<button
-					className={styles.generatebutton}
+					className={selection.genre === 'Sci-Fi' ? styles.scifigeneratebutton : styles.generatebutton}
 					onClick={props.onGenerateButtonClick}
 				>
 					<div className={styles.generate}>Generate!</div>

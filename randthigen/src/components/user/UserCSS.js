@@ -82,5 +82,3 @@ const MyPageDiv = styled.div`
 `;
 
 export { LoginDiv, MyPageDiv };
-
-export { LoginDiv, MyPageDiv };
