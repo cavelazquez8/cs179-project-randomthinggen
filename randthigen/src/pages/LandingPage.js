@@ -28,6 +28,7 @@ const LandingPage = () => {
 	const [post, setPost] = useState([]);
 	const [style, setStyle] = useState();
 	const [image, setImage] = useState('');
+	const [context, getContext] = useState('');
 	console.log(message);
 	const logoutHandler = () => {
 		firebase.auth().signOut();
@@ -100,6 +101,7 @@ const LandingPage = () => {
 			console.error(error);
 		}
 	};
+
 	const handleGenerateButtonClick = async () => {
 		// setGeneratedContainers((prevContainers) => [
 		// 	...prevContainers,
@@ -149,7 +151,48 @@ const LandingPage = () => {
 	// useEffect(() => {
 	// 	putPieceToDB();
 	// }, []);
-
+	useEffect(() => {
+		if (context === '') return;
+		const textToSent = `${context}
+		Refine this description to three paragraphs,
+		expanding the reader's understanding of the person/place/thing described.
+		and providing new information consistent with the informatino provided
+		`;
+		console.log('textToSent:', textToSent);
+		const getMessages = async () => {
+			//e.preventDefault();
+			const options = {
+				method: 'POST',
+				body: JSON.stringify({
+					message: textToSent,
+					uid: user.uid,
+				}),
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			};
+			try {
+				const response = await fetch(
+					'http://localhost:8000/api/post/completions',
+					options
+				);
+				console.log(response);
+				const data = await response.json();
+				console.log(data);
+				console.log(data.post);
+				setPost((array) => {
+					return [...array, data.post[data.post.length - 1]];
+				});
+				console.log(post);
+				// setMessage(data.choices[0].message);
+				// console.log(message);
+				// setResponse(data.choices[0].message.content);
+			} catch (error) {
+				console.error(error);
+			}
+		};
+		getMessages();
+	}, [context]);
 	return (
 		<div className={styles.landingPage}>
 			<div className={`${style}`}>
@@ -231,6 +274,13 @@ const LandingPage = () => {
 				>
 					<ChatGPTApi msgFromLanding={message} trigger={trigger} />
 					{/* <ul className='feed'>{generatedContainers}</ul> */}
+					{post.length !== 0 && (
+						<div className={styles.divider}>
+							<span></span>
+							<span>True Random</span>
+							<span></span>
+						</div>
+					)}
 					<ul className='feed'>
 						{post?.map((message, index) => (
 							// <li key={index}>
@@ -243,6 +293,7 @@ const LandingPage = () => {
 								text={message.content}
 								onSave={handleSave}
 								setPosts={setGeneratedContainers}
+								getContext={getContext}
 							/>
 						))}
 					</ul>

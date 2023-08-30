@@ -12,7 +12,7 @@ var getOnePiece = (role) => {
 		});
 };
 
-var firstName3 = (role) =>
+var getWord = (role) =>
 	axios
 		.get('/api/piece/get_piece', { params: { role: `${role}` } })
 		.then(async (res) => {
@@ -130,4 +130,4 @@ const putPieceToDB = async () => {
 	// await getPosts('nameStart');
 };
 
-export { putPieceToDB, getOnePiece, postMessage, firstName3 };
+export { putPieceToDB, getOnePiece, postMessage, getWord };
