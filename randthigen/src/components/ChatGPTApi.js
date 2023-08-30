@@ -182,7 +182,7 @@ function ChatGPTApi(props) {
 					/>
 					<`button` type='submit'>Submit</>
 				</form> */}
-				{1 === 0 && (
+				{selection.AI === 'On' && (
 					<div className='input-container'>
 						<textarea
 							value={value}

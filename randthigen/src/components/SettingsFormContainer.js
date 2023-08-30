@@ -32,6 +32,10 @@ const SettingsFormContainer = (props) => {
 	const options = ['one', 'two', 'three'];
 	const defaultOption = options[0];
 	//const [msg, setMSG] = useState('');
+	const heights = ['Short', 'Medium', 'Tall'];
+	const builds = ['Thin', 'Medium', 'Fat'];
+	const jobs = ['No job', 'Student', 'Welder', 'Magician'];
+	const hobbies = ['Swimming', 'Dancing', 'Singing', 'Play the piano'];
 	//const [genre, setGenre] = useState('fantasy');
 	const handleGenreChange = (event, value) => {
 		setSelectedGenre(
@@ -52,33 +56,41 @@ const SettingsFormContainer = (props) => {
 			dispatch(AISelect({ AI: event.target.value }))
 		);
 	};
+	const [height, setHeight] = useState('Short');
+	const [build, setBuild] = useState('Thin');
+	const [hobby, setHobby] = useState('Swimming');
+	const [job, setJob] = useState('Student');
 	const msg = `
-	generate random thing with these conditions: 
+	Generate something with these conditions: 
 	Genre: ${selection.genre}
 	Object: ${selection.generate}
-	height:
-	build: thin
-	job: welder
-	hobbies: reading, writing
-	limit response to be two paragraph
-	`;
+	Height: ${height}
+	Build: ${build}
+	Job: ${job}
+	Hobbies: ${hobby}
+	Limit your response to two paragraphs.
+		`;
 	//props.setMessage(msg);
 	useEffect(() => {
 		const msg = `
-		generate random thing with these conditions: 
+		Generate something with these conditions: 
 		Genre: ${selection.genre}
 		Object: ${selection.generate}
-		height: 
-		build: 
-		job: 
-		hobby: 
-		limit response to be two paragraph
+		Height: ${height}
+		Build: ${build}
+		Job: ${job}
+		Hobbies: ${hobby}
+		Limit your response to two paragraphs.
 		`;
 		props.setMessage(msg);
 	}, [
 		selectedGenre,
 		selectedGenerateType,
-		selectedAI
+		selectedAI,
+		height,
+		build,
+		job,
+		hobby,
 	]);
 	//console.log(message);
 	// const getMessages = async () => {
@@ -245,6 +257,89 @@ const SettingsFormContainer = (props) => {
 					/>
 				}
 			/>
+			<h2 className={styles.ai}>AI:</h2>
+			<div className={styles.airadiobuttons}>
+				<FormControlLabel
+					value='On' //ADDED
+					label='On'
+					labelPlacement='end'
+					control={
+						<Radio
+							color='primary'
+							size='medium'
+							checked={selectedAI === 'On'} //ADDED
+							onChange={handleAIChange} //ADDED
+						/>
+					}
+				/>
+				<FormControlLabel
+					value='Off' //ADDED
+					label='Off'
+					labelPlacement='end'
+					control={
+						<Radio
+							color='primary'
+							size='medium'
+							checked={selectedAI === 'Off'} //ADDED
+							onChange={handleAIChange}
+						/>
+					} //ADDED
+				/>
+			</div>
+			<div className={styles.aisettings}>
+				{/* <div className={styles.aiinput}>
+					Height:
+					<div className={styles.aisettingtextbox}>Tall</div>
+				</div> */}
+				<Dropdown
+					options={options}
+					// onChange={this._onSelect}
+					value={defaultOption}
+					placeholder='Select an option'
+				/>
+				<Dropdown>
+					<Dropdown.Toggle variant='success'>Height</Dropdown.Toggle>
+					<Dropdown.Menu>
+						{heights.map((item) => (
+							<Dropdown.Item onClick={() => setHeight(item)}>
+								{item}
+							</Dropdown.Item>
+						))}
+					</Dropdown.Menu>
+				</Dropdown>
+
+				<Dropdown>
+					<Dropdown.Toggle variant='success'>Build</Dropdown.Toggle>
+					<Dropdown.Menu>
+						{builds.map((item) => (
+							<Dropdown.Item onClick={() => setBuild(item)}>
+								{item}
+							</Dropdown.Item>
+						))}
+					</Dropdown.Menu>
+				</Dropdown>
+
+				<Dropdown>
+					<Dropdown.Toggle variant='success'>Job</Dropdown.Toggle>
+					<Dropdown.Menu>
+						{jobs.map((item) => (
+							<Dropdown.Item onClick={() => setJob(item)}>{item}</Dropdown.Item>
+						))}
+					</Dropdown.Menu>
+				</Dropdown>
+
+				<Dropdown>
+					<Dropdown.Toggle variant='success'>Hobbies</Dropdown.Toggle>
+					<Dropdown.Menu>
+						{hobbies.map((item) => (
+							<Dropdown.Item onClick={() => setHobby(item)}>
+								{item}
+							</Dropdown.Item>
+						))}
+					</Dropdown.Menu>
+				</Dropdown>
+			</div>
+
 
 			{/* <ImageUpload setImage={setImage} /> */}
 		</div>
