@@ -1,6 +1,6 @@
 import SavedResultsContainer from '../components/SavedResultsContainer';
 import SettingsFormContainer from '../components/SettingsFormContainer';
-import GenerateContainer from '../components/GenerateContainer';
+//import GenerateContainer from '../components/GenerateContainer';
 import ContainerFooter from '../components/ContainerFooter';
 import styles from './LandingPage.module.css';
 import ChatGPTApi from '../components/ChatGPTApi';
@@ -29,6 +29,7 @@ const LandingPage = () => {
 	const [post, setPost] = useState([]);
 	const [style, setStyle] = useState();
 	const [image, setImage] = useState('');
+	const [context, getContext] = useState('');
 	console.log(message);
 	const [generatedContainers, setGeneratedContainers] = useState([]);
 	const [savedResults, setSavedResults] = useState([]);
@@ -100,9 +101,12 @@ const LandingPage = () => {
 				'http://localhost:8000/api/post/completions_no_ai',
 				options
 			);
-			console.log(response);
+			//console.log('RESPONSE: ', response.json);
 			const data = await response.json();
-			console.log('Data from no ai', data);
+			console.log('Data from no ai', data.post[data.post.length - 1]);
+			setPost((posts) => {
+				return [...posts, data.post[data.post.length - 1]];
+			});
 			//console.log(data);
 			// setPosts(data.post);
 
@@ -114,6 +118,7 @@ const LandingPage = () => {
 			console.error(error);
 		}
 	};
+
 	const handleGenerateButtonClick = async () => {
 		// setGeneratedContainers((prevContainers) => [
 		// 	...prevContainers,
@@ -124,7 +129,7 @@ const LandingPage = () => {
 		// 	/>,
 		// ]);
 		await postMessage();
-		await getPosts();
+		//await getPosts();
 		console.log('getPosts: ', post);
 		setGeneratedContainers([...post]);
 	};
@@ -157,13 +162,54 @@ const LandingPage = () => {
 			setStyle(styles.scifi);
 		}
 	}, [selection.genre]);
-	useEffect(() => {
-		getPosts();
-	}, []);
+	// useEffect(() => {
+	// 	//getPosts();
+	// }, []);
 	// useEffect(() => {
 	// 	putPieceToDB();
 	// }, []);
-
+	useEffect(() => {
+		if (context === '') return;
+		const textToSent = `${context}
+		Refine this description to three paragraphs,
+		expanding the reader's understanding of the person/place/thing described.
+		and providing new information consistent with the informatino provided
+		`;
+		console.log('textToSent:', textToSent);
+		const getMessages = async () => {
+			//e.preventDefault();
+			const options = {
+				method: 'POST',
+				body: JSON.stringify({
+					message: textToSent,
+					uid: user.uid,
+				}),
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			};
+			try {
+				const response = await fetch(
+					'http://localhost:8000/api/post/completions',
+					options
+				);
+				console.log(response);
+				const data = await response.json();
+				console.log(data);
+				console.log(data.post);
+				setPost((array) => {
+					return [...array, data.post[data.post.length - 1]];
+				});
+				console.log(post);
+				// setMessage(data.choices[0].message);
+				// console.log(message);
+				// setResponse(data.choices[0].message.content);
+			} catch (error) {
+				console.error(error);
+			}
+		};
+		getMessages();
+	}, [context]);
 	return (
 		<div className={styles.landingPage}>
 			<div className={`${style}`}>
@@ -184,10 +230,6 @@ const LandingPage = () => {
 							History
 						</div>
 						<div className={styles.selectionmenuChild} />
-						<div className={styles.saved}>Chat</div>
-						<div className={styles.selectionmenuChild} />
-						<div className={styles.saved}>Analytics</div>
-						<div className={styles.selectionmenuChild} />
 						<div className={styles.profile}>Profile</div>
 					</div>
 					<ImageUpload setImage={setImage} />
@@ -206,7 +248,7 @@ const LandingPage = () => {
             />
           </button>
 				</div>
-				<SavedResultsContainer results={savedResults} />
+				{/* <SavedResultsContainer results={savedResults} /> */}
 				<SettingsFormContainer
 					message={message}
 					setMessage={setMessage}
@@ -227,6 +269,13 @@ const LandingPage = () => {
 				>
 					<ChatGPTApi msgFromLanding={message} trigger={trigger} />
 					{/* <ul className='feed'>{generatedContainers}</ul> */}
+					{post.length !== 0 && (
+						<div className={styles.divider}>
+							<span></span>
+							<span>True Random</span>
+							<span></span>
+						</div>
+					)}
 					<ul className='feed'>
 						{post?.map((message, index) => (
 							// <li key={index}>
@@ -239,6 +288,7 @@ const LandingPage = () => {
 								text={message.content}
 								onSave={handleSave}
 								setPosts={setGeneratedContainers}
+								getContext={getContext}
 							/>
 						))}
 					</ul>
@@ -254,7 +304,7 @@ const LandingPage = () => {
 					<div className={styles.saved}>Terms of use</div>
 				</div>
 				<div className={styles.saved}>Test</div>
-			</footer>
+			</footer> */}
 		</div>
 	);
 };

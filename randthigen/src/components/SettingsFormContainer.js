@@ -9,13 +9,17 @@ import styles from './SettingsFormContainer.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import ChatGPTApi from './ChatGPTApi';
 import { useState, useEffect } from 'react';
-
+//import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 import {
 	genreSelect,
 	generateSelect,
 	AISelect,
 } from '../Reducer/selectionSlice';
 import ImageUpload from './ImageUpload';
+import Dropdown from 'react-bootstrap/Dropdown';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 const SettingsFormContainer = (props) => {
 	const selection = useSelector((state) => state.selection);
 	const [image, setImage] = useState('');
@@ -25,7 +29,13 @@ const SettingsFormContainer = (props) => {
 	const [selectedAI, setSelectedAI] = useState('On'); // ADDED (Default value "On")
 
 	const dispatch = useDispatch();
-
+	const options = ['one', 'two', 'three'];
+	const defaultOption = options[0];
+	//const [msg, setMSG] = useState('');
+	const heights = ['Short', 'Medium', 'Tall'];
+	const builds = ['Thin', 'Medium', 'Fat'];
+	const jobs = ['No job', 'Student', 'Welder', 'Magician'];
+	const hobbies = ['Swimming', 'Dancing', 'Singing', 'Play the piano'];
 	//const [genre, setGenre] = useState('fantasy');
 	const handleGenreChange = (event, value) => {
 		setSelectedGenre(
@@ -46,11 +56,15 @@ const SettingsFormContainer = (props) => {
 			dispatch(AISelect({ AI: event.target.value }))
 		);
 	};
+	const [height, setHeight] = useState('Short');
+	const [build, setBuild] = useState('Thin');
+	const [hobby, setHobby] = useState('Swimming');
+	const [job, setJob] = useState('Student');
 	const msg = `
 	generate random thing with these conditions: 
 	Genre: ${selection.genre}
 	Object: ${selection.generate}
-	height: tall
+	height: ${height}
 	build: thin
 	job: welder
 	hobbies: reading, writing
@@ -62,14 +76,22 @@ const SettingsFormContainer = (props) => {
 		generate random thing with these conditions: 
 		Genre: ${selection.genre}
 		Object: ${selection.generate}
-		height: tall
-		build: thin
-		job: welder
-		hobbies: reading, writing
+		height: ${height}
+		build: ${build}
+		job: ${job}
+		hobby: ${hobby}
 		limit response to be two paragraph
 		`;
 		props.setMessage(msg);
-	}, [selectedGenre, selectedGenerateType, selectedAI]);
+	}, [
+		selectedGenre,
+		selectedGenerateType,
+		selectedAI,
+		height,
+		build,
+		job,
+		hobby,
+	]);
 	//console.log(message);
 	// const getMessages = async () => {
 	// 	const options = {
@@ -102,6 +124,7 @@ const SettingsFormContainer = (props) => {
 	// 	}
 	// };
 	console.log('selection: ', selection);
+	console.log('HEIGHT: ', height);
 	return (
 		<div className={styles.settingscontainer}>
 			<h1 className={styles.settings}>Settings</h1>
@@ -265,11 +288,59 @@ const SettingsFormContainer = (props) => {
 				/>
 			</div>
 			<div className={styles.aisettings}>
-				<div className={styles.aiinput}>
+				{/* <div className={styles.aiinput}>
 					Height:
 					<div className={styles.aisettingtextbox}>Tall</div>
-				</div>
-				<div className={styles.aiinput}>
+				</div> */}
+				<Dropdown
+					options={options}
+					// onChange={this._onSelect}
+					value={defaultOption}
+					placeholder='Select an option'
+				/>
+				<Dropdown>
+					<Dropdown.Toggle variant='success'>Height</Dropdown.Toggle>
+					<Dropdown.Menu>
+						{heights.map((item) => (
+							<Dropdown.Item onClick={() => setHeight(item)}>
+								{item}
+							</Dropdown.Item>
+						))}
+					</Dropdown.Menu>
+				</Dropdown>
+
+				<Dropdown>
+					<Dropdown.Toggle variant='success'>Build</Dropdown.Toggle>
+					<Dropdown.Menu>
+						{builds.map((item) => (
+							<Dropdown.Item onClick={() => setBuild(item)}>
+								{item}
+							</Dropdown.Item>
+						))}
+					</Dropdown.Menu>
+				</Dropdown>
+
+				<Dropdown>
+					<Dropdown.Toggle variant='success'>Job</Dropdown.Toggle>
+					<Dropdown.Menu>
+						{jobs.map((item) => (
+							<Dropdown.Item onClick={() => setJob(item)}>{item}</Dropdown.Item>
+						))}
+					</Dropdown.Menu>
+				</Dropdown>
+
+				<Dropdown>
+					<Dropdown.Toggle variant='success'>Hobbies</Dropdown.Toggle>
+					<Dropdown.Menu>
+						{hobbies.map((item) => (
+							<Dropdown.Item onClick={() => setHobby(item)}>
+								{item}
+							</Dropdown.Item>
+						))}
+					</Dropdown.Menu>
+				</Dropdown>
+
+				{/* <div className={styles.aiinput}>
 					Build:
 					<div className={styles.aisettingtextbox}>Thin</div>
 				</div>
@@ -280,7 +351,7 @@ const SettingsFormContainer = (props) => {
 				<div className={styles.aiinput}>
 					Hobbies:
 					<div className={styles.aisettingtextbox}>Reading, Writing</div>
-				</div>
+				</div> */}
 			</div>
 
 			{/* <ImageUpload setImage={setImage} /> */}

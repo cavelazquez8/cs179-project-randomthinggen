@@ -9,7 +9,9 @@ const GenerateContainerAI = (props) => {
 
 	const [content, setContent] = useState(boxCont); // Default content
 	const handleSave = () => {
-		props.onSave(boxCont);
+		console.log('box: ', boxCont);
+		props.getContext(boxCont);
+		// props.onSave(boxCont);
 	};
 	const user = useSelector((state) => state.user);
 	const handleDelete = async () => {
@@ -41,16 +43,17 @@ const GenerateContainerAI = (props) => {
 		<div className={styles.singlegeneratecontainer}>
 			<div className={styles.generatecontainer}>{boxCont}</div>
 			<button className={styles.savegeneratebutton} onClick={handleSave}>
-				<div className={styles.save}>Save</div>
+				<div className={styles.save}>Feed It to AI</div>
 				<img
 					className={styles.materialSymbolssaveIcon}
 					alt=''
 					src='/materialsymbolssave.svg'
 				/>
 			</button>
+			{/* 
 			<button className={styles.deletebutton} onClick={handleDelete}>
 				<img className={styles.typcndeleteIcon} alt='' src='/typcndelete.svg' />
-			</button>
+			</button> */}
 		</div>
 	);
 };

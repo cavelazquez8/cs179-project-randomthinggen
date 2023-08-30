@@ -1,8 +1,8 @@
-import { getOnePiece, postMessage, firstName3 } from './postPieces';
+import { getOnePiece, postMessage, getWord } from './postPieces';
 import axios from 'axios';
 import useState from 'react';
 let used = [];
-async function firstName() {
+var firstName = async () => {
 	if (document.getElementById('fantasy').checked) {
 		var res = '';
 		var nameStart = [
@@ -18,10 +18,10 @@ async function firstName() {
 			'Te',
 		];
 		var nameMid = ['ba', 'be', 'bi', 'bo', 'bu', 'ca', 'ci', 'co'];
-		nameMid.forEach(async (message) => {
-			//console.log('Message: ', message);
-			await postMessage(message, 'nameStart');
-		});
+		// nameMid.forEach(async (message) => {
+		// 	//console.log('Message: ', message);
+		// 	await postMessage(message, 'nameStart');
+		// });
 		// nameMid.forEach(async (message) => {
 		// 	//console.log('Message: ', message);
 		// 	await postMessage(message, 'nameMid');
@@ -132,18 +132,25 @@ async function firstName() {
 			'zie',
 		];
 		var numMids = Math.floor(Math.random() * 2);
-		res += nameStart[Math.floor(Math.random() * nameStart.length)];
-		for (var i = 0; i < numMids; i++) {
-			res += nameMid[Math.floor(Math.random() * nameMid.length)];
-		}
-		res += nameEnd[Math.floor(Math.random() * nameEnd.length)];
+		var fname = await getWord('nameStart');
+		res += fname;
+		//[Math.floor(Math.random() * nameStart.length)];
+		// for (var i = 0; i < numMids; i++) {
+		// 	res += nameMid[Math.floor(Math.random() * nameMid.length)];
+		// 	// res += await firstName3('nameMid');
+		// }
+		// res += nameEnd[Math.floor(Math.random() * nameEnd.length)];
+		// res += await firstName3('nameEnd');
+		var lname = await getWord('nameEnd');
+		res += lname;
+		await console.log('RRREEESSS: ', fname, ' ', lname, ' ', res);
 		return res;
 	}
 	if (document.getElementById('scifi').checked) {
 		var a = ['Alice', 'John'];
 		return a[Math.floor(Math.random() * a.length)];
 	}
-}
+};
 
 function lastName() {
 	if (document.getElementById('fantasy').checked) {
@@ -1669,29 +1676,31 @@ async function newGen() {
 	var desc;
 
 	var name = '';
-	var firstName = (role) =>
-		axios
-			.get('/api/piece/get_piece', { params: { role: `${role}` } })
-			.then(async (res) => {
-				// await console.log('nameStart: ', res.data.post[0].content);
-				// firstName_v = res.data.post[0].content;
-				//res.status(200).json({ result: firstName });
-				console.log('RES: ', res.data.post[0].content);
-				return res.data.post[0].content;
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+	// var firstName = (role) =>
+	// 	axios
+	// 		.get('/api/piece/get_piece', { params: { role: `${role}` } })
+	// 		.then(async (res) => {
+	// 			// await console.log('nameStart: ', res.data.post[0].content);
+	// 			// firstName_v = res.data.post[0].content;
+	// 			//res.status(200).json({ result: firstName });
+	// 			console.log('RES: ', res.data.post[0].content);
+	// 			return res.data.post[0].content;
+	// 		})
+	// 		.catch((err) => {
+	// 			console.log(err);
+	// 		});
 
-	const nameStart = await firstName('nameStart');
-	const nameMid = await firstName('nameMid');
-	const nameLast = await getOnePiece('nameStart');
-	console.log('nameStart:', nameStart);
-	console.log('nameMid:', nameMid);
-	console.log('nameLast:', nameLast);
+	// const nameStart = await firstName('nameStart');
+	// const nameMid = await firstName('nameMid');
+	// const nameLast = await getOnePiece('nameStart');
+	// console.log('nameStart:', nameStart);
+	// console.log('nameMid:', nameMid);
+	// console.log('nameLast:', nameLast);
+	var vFirstName = await firstName();
+	console.log('firstName(): ', vFirstName);
 	if (document.getElementById('person').checked) {
 		desc =
-			name +
+			vFirstName +
 			' ' +
 			lastName() +
 			', ' +

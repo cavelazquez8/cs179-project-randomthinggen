@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Link, Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import GenerateContainer from './GenerateContainer';
+//import GenerateContainer from './GenerateContainer';
 import GenerateContainerAI from './GenerateContainerAI';
+import styles from '../pages/LandingPage.module.css';
 
 function ChatGPTApi(props) {
 	const [response, setResponse] = useState('');
@@ -15,6 +16,7 @@ function ChatGPTApi(props) {
 	const [currentTitle, setCurrentTitle] = useState('');
 	const [posts, setPosts] = useState([]);
 	const user = useSelector((state) => state.user);
+	const [context, getContext] = useState('');
 	const selection = useSelector((state) => state.selection);
 	const uid = user.uid;
 	const trigg = props.trigger;
@@ -49,8 +51,9 @@ function ChatGPTApi(props) {
 			const data = await response.json();
 			console.log(data);
 			console.log(data.post);
-			setPosts(data.post);
-			SVGTextContentElement();
+			setPosts((array) => {
+				return [...array, data.post[data.post.length - 1]];
+			});
 			console.log(posts);
 			// setMessage(data.choices[0].message);
 			// console.log(message);
@@ -102,9 +105,52 @@ function ChatGPTApi(props) {
 			]);
 		}
 	}, [message, currentTitle]);
+
 	useEffect(() => {
-		getPostsWithoutGen();
-	}, []);
+		if (context === '') return;
+		const textToSent = `${context}
+		Refine this description to three paragraphs,
+		expanding the reader's understanding of the person/place/thing described.
+		and providing new information consistent with the informatino provided
+		`;
+		console.log('textToSent:', textToSent);
+		const getMessages = async () => {
+			//e.preventDefault();
+			const options = {
+				method: 'POST',
+				body: JSON.stringify({
+					message: textToSent,
+					uid: user.uid,
+				}),
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			};
+			try {
+				const response = await fetch(
+					'http://localhost:8000/api/post/completions',
+					options
+				);
+				console.log(response);
+				const data = await response.json();
+				console.log(data);
+				console.log(data.post);
+				setPosts((array) => {
+					return [...array, data.post[data.post.length - 1]];
+				});
+				console.log(posts);
+				// setMessage(data.choices[0].message);
+				// console.log(message);
+				// setResponse(data.choices[0].message.content);
+			} catch (error) {
+				console.error(error);
+			}
+		};
+		getMessages();
+	}, [context]);
+	// useEffect(() => {
+	// 	getPostsWithoutGen();
+	// }, []);
 	// useEffect(async () => {
 	// 	//console.log('Hello!!!!!!!!!!', props.trigger);
 	// 	setValue(props.msgFromLanding);
@@ -158,7 +204,6 @@ function ChatGPTApi(props) {
 						</button>
 					</div>
 				)}
-
 				{/* <ul className='feed'>
 					{previousChats?.map((message, index) => (
 						<li key={index}>
@@ -169,7 +214,14 @@ function ChatGPTApi(props) {
 						</li>
 					))}
 				</ul> */}
-
+				{posts.length !== 0 && (
+					<div className={styles.divider}>
+						<span></span>
+						<span>AI Random</span>
+						<span></span>
+					</div>
+				)}
+				{/*  */}
 				<ul className='feed'>
 					{posts?.map((message, index) => (
 						// <li key={index}>
@@ -182,6 +234,7 @@ function ChatGPTApi(props) {
 							text={message.content}
 							onSave={handleSave}
 							setPosts={setPosts}
+							getContext={getContext}
 						/>
 					))}
 				</ul>
