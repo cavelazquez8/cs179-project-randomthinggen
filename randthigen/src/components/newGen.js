@@ -1,4 +1,4 @@
-import { getOnePiece, postMessage, firstName3 } from './postPieces';
+import { getOnePiece, postMessage, getWord } from './postPieces';
 import axios from 'axios';
 import useState from 'react';
 let used = [];
@@ -132,15 +132,16 @@ var firstName = async () => {
 			'zie',
 		];
 		var numMids = Math.floor(Math.random() * 2);
-		var fname = await firstName3('nameStart');
-		res += fname; //[Math.floor(Math.random() * nameStart.length)];
+		var fname = await getWord('nameStart');
+		res += fname;
+		//[Math.floor(Math.random() * nameStart.length)];
 		// for (var i = 0; i < numMids; i++) {
 		// 	res += nameMid[Math.floor(Math.random() * nameMid.length)];
 		// 	// res += await firstName3('nameMid');
 		// }
 		// res += nameEnd[Math.floor(Math.random() * nameEnd.length)];
 		// res += await firstName3('nameEnd');
-		var lname = await firstName3('nameEnd');
+		var lname = await getWord('nameEnd');
 		res += lname;
 		await console.log('RRREEESSS: ', fname, ' ', lname, ' ', res);
 		return res;

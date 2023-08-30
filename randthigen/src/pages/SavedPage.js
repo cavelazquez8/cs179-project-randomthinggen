@@ -114,14 +114,16 @@ function SavedPage() {
 					className={styles.generationscontainer}
 					style={{ overflowY: 'scroll', height: '100vh' }}
 				>
-					{userSaved.map((item) => (
-						<SavedContainer
-							key={item._id}
-							id={item._id}
-							content={item.content}
-							onDelete={handleDelete}
-						/>
-					))}
+					<ul className='feed'>
+						{userSaved.map((item) => (
+							<SavedContainer
+								key={item._id}
+								id={item._id}
+								content={item.content}
+								onDelete={handleDelete}
+							/>
+						))}
+					</ul>
 				</div>
 			</div>
 			{/* <ContainerFooter />

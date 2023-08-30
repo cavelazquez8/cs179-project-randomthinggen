@@ -15,6 +15,8 @@ function HistoryPage() {
 	const [userHistory, setUserHistory] = useState([]);
 	const navigate = useNavigate();
 	const [post, setPost] = useState([]);
+	const [postAI, setPostAI] = useState([]);
+	const [postNoAI, setPostNoAI] = useState([]);
 	const [savedResults, setSavedResults] = useState([]);
 	const logoutHandler = () => {
 		firebase.auth().signOut();
@@ -27,6 +29,7 @@ function HistoryPage() {
 			.then(async (res) => {
 				console.log('res.data.post No AI: ', res.data.post);
 				setPost((array) => [...array, ...res.data.post]);
+				setPostNoAI((array) => [...array, ...res.data.post]);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -43,6 +46,7 @@ function HistoryPage() {
 				// await console.log('res.data.post.withoutGen: ', res);
 				console.log('res.data.post: ', res.data.post);
 				setPost((array) => [...array, ...res.data.post]);
+				setPostAI((array) => [...array, ...res.data.post]);
 				console.log('POST: ', post);
 			})
 			.catch((err) => {
@@ -177,8 +181,7 @@ function HistoryPage() {
 						/>
 					))} */}
 					<ul className='feed'>
-						{post?.map((message, index) => (
-							// <li key={index}>
+						{/* // <li key={index}>
 							// 	<p className='role' style={{ color: 'red' }}>
 							// 		{message.role}
 							// 	</p>
@@ -188,7 +191,34 @@ function HistoryPage() {
 							// 	text={message.content}
 							// 	onSave={handleSave}
 							// 	onDelete={handleDelete}
-							// />
+							// /> */}
+						{/* {post?.map((message, index) => (
+							<HistoryContainer
+								key={message._id}
+								id={message._id}
+								content={message.content}
+								onDelete={handleDelete}
+							/>
+						))} */}
+						<div className={styles.divider}>
+							<span></span>
+							<span>AI Random</span>
+							<span></span>
+						</div>
+						{postAI?.map((message, index) => (
+							<HistoryContainer
+								key={message._id + 'ai'}
+								id={message._id}
+								content={message.content}
+								onDelete={handleDelete}
+							/>
+						))}
+						<div className={styles.divider}>
+							<span></span>
+							<span>True Random</span>
+							<span></span>
+						</div>
+						{postNoAI?.map((message, index) => (
 							<HistoryContainer
 								key={message._id}
 								id={message._id}
