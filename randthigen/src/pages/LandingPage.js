@@ -61,9 +61,7 @@ const LandingPage = () => {
 					console.error('Error saving content to user saved:', error);
 				});
 		}
-	};
-
-
+	}
 	const handleShowLoginModal = () => {
     setShowLoginModal(true);
     };
@@ -162,8 +160,6 @@ const LandingPage = () => {
 		} else {
 			setStyle(styles.scifi);
 		}
-		console.log('Genre:', selection.genre); // Add this line to check the genre value
-
 	}, [selection.genre]);
 	// useEffect(() => {
 	// 	//getPosts();
@@ -253,7 +249,6 @@ const LandingPage = () => {
 				</div>
 				{/* <SavedResultsContainer results={savedResults} /> */}
 				<SettingsFormContainer
-					className={selection.genre === 'Sci-Fi' ? styles.scifisettingscontainer : styles.settingscontainer}
 					message={message}
 					setMessage={setMessage}
 					onGenerateButtonClick={handleGenerateButtonClick}
@@ -298,17 +293,11 @@ const LandingPage = () => {
 					</ul>
 				</div>
 			</div>
-			<ContainerFooter />
+			
 			{showLoginModal && (
         <LoginModal onClose={handleCloseLoginModal}/>
       )}
-			<footer className={styles.copyright}>
-				<div className={styles.privacyPolicyParent}>
-					<div className={styles.saved}>Privacy Policy</div>
-					<div className={styles.saved}>Terms of use</div>
-				</div>
-				<div className={styles.saved}>Test</div>
-			</footer>
+
 		</div>
 	);
 };
