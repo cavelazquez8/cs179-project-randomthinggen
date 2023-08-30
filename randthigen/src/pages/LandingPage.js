@@ -228,16 +228,15 @@ const LandingPage = () => {
 						<div className={styles.saved} onClick={() => navigate('/history')}>
 							History
 						</div>
-						<div className={styles.selectionmenuChild} />
-						<div className={styles.profile}>Profile</div>
 					</div>
-					<ImageUpload setImage={setImage} />
+					{/* <ImageUpload setImage={setImage} />
 					<button
 						// className={styles.loginbutton}
 						onClick={() => changeBackground()}
 					>
 						Change the background
 					</button>
+	} */}
 					<button className={selection.genre === 'Sci-Fi' ? styles.scifiloginbutton : styles.loginbutton} onClick={user ? logoutHandler : handleShowLoginModal}>
             <div className={styles.login}>{user ? 'Logout' : 'Login'}</div>
             <img
@@ -247,6 +246,13 @@ const LandingPage = () => {
             />
           </button>
 				</div>
+				{/* <div className={styles2.savedresultscontainer}>
+					<ImageUpload setImage={setImage} />
+					<button
+						// className={styles.loginbutton}
+						onClick={() => changeBackground()}
+					></button>
+				</div> */}
 				{/* <SavedResultsContainer results={savedResults} /> */}
 				<SettingsFormContainer
 					message={message}

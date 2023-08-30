@@ -19,7 +19,7 @@ const SavedResultsContainer = ({ results }) => {
 	
 	return (
 <div className={selection.genre === 'Sci-Fi' ? styles.scifisavedresultscontainer : styles.savedresultscontainer}>
-			<h1 className={styles.savedResults}>Saved Results</h1>
+			<h1 className={styles.savedResults}>To Download</h1>
 			<button className={selection.genre === 'Sci-Fi' ? styles.scifidownloadbutton : styles.downloadbutton} onClick={downloadResults}>
 				<div className={styles.download}>{`Download `}</div>
 				<img

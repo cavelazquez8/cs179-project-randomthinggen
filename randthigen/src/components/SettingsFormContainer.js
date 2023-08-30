@@ -26,7 +26,7 @@ const SettingsFormContainer = (props) => {
 	const user = useSelector((state) => state.user);
 	const [selectedGenre, setSelectedGenre] = useState('Fantasy');
 	const [selectedGenerateType, setSelectedGenerateType] = useState('Person'); // ADDED (Default value "Person")
-	const [selectedAI, setSelectedAI] = useState('On'); // ADDED (Default value "On")
+	const [selectedAI, setSelectedAI] = useState('Off'); // ADDED (Default value "On")
 
 	const dispatch = useDispatch();
 	const options = ['one', 'two', 'three'];
@@ -61,26 +61,26 @@ const SettingsFormContainer = (props) => {
 	const [hobby, setHobby] = useState('Swimming');
 	const [job, setJob] = useState('Student');
 	const msg = `
-	generate random thing with these conditions: 
+	Generate something with these conditions: 
 	Genre: ${selection.genre}
 	Object: ${selection.generate}
-	height: ${height}
-	build: thin
-	job: welder
-	hobbies: reading, writing
-	limit response to be two paragraph
-	`;
+	Height: ${height}
+	Build: ${build}
+	Job: ${job}
+	Hobbies: ${hobby}
+	Limit your response to two paragraphs.
+		`;
 	//props.setMessage(msg);
 	useEffect(() => {
 		const msg = `
-		generate random thing with these conditions: 
+		Generate something with these conditions: 
 		Genre: ${selection.genre}
 		Object: ${selection.generate}
-		height: ${height}
-		build: ${build}
-		job: ${job}
-		hobby: ${hobby}
-		limit response to be two paragraph
+		Height: ${height}
+		Build: ${build}
+		Job: ${job}
+		Hobbies: ${hobby}
+		Limit your response to two paragraphs.
 		`;
 		props.setMessage(msg);
 	}, [
@@ -124,12 +124,11 @@ const SettingsFormContainer = (props) => {
 	// 	}
 	// };
 	console.log('selection: ', selection);
-	console.log('HEIGHT: ', height);
 	return (
 		<div className={selection.genre === 'Sci-Fi' ? styles.scifisettingscontainer : styles.settingscontainer}>
 			<h1 className={styles.settings}>Settings</h1>
 			{/* onClick={ChatGPTApi generateMessage={message}} */}
-			{selection.AI === 'Off' && (
+			{selectedAI === 'Off' && (
 				<button
 					className={selection.genre === 'Sci-Fi' ? styles.scifigeneratebutton : styles.generatebutton}
 					onClick={props.onGenerateButtonClick}
@@ -287,72 +286,63 @@ const SettingsFormContainer = (props) => {
 					} //ADDED
 				/>
 			</div>
-			<div className={styles.aisettings}>
-				{/* <div className={styles.aiinput}>
+			{selectedAI === 'On' && (
+				<div className={styles.aisettings}>
+					{/* <div className={styles.aiinput}>
 					Height:
 					<div className={styles.aisettingtextbox}>Tall</div>
 				</div> */}
-				<Dropdown
-					options={options}
-					// onChange={this._onSelect}
-					value={defaultOption}
-					placeholder='Select an option'
-				/>
-				<Dropdown>
-					<Dropdown.Toggle variant='success'>Height</Dropdown.Toggle>
-					<Dropdown.Menu>
-						{heights.map((item) => (
-							<Dropdown.Item onClick={() => setHeight(item)}>
-								{item}
-							</Dropdown.Item>
-						))}
-					</Dropdown.Menu>
-				</Dropdown>
+					<Dropdown
+						options={options}
+						// onChange={this._onSelect}
+						value={defaultOption}
+						placeholder='Select an option'
+					/>
+					<Dropdown>
+						<Dropdown.Toggle variant='success'>Height</Dropdown.Toggle>
+						<Dropdown.Menu>
+							{heights.map((item) => (
+								<Dropdown.Item onClick={() => setHeight(item)}>
+									{item}
+								</Dropdown.Item>
+							))}
+						</Dropdown.Menu>
+					</Dropdown>
 
-				<Dropdown>
-					<Dropdown.Toggle variant='success'>Build</Dropdown.Toggle>
-					<Dropdown.Menu>
-						{builds.map((item) => (
-							<Dropdown.Item onClick={() => setBuild(item)}>
-								{item}
-							</Dropdown.Item>
-						))}
-					</Dropdown.Menu>
-				</Dropdown>
+					<Dropdown>
+						<Dropdown.Toggle variant='success'>Build</Dropdown.Toggle>
+						<Dropdown.Menu>
+							{builds.map((item) => (
+								<Dropdown.Item onClick={() => setBuild(item)}>
+									{item}
+								</Dropdown.Item>
+							))}
+						</Dropdown.Menu>
+					</Dropdown>
 
-				<Dropdown>
-					<Dropdown.Toggle variant='success'>Job</Dropdown.Toggle>
-					<Dropdown.Menu>
-						{jobs.map((item) => (
-							<Dropdown.Item onClick={() => setJob(item)}>{item}</Dropdown.Item>
-						))}
-					</Dropdown.Menu>
-				</Dropdown>
+					<Dropdown>
+						<Dropdown.Toggle variant='success'>Job</Dropdown.Toggle>
+						<Dropdown.Menu>
+							{jobs.map((item) => (
+								<Dropdown.Item onClick={() => setJob(item)}>
+									{item}
+								</Dropdown.Item>
+							))}
+						</Dropdown.Menu>
+					</Dropdown>
 
-				<Dropdown>
-					<Dropdown.Toggle variant='success'>Hobbies</Dropdown.Toggle>
-					<Dropdown.Menu>
-						{hobbies.map((item) => (
-							<Dropdown.Item onClick={() => setHobby(item)}>
-								{item}
-							</Dropdown.Item>
-						))}
-					</Dropdown.Menu>
-				</Dropdown>
-
-				{/* <div className={styles.aiinput}>
-					Build:
-					<div className={styles.aisettingtextbox}>Thin</div>
+					<Dropdown>
+						<Dropdown.Toggle variant='success'>Hobbies</Dropdown.Toggle>
+						<Dropdown.Menu>
+							{hobbies.map((item) => (
+								<Dropdown.Item onClick={() => setHobby(item)}>
+									{item}
+								</Dropdown.Item>
+							))}
+						</Dropdown.Menu>
+					</Dropdown>
 				</div>
-				<div className={styles.aiinput}>
-					Job:
-					<div className={styles.aisettingtextbox}>Welder</div>
-				</div>
-				<div className={styles.aiinput}>
-					Hobbies:
-					<div className={styles.aisettingtextbox}>Reading, Writing</div>
-				</div> */}
-			</div>
+			)}
 
 			{/* <ImageUpload setImage={setImage} /> */}
 		</div>
