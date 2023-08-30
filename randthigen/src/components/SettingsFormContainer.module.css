@@ -122,7 +122,7 @@
 }
 .aisettingtextbox {
   flex: 1;
-  border-radius: var(--br-5xs);
+  border-radius: var(--br-mini);
   border: 1px solid var(--color-black);
   overflow: hidden;
   flex-direction: column;
@@ -152,6 +152,7 @@
   z-index: 9;
   font-size: var(--font-size-sm);
 }
+
 .scifisettingscontainer {
   margin: 0 !important;
   position: absolute;
@@ -170,6 +171,7 @@
   color: var(--color-black);
   font-family: var(--font-im-fell-english);
 }
+
 
 .settingscontainer {
   margin: 0 !important;

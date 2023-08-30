@@ -1,6 +1,6 @@
 import SavedResultsContainer from '../components/SavedResultsContainer';
 import SettingsFormContainer from '../components/SettingsFormContainer';
-import GenerateContainer from '../components/GenerateContainer';
+//import GenerateContainer from '../components/GenerateContainer';
 import ContainerFooter from '../components/ContainerFooter';
 import styles from './LandingPage.module.css';
 import ChatGPTApi from '../components/ChatGPTApi';
@@ -15,6 +15,9 @@ import generatecontainer from '../components/GenerateContainer.module.css';
 import axios from 'axios';
 import GenerateContainerAI from '../components/GenerateContainerAI';
 import { newGen } from '../components/newGen';
+import ImageUpload from '../components/ImageUpload';
+import styled from 'styled-components';
+import { putPieceToDB } from '../components/postPieces';
 
 const LandingPage = () => {
 	const user = useSelector((state) => state.user);
@@ -24,9 +27,8 @@ const LandingPage = () => {
 	const [trigger, setTrigger] = useState(0);
 	const [post, setPost] = useState([]);
 	const [style, setStyle] = useState();
-	const [savedResultsStyle, setSavedResultsStyle] = useState(''); // Add this state
-	const [savedFooterStyle, setFooterStyle] = useState('');
-
+	const [image, setImage] = useState('');
+	const [context, getContext] = useState('');
 	console.log(message);
 	const logoutHandler = () => {
 		firebase.auth().signOut();
@@ -37,21 +39,23 @@ const LandingPage = () => {
 	const [savedResults, setSavedResults] = useState([]);
 	const handleSave = (content) => {
 		setSavedResults((prevResults) => [...prevResults, content]);
-        if (user && user.uid) {
-        axios.post('/api/user/saved', {
-            userId: user.uid,
-            content: content
-        })
-        .then(response => {
-            console.log("Content saved to user saved:", response.data);
-        })
-        .catch(error => {
-            console.error("Error saving content to user saved:", error);
-        });
-    }
+		if (user && user.uid) {
+			axios
+				.post('/api/user/saved', {
+					userId: user.uid,
+					content: content,
+				})
+				.then((response) => {
+					console.log('Content saved to user saved:', response.data);
+				})
+				.catch((error) => {
+					console.error('Error saving content to user saved:', error);
+				});
+		}
 	};
 
 	const getPosts = () => {
+		const uid_ = user.uid;
 		axios
 			.get('/api/post/get_no_ai_posts', { params: { uid: user.uid } })
 			.then(async (res) => {
@@ -65,10 +69,11 @@ const LandingPage = () => {
 
 	const postMessage = async () => {
 		try {
+			const message = await newGen();
 			const options = {
 				method: 'POST',
 				body: JSON.stringify({
-					message: newGen(),
+					message: message,
 					uid: user.uid,
 				}),
 				headers: {
@@ -79,9 +84,12 @@ const LandingPage = () => {
 				'http://localhost:8000/api/post/completions_no_ai',
 				options
 			);
-			console.log(response);
+			//console.log('RESPONSE: ', response.json);
 			const data = await response.json();
-			console.log('Data from no ai', data);
+			console.log('Data from no ai', data.post[data.post.length - 1]);
+			setPost((posts) => {
+				return [...posts, data.post[data.post.length - 1]];
+			});
 			//console.log(data);
 			// setPosts(data.post);
 
@@ -93,6 +101,7 @@ const LandingPage = () => {
 			console.error(error);
 		}
 	};
+
 	const handleGenerateButtonClick = async () => {
 		// setGeneratedContainers((prevContainers) => [
 		// 	...prevContainers,
@@ -103,46 +112,121 @@ const LandingPage = () => {
 		// 	/>,
 		// ]);
 		await postMessage();
-		await getPosts();
+		//await getPosts();
 		console.log('getPosts: ', post);
 		setGeneratedContainers([...post]);
 	};
-	
-	
+
+	const changeBackground = () => {
+		let imagePath = './' + image;
+		console.log('imagePath: ', imagePath);
+
+		const newStyle = styled.div`
+			align-self: stretch;
+			height: 64.06rem;
+			flex-direction: column;
+			padding: var(--padding-xl) 15rem;
+			box-sizing: border-box;
+			align-items: center;
+			position: relative;
+			gap: 4.25rem;
+			background-image: url('');
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: top;
+		`;
+		setStyle(styles.customized);
+	};
+
 	useEffect(() => {
 		if (selection.genre === 'Fantasy') {
 			setStyle(styles.fantasy);
-			setSavedResultsStyle(''); // Reset to default style
-			setFooterStyle(''); // Reset to default style
 		} else {
 			setStyle(styles.scifi);
-			setSavedResultsStyle(styles.scifisavedresultscontainer); // Apply sci-fi style to SavedResultsContainer
-			
-			
 		}
 		console.log('Genre:', selection.genre); // Add this line to check the genre value
 
 	}, [selection.genre]);
+	// useEffect(() => {
+	// 	//getPosts();
+	// }, []);
+	// useEffect(() => {
+	// 	putPieceToDB();
+	// }, []);
+	useEffect(() => {
+		if (context === '') return;
+		const textToSent = `${context}
+		Refine this description to three paragraphs,
+		expanding the reader's understanding of the person/place/thing described.
+		and providing new information consistent with the informatino provided
+		`;
+		console.log('textToSent:', textToSent);
+		const getMessages = async () => {
+			//e.preventDefault();
+			const options = {
+				method: 'POST',
+				body: JSON.stringify({
+					message: textToSent,
+					uid: user.uid,
+				}),
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			};
+			try {
+				const response = await fetch(
+					'http://localhost:8000/api/post/completions',
+					options
+				);
+				console.log(response);
+				const data = await response.json();
+				console.log(data);
+				console.log(data.post);
+				setPost((array) => {
+					return [...array, data.post[data.post.length - 1]];
+				});
+				console.log(post);
+				// setMessage(data.choices[0].message);
+				// console.log(message);
+				// setResponse(data.choices[0].message.content);
+			} catch (error) {
+				console.error(error);
+			}
+		};
+		getMessages();
+	}, [context]);
 	return (
 		<div className={selection.genre === 'Sci-Fi' ? styles.scifilandingPage : styles.landingPage}>
 			<div className={`${style}`}>
 				<div className={selection.genre === 'Sci-Fi' ? styles.scifitabcontainer : styles.tabcontainer}>
 					<div className={styles.selectionmenu}>
-						<div className={styles.randomthinggen} onClick={() => navigate('/')}>RandomThingGen</div>
+						<div
+							className={styles.randomthinggen}
+							onClick={() => navigate('/')}
+						>
+							RandomThingGen
+						</div>
 						<div className={styles.selectionmenuChild} />
-						<div className={styles.saved} onClick={() => navigate('/saved')}>Saved</div>
+						<div className={styles.saved} onClick={() => navigate('/saved')}>
+							Saved
+						</div>
 						<div className={styles.selectionmenuChild} />
-						<div className={styles.saved} onClick={() => navigate('/history')}>History</div>
-						<div className={styles.selectionmenuChild} />
-						<div className={styles.saved}>Chat</div>
-						<div className={styles.selectionmenuChild} />
-						<div className={styles.saved}>Analytics</div>
+						<div className={styles.saved} onClick={() => navigate('/history')}>
+							History
+						</div>
 						<div className={styles.selectionmenuChild} />
 						<div className={styles.profile}>Profile</div>
 					</div>
+					<ImageUpload setImage={setImage} />
+					<button
+						// className={styles.loginbutton}
+						onClick={() => changeBackground()}
+					>
+						Change the background
+					</button>
 					{user.accessToken ? (
 						<button
-							className={selection.genre === 'Sci-Fi' ? styles.scifiloginbutton : styles.loginbutton}
+							className={styles.loginbutton}
 							onClick={() => logoutHandler()}
 						>
 							{/* <div className={styles.login}>Login</div> */}
@@ -171,9 +255,9 @@ const LandingPage = () => {
 						</button>
 					)}
 				</div>
-				<SavedResultsContainer selection={selection} results={savedResults} savedResultsStyle={savedResultsStyle} />
+				{/* <SavedResultsContainer results={savedResults} /> */}
 				<SettingsFormContainer
-					className={selection.genre === 'Sci-Fi' ? styles.scifisettingscontainer : ''}
+					className={selection.genre === 'Sci-Fi' ? styles.scifisettingscontainer : styles.settingscontainer}
 					message={message}
 					setMessage={setMessage}
 					onGenerateButtonClick={handleGenerateButtonClick}
@@ -193,6 +277,13 @@ const LandingPage = () => {
 				>
 					<ChatGPTApi msgFromLanding={message} trigger={trigger} />
 					{/* <ul className='feed'>{generatedContainers}</ul> */}
+					{post.length !== 0 && (
+						<div className={styles.divider}>
+							<span></span>
+							<span>True Random</span>
+							<span></span>
+						</div>
+					)}
 					<ul className='feed'>
 						{post?.map((message, index) => (
 							// <li key={index}>
@@ -201,19 +292,24 @@ const LandingPage = () => {
 							// 	</p>
 							// 	<p style={{ color: 'white' }}>{message.content}</p>
 							// </li>
-							<GenerateContainerAI text={message.content} onSave={handleSave} />
+							<GenerateContainerAI
+								text={message.content}
+								onSave={handleSave}
+								setPosts={setGeneratedContainers}
+								getContext={getContext}
+							/>
 						))}
 					</ul>
 				</div>
 			</div>
-			<ContainerFooter selection={selection} results={savedResults} savedFooterStyle={savedFooterStyle} />
+			{/* <ContainerFooter />
 			<footer className={styles.copyright}>
 				<div className={styles.privacyPolicyParent}>
 					<div className={styles.saved}>Privacy Policy</div>
 					<div className={styles.saved}>Terms of use</div>
 				</div>
 				<div className={styles.saved}>Test</div>
-			</footer>
+			</footer> */}
 		</div>
 	);
 };

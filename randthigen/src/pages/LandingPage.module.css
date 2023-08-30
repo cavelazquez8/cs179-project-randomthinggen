@@ -1,15 +1,8 @@
 .randomthinggen {
 	position: relative;
 	color: var(--color-saddlebrown);
-	position: relative;
-	color: var(--color-saddlebrown);
 }
 .selectionmenuChild {
-	position: relative;
-	border-right: 1px solid var(--color-wheat);
-	box-sizing: border-box;
-	width: 0.06rem;
-	height: 1.19rem;
 	position: relative;
 	border-right: 1px solid var(--color-wheat);
 	box-sizing: border-box;
@@ -19,12 +12,8 @@
 .profile,
 .saved {
 	position: relative;
-	position: relative;
 }
 .profile {
-	display: inline-block;
-	width: 2.5rem;
-	flex-shrink: 0;
 	display: inline-block;
 	width: 2.5rem;
 	flex-shrink: 0;
@@ -35,18 +24,8 @@
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
-	width: 27.44rem;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: space-between;
 }
 .login {
-	position: relative;
-	font-size: var(--font-size-sm);
-	font-family: var(--font-im-fell-english);
-	color: var(--color-lightcyan);
-	text-align: left;
 	position: relative;
 	font-size: var(--font-size-sm);
 	font-family: var(--font-im-fell-english);
@@ -86,8 +65,6 @@
 	gap: var(--gap-3xs);
 }
 
-
-
 .loginbutton {
 	cursor: pointer;
 	border: 0;
@@ -97,7 +74,6 @@
 	justify-content: center;
 	gap: var(--gap-3xs);
 }
-
 
 .scifitabcontainer {
 	align-self: stretch;
@@ -112,7 +88,7 @@
 
 .tabcontainer {
 	align-self: stretch;
-	background: linear-gradient(180deg, #b89c65, #efcfa4);
+	background: linear-gradient(180deg, #faeaca, #efcfa4);
 	box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 	overflow: hidden;
 	padding: var(--padding-8xs) var(--padding-8xs) var(--padding-8xs)
@@ -121,17 +97,16 @@
 	z-index: 0;
 }
 
-
 .generationscontainer {
-  overflow-y: auto; /* ADDED (Allows vertical scrolling) */
+	overflow-y: auto; /* ADDED (Allows vertical scrolling) */
 
-  align-self: stretch;
-  flex: 1;
-  overflow: hidden;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--gap-mini);
-  z-index: 3;
+	align-self: stretch;
+	flex: 1;
+	overflow: hidden;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: var(--gap-mini);
+	z-index: 3;
 }
 .fantasy,
 .generationscontainer,
@@ -176,12 +151,32 @@
 	display: flex;
 	justify-content: flex-start;
 }
+
+.customized {
+	align-self: stretch;
+	height: 64.06rem;
+	flex-direction: column;
+	padding: var(--padding-xl) 15rem;
+	box-sizing: border-box;
+	align-items: center;
+	position: relative;
+	gap: 4.25rem;
+	background-image: url(/public/customizedImage.jpg);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: top;
+}
+
+.privacyPolicyParent {
+	flex-direction: row;
+	align-items: flex-start;
+	gap: 1.25rem;
+}
 .copyright,
 .landingPage {
 	display: flex;
 	align-items: center;
 }
-
 .copyright,
 .scifilandingPage {
 	display: flex;
@@ -224,7 +219,63 @@
 
 .randomthinggen:hover,
 .saved:hover {
-  background-color: #f2f2f2;  /* Change background color */
-  cursor: pointer;  /* Change cursor to pointer */
-  /* Add any other styles you want to apply on hover */
+	background-color: #f2f2f2; /* Change background color */
+	cursor: pointer; /* Change cursor to pointer */
+	/* Add any other styles you want to apply on hover */
+}
+
+.divider {
+	/* minor cosmetics */
+	display: table;
+	font-size: 24px;
+	text-align: center;
+	width: 75%; /* divider width */
+	margin: 40px auto; /* spacing above/below */
+}
+.divider span {
+	display: table-cell;
+	position: relative;
+}
+.divider span:first-child,
+.divider span:last-child {
+	width: 50%;
+	top: 13px; /* adjust vertical align */
+	-moz-background-size: 100% 2px; /* line width */
+	background-size: 100% 2px; /* line width */
+	background-position: 0 0, 0 100%;
+	background-repeat: no-repeat;
+}
+.divider span:first-child {
+	/* color changes in here */
+	background-image: -webkit-gradient(
+		linear,
+		0 0,
+		0 100%,
+		from(transparent),
+		to(#000)
+	);
+	background-image: -webkit-linear-gradient(180deg, transparent, #000);
+	background-image: -moz-linear-gradient(180deg, transparent, #000);
+	background-image: -o-linear-gradient(180deg, transparent, #000);
+	background-image: linear-gradient(90deg, transparent, #000);
+}
+.divider span:nth-child(2) {
+	color: #000;
+	padding: 0px 5px;
+	width: auto;
+	white-space: nowrap;
+}
+.divider span:last-child {
+	/* color changes in here */
+	background-image: -webkit-gradient(
+		linear,
+		0 0,
+		0 100%,
+		from(#000),
+		to(transparent)
+	);
+	background-image: -webkit-linear-gradient(180deg, #000, transparent);
+	background-image: -moz-linear-gradient(180deg, #000, transparent);
+	background-image: -o-linear-gradient(180deg, #000, transparent);
+	background-image: linear-gradient(90deg, #000, transparent);
 }
