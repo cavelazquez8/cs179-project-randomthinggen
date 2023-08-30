@@ -203,7 +203,6 @@
 	color: var(--color-tan);
 	font-family: var(--font-im-fell-english);
 }
-<<<<<<< HEAD
 
 .scifilandingPage {
 	position: relative;
@@ -218,8 +217,6 @@
 	font-family: var(--font-im-fell-english);
 }
 
-=======
->>>>>>> 88e7048086da0afd7a534b3b31b47f07bd133308
 .randomthinggen:hover,
 .saved:hover {
 	background-color: #f2f2f2; /* Change background color */
