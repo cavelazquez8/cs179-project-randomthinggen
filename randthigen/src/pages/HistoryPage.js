@@ -133,8 +133,6 @@ function HistoryPage() {
 						<div className={styles.saved} onClick={() => navigate('/history')}>
 							History
 						</div>
-						<div className={styles.selectionmenuChild} />
-						<div className={styles.profile}>Profile</div>
 					</div>
 					{user.accessToken ? (
 						<button
