@@ -1,4 +1,4 @@
-
+import { useDispatch, useSelector } from 'react-redux';
 import React, { useState } from "react";
 import styles from "./LoginModal.module.css";
 import firebase from '../firebase.js';
@@ -6,6 +6,7 @@ import axios from 'axios';
 
 
 const LoginModal = ({ onClose }) => {
+  const selection = useSelector((state) => state.selection); 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -60,7 +61,7 @@ const LoginModal = ({ onClose }) => {
 
   return (
     <div className={styles.modalBackdrop}>
-      <div className={styles.modalContent}>
+      <div className={selection.genre === 'Sci-Fi' ? styles.scifimodalContent : styles.modalContent}>
         <button className={styles.closeButton} onClick={onClose}>X</button>
         <h2>{isSignup ? "Signup" : "Login"}</h2>
                 {errMessage && <p>{errMessage}</p>}
@@ -75,6 +76,7 @@ const LoginModal = ({ onClose }) => {
             />
           )}
           <input 
+            className={selection.genre === 'Sci-Fi' ? styles.scifiinput : styles.input}
             type="email" 
             value={email} 
             onChange={(e) => setEmail(e.target.value)} 
@@ -90,6 +92,7 @@ const LoginModal = ({ onClose }) => {
           />
           {isSignup && (
             <input
+            
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
@@ -97,11 +100,11 @@ const LoginModal = ({ onClose }) => {
               required
             />
           )}
-          <button className={styles.modalLoginButton} type="submit">{isSignup ? "Signup" : "Login"}</button>
+          <button className={selection.genre === 'Sci-Fi' ? styles.scifimodalLoginButton : styles.modalLoginButton} type="submit">{isSignup ? "Signup" : "Login"}</button>
         </form>
         <p>
           {isSignup ? "Already have an account? " : "Don't have an account? "}
-          <button className={styles.modalLoginButton} onClick={() => setIsSignup(!isSignup)}>
+          <button className={selection.genre === 'Sci-Fi' ? styles.scifimodalLoginButton : styles.modalLoginButton} onClick={() => setIsSignup(!isSignup)}>
             {isSignup ? "Login" : "Signup"}
           </button>
         </p>

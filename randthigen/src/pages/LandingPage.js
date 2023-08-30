@@ -61,8 +61,7 @@ const LandingPage = () => {
 					console.error('Error saving content to user saved:', error);
 				});
 		}
-	};
-
+	}
 	const handleShowLoginModal = () => {
     setShowLoginModal(true);
     };
@@ -211,9 +210,9 @@ const LandingPage = () => {
 		getMessages();
 	}, [context]);
 	return (
-		<div className={styles.landingPage}>
+		<div className={selection.genre === 'Sci-Fi' ? styles.scifilandingPage : styles.landingPage}>
 			<div className={`${style}`}>
-				<div className={styles.tabcontainer}>
+				<div className={selection.genre === 'Sci-Fi' ? styles.scifitabcontainer : styles.tabcontainer}>
 					<div className={styles.selectionmenu}>
 						<div
 							className={styles.randomthinggen}
@@ -239,7 +238,7 @@ const LandingPage = () => {
 					>
 						Change the background
 					</button>
-					<button className={styles.loginbutton} onClick={user ? logoutHandler : handleShowLoginModal}>
+					<button className={selection.genre === 'Sci-Fi' ? styles.scifiloginbutton : styles.loginbutton} onClick={user ? logoutHandler : handleShowLoginModal}>
             <div className={styles.login}>{user ? 'Logout' : 'Login'}</div>
             <img
               className={styles.materialSymbolsloginIcon}
@@ -294,17 +293,11 @@ const LandingPage = () => {
 					</ul>
 				</div>
 			</div>
-			<ContainerFooter />
+			
 			{showLoginModal && (
         <LoginModal onClose={handleCloseLoginModal}/>
       )}
-			<footer className={styles.copyright}>
-				<div className={styles.privacyPolicyParent}>
-					<div className={styles.saved}>Privacy Policy</div>
-					<div className={styles.saved}>Terms of use</div>
-				</div>
-				<div className={styles.saved}>Test</div>
-			</footer> */}
+
 		</div>
 	);
 };

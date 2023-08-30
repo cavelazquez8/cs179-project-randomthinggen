@@ -11,6 +11,7 @@ import GenerateContainerAI from '../components/GenerateContainerAI';
 import SavedResultsContainer from '../components/SavedResultsContainer';
 //import { useEffect } from 'react';
 function HistoryPage() {
+	const selection = useSelector((state) => state.selection); 
 	const user = useSelector((state) => state.user);
 	const [userHistory, setUserHistory] = useState([]);
 	const navigate = useNavigate();
@@ -115,9 +116,9 @@ function HistoryPage() {
 	};
 
 	return (
-		<div className={styles.landingPage}>
-			<div className={styles.fantasy}>
-				<div className={styles.tabcontainer}>
+		<div className={selection.genre === 'Sci-Fi' ? styles.scifilandingPage : styles.landingPage}>
+			<div className={selection.genre === 'Sci-Fi' ? styles.scifi : styles.fantasy}>
+				<div className={selection.genre === 'Sci-Fi' ? styles.scifitabcontainer : styles.tabcontainer}>
 					<div className={styles.selectionmenu}>
 						<div
 							className={styles.randomthinggen}
@@ -138,7 +139,7 @@ function HistoryPage() {
 					</div>
 					{user.accessToken ? (
 						<button
-							className={styles.loginbutton}
+							className={selection.genre === 'Sci-Fi' ? styles.scifiloginbutton : styles.loginbutton}
 							onClick={() => logoutHandler()}
 						>
 							{/* <div className={styles.login}>Login</div> */}
@@ -152,7 +153,7 @@ function HistoryPage() {
 							/>
 						</button>
 					) : (
-						<button className={styles.loginbutton}>
+						<button className={selection.genre === 'Sci-Fi' ? styles.scifiloginbutton : styles.loginbutton}>
 							{/* <div className={styles.login}>Login</div> */}
 
 							<Link to='/login' className={styles.login}>
