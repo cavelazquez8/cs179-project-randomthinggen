@@ -40,7 +40,7 @@ const GenerateContainerAI = (props) => {
 	return (
 		<div className={styles.singlegeneratecontainer}>
 			<div className={styles.generatecontainer}>{boxCont}</div>
-			<button className={styles.savegeneratebutton} onClick={handleSave}>
+			{/* <button className={styles.savegeneratebutton} onClick={handleSave}>
 				<div className={styles.save}>Save</div>
 				<img
 					className={styles.materialSymbolssaveIcon}
@@ -50,7 +50,7 @@ const GenerateContainerAI = (props) => {
 			</button>
 			<button className={styles.deletebutton} onClick={handleDelete}>
 				<img className={styles.typcndeleteIcon} alt='' src='/typcndelete.svg' />
-			</button>
+			</button> */}
 		</div>
 	);
 };

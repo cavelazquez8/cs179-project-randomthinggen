@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Link, Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import GenerateContainer from './GenerateContainer';
+//import GenerateContainer from './GenerateContainer';
 import GenerateContainerAI from './GenerateContainerAI';
 
 function ChatGPTApi(props) {
@@ -49,8 +49,9 @@ function ChatGPTApi(props) {
 			const data = await response.json();
 			console.log(data);
 			console.log(data.post);
-			setPosts(data.post);
-			SVGTextContentElement();
+			setPosts((array) => {
+				return [...array, data.post[data.post.length - 1]];
+			});
 			console.log(posts);
 			// setMessage(data.choices[0].message);
 			// console.log(message);
@@ -102,9 +103,9 @@ function ChatGPTApi(props) {
 			]);
 		}
 	}, [message, currentTitle]);
-	useEffect(() => {
-		getPostsWithoutGen();
-	}, []);
+	// useEffect(() => {
+	// 	getPostsWithoutGen();
+	// }, []);
 	// useEffect(async () => {
 	// 	//console.log('Hello!!!!!!!!!!', props.trigger);
 	// 	setValue(props.msgFromLanding);
