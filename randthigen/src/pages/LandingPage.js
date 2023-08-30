@@ -18,6 +18,7 @@ import { newGen } from '../components/newGen';
 import ImageUpload from '../components/ImageUpload';
 import styled from 'styled-components';
 import { putPieceToDB } from '../components/postPieces';
+import styles2 from '../components/SavedResultsContainer.module.css';
 
 const LandingPage = () => {
 	const user = useSelector((state) => state.user);
@@ -215,13 +216,13 @@ const LandingPage = () => {
 						<div className={styles.selectionmenuChild} />
 						<div className={styles.profile}>Profile</div>
 					</div>
-					<ImageUpload setImage={setImage} />
+					{/* <ImageUpload setImage={setImage} />
 					<button
 						// className={styles.loginbutton}
 						onClick={() => changeBackground()}
 					>
 						Change the background
-					</button>
+					</button> */}
 					{user.accessToken ? (
 						<button
 							className={styles.loginbutton}
@@ -253,6 +254,13 @@ const LandingPage = () => {
 						</button>
 					)}
 				</div>
+				{/* <div className={styles2.savedresultscontainer}>
+					<ImageUpload setImage={setImage} />
+					<button
+						// className={styles.loginbutton}
+						onClick={() => changeBackground()}
+					></button>
+				</div> */}
 				{/* <SavedResultsContainer results={savedResults} /> */}
 				<SettingsFormContainer
 					message={message}

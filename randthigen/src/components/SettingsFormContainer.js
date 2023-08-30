@@ -128,7 +128,7 @@ const SettingsFormContainer = (props) => {
 		<div className={styles.settingscontainer}>
 			<h1 className={styles.settings}>Settings</h1>
 			{/* onClick={ChatGPTApi generateMessage={message}} */}
-			{(
+			{selectedAI === 'Off' && (
 				<button
 					className={styles.generatebutton}
 					onClick={props.onGenerateButtonClick}
@@ -286,60 +286,63 @@ const SettingsFormContainer = (props) => {
 					} //ADDED
 				/>
 			</div>
-			<div className={styles.aisettings}>
-				{/* <div className={styles.aiinput}>
+			{selectedAI === 'On' && (
+				<div className={styles.aisettings}>
+					{/* <div className={styles.aiinput}>
 					Height:
 					<div className={styles.aisettingtextbox}>Tall</div>
 				</div> */}
-				<Dropdown
-					options={options}
-					// onChange={this._onSelect}
-					value={defaultOption}
-					placeholder='Select an option'
-				/>
-				<Dropdown>
-					<Dropdown.Toggle variant='success'>Height</Dropdown.Toggle>
-					<Dropdown.Menu>
-						{heights.map((item) => (
-							<Dropdown.Item onClick={() => setHeight(item)}>
-								{item}
-							</Dropdown.Item>
-						))}
-					</Dropdown.Menu>
-				</Dropdown>
+					<Dropdown
+						options={options}
+						// onChange={this._onSelect}
+						value={defaultOption}
+						placeholder='Select an option'
+					/>
+					<Dropdown>
+						<Dropdown.Toggle variant='success'>Height</Dropdown.Toggle>
+						<Dropdown.Menu>
+							{heights.map((item) => (
+								<Dropdown.Item onClick={() => setHeight(item)}>
+									{item}
+								</Dropdown.Item>
+							))}
+						</Dropdown.Menu>
+					</Dropdown>
 
-				<Dropdown>
-					<Dropdown.Toggle variant='success'>Build</Dropdown.Toggle>
-					<Dropdown.Menu>
-						{builds.map((item) => (
-							<Dropdown.Item onClick={() => setBuild(item)}>
-								{item}
-							</Dropdown.Item>
-						))}
-					</Dropdown.Menu>
-				</Dropdown>
+					<Dropdown>
+						<Dropdown.Toggle variant='success'>Build</Dropdown.Toggle>
+						<Dropdown.Menu>
+							{builds.map((item) => (
+								<Dropdown.Item onClick={() => setBuild(item)}>
+									{item}
+								</Dropdown.Item>
+							))}
+						</Dropdown.Menu>
+					</Dropdown>
 
-				<Dropdown>
-					<Dropdown.Toggle variant='success'>Job</Dropdown.Toggle>
-					<Dropdown.Menu>
-						{jobs.map((item) => (
-							<Dropdown.Item onClick={() => setJob(item)}>{item}</Dropdown.Item>
-						))}
-					</Dropdown.Menu>
-				</Dropdown>
+					<Dropdown>
+						<Dropdown.Toggle variant='success'>Job</Dropdown.Toggle>
+						<Dropdown.Menu>
+							{jobs.map((item) => (
+								<Dropdown.Item onClick={() => setJob(item)}>
+									{item}
+								</Dropdown.Item>
+							))}
+						</Dropdown.Menu>
+					</Dropdown>
 
-				<Dropdown>
-					<Dropdown.Toggle variant='success'>Hobbies</Dropdown.Toggle>
-					<Dropdown.Menu>
-						{hobbies.map((item) => (
-							<Dropdown.Item onClick={() => setHobby(item)}>
-								{item}
-							</Dropdown.Item>
-						))}
-					</Dropdown.Menu>
-				</Dropdown>
-			</div>
-
+					<Dropdown>
+						<Dropdown.Toggle variant='success'>Hobbies</Dropdown.Toggle>
+						<Dropdown.Menu>
+							{hobbies.map((item) => (
+								<Dropdown.Item onClick={() => setHobby(item)}>
+									{item}
+								</Dropdown.Item>
+							))}
+						</Dropdown.Menu>
+					</Dropdown>
+				</div>
+			)}
 
 			{/* <ImageUpload setImage={setImage} /> */}
 		</div>
