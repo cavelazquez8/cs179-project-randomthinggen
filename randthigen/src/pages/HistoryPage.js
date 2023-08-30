@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styles from './LandingPage.module.css';
-import styles from './SavedResultsContainer.module.css';
 import axios from 'axios';
 import ContainerFooter from '../components/ContainerFooter';
 import firebase from '../firebase.js';
@@ -12,6 +11,7 @@ import GenerateContainerAI from '../components/GenerateContainerAI';
 import SavedResultsContainer from '../components/SavedResultsContainer';
 //import { useEffect } from 'react';
 function HistoryPage() {
+	const selection = useSelector((state) => state.selection); 
 	const user = useSelector((state) => state.user);
 	const [userHistory, setUserHistory] = useState([]);
 	const navigate = useNavigate();

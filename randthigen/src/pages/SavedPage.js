@@ -1,5 +1,4 @@
 import ContainerFooter from '../components/ContainerFooter';
-import styles from './SavedResultsContainer.module.css';
 import styles from './LandingPage.module.css';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -13,6 +12,7 @@ import SavedContainer from '../components/SavedContainer';
 import SavedResultsContainer from '../components/SavedResultsContainer';
 
 function SavedPage() {
+	const selection = useSelector((state) => state.selection); 
 	const user = useSelector((state) => state.user);
 	const [userSaved, setUserSaved] = useState([]);
 	const [savedResults, setSavedResults] = useState([]);
