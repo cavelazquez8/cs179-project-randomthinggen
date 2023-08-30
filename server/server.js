@@ -79,6 +79,7 @@ app.listen(PORT, () => {
 });
 
 app.use('/api/post', require('./Router/Post.js'));
+
 app.use('/api/user', require('./Router/User.js'));
 app.use('/api/piece', require('./Router/TrueRandom.js'));
 
@@ -95,3 +96,4 @@ app.use('/api/piece', require('./Router/TrueRandom.js'));
 // 			res.status(400).json({ success: false });
 // 		});
 // });
+
