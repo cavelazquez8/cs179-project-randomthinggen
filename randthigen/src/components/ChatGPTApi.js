@@ -108,11 +108,8 @@ function ChatGPTApi(props) {
 
 	useEffect(() => {
 		if (context === '') return;
-		const textToSent = `${context}
-		Refine this description to three paragraphs,
-		expanding the reader's understanding of the person/place/thing described.
-		and providing new information consistent with the informatino provided
-		`;
+
+		const textToSent = `${context}`;
 		console.log('textToSent:', textToSent);
 		const getMessages = async () => {
 			//e.preventDefault();
@@ -185,7 +182,7 @@ function ChatGPTApi(props) {
 					/>
 					<`button` type='submit'>Submit</>
 				</form> */}
-				{selection.AI === 'On' && (
+				{1 === 0 && (
 					<div className='input-container'>
 						<textarea
 							value={value}
